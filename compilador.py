@@ -10,8 +10,7 @@ tokens = ['EQUALS', 'PERC', 'SYM',
           'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
           'QUOTE', 'PELICA', 'COMMA', 'DOT', 'DDOT', 'BACKSLASH',
           'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX',
-          'LIST', 'CHAVSTXT'
-         ] + [x.upper() for x in reservadas]
+          'LIST', 'CHAVSTXT', 'CODE'] + [x.upper() for x in reservadas]
 
 def t_SSTR(t):
     r'\w*\"(.+)\"'
@@ -65,6 +64,10 @@ def t_SYM(t):
     r'[+*/^~?!-]'
     return t
 
+def t_CODE(t):
+    r'.*'
+    return t
+
 t_ignore = " \t\n"
 
 def t_error(t):
@@ -84,11 +87,12 @@ def p_PROG(p):
     print(p[2])
 
 def p_LEXER(p):
-    "LEXER : LIT IGN TOK TRULES"
+    "LEXER : CODE LIT IGN TOK TRULES"
     p[0] = f"""{p[1]}
 {p[2]}
-{p[3]}\n
-{p[4]}
+{p[3]}
+{p[4]}\n
+{p[5]}
 """
 
 def p_IGN(p):
@@ -149,9 +153,10 @@ def p_ARG_6(p):  "ARG : INDEX"                   ;   p[0] = p[1]
 def p_ARG_7(p):  "ARG : SSTR"                    ;   p[0] = p[1]
 
 def p_GRAM_1(p): 
-    "GRAM : PRCDNC GRULES"
-    p[0] = f"""{p[1]}
+    "GRAM : CODE PRCDNC GRULES"
+    p[0] = f"""{p[1]}\n
 {p[2]}
+{p[3]}
 """
 
 def p_PRCDNC_1(p):
