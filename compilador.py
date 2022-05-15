@@ -1,3 +1,4 @@
+from operator import truediv
 from ply.lex import lex
 from ply.yacc import yacc 
 import sys
@@ -10,7 +11,12 @@ tokens = ['EQUALS', 'PERC', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE',
           'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
           'QUOTE', 'PELICA', 'COMMA', 'DOT', 'DDOT', 'BACKSLASH',
           'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX',
-          'LIST', 'CHAVSTXT'] + [x.upper() for x in reservadas]
+          'LIST', 'CHAVSTXT', 'BEGINCODE', 'ALL'] + [x.upper() for x in reservadas]
+states = (('incode', 'exclusive'),)
+
+def t_incode_ALL(t):
+    r'.+'
+    return t
 
 def t_SSTR(t):
     r'\w*\"(.+)\"'
@@ -44,6 +50,11 @@ def t_CHAVSTXT(t):
     r'\{.+\}'
     return t
 
+def t_BEGINCODE(t):
+    r'%%'
+    t.lexer.begin('incode')
+    return t
+
 def t_LBRAC(t):      r'\('; return t
 def t_RBRAC(t):      r'\)'; return t
 def t_LRBRAC(t):     r'\['; return t
@@ -64,11 +75,11 @@ def t_TIMES(t):      r'\*'; return t
 def t_DIVIDE(t):     r'/' ; return t
 
 t_ignore = " \t\n"
+t_incode_ignore = "\n"
 
-def t_error(t):
+def t_ANY_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
-
 
 lexer = lex()
 
@@ -77,26 +88,13 @@ lexer = lex()
 ts = {"ltls" : []}
 
 def p_PROG(p):
-    "PROG : LEXER GRAM CODE"
+    "PROG : LEXER GRAM BEGINCODE CODE"
     print(p[1])
     print(p[2])
-    print(p[3])
+    print(p[4])
 
-def p_CODE_1(p): "CODE : CODE FUNCTIONS"  ; p[0] = p[1] + p[2]
-def p_CODE_2(p): "CODE : CODE ARGS"       ; p[0] = p[1] + p[2]
-def p_CODE_3(p): "CODE : FUNCTIONS"       ; p[0] = p[1]
-def p_CODE_4(p): "CODE : ARGS"            ; p[0] = p[1]
-
-def p_FUNCTIONS_1(p):
-    "FUNCTIONS : FUNCTIONS FUNCTION"
-    p[0] = f"{p[1]}\n{p[2]}"
-def p_FUNCTIONS_2(p):
-    "FUNCTIONS : FUNCTION"
-    p[0] = p[1]
-
-def p_FUNCTION_1(p):
-    "FUNCTION : DEF STR LBRAC STR RBRAC DDOT"
-    p[0] = f"def {p[2]}({p[3]}):\n"
+def p_CODE_1(p): "CODE : CODE ALL" ; p[0] = f"{p[1]}\n{p[2]}"
+def p_CODE_2(p): "CODE : ALL"      ; p[0] = p[1]
 
 def p_LEXER(p):
     "LEXER : LIT IGN TOK TRULES"
