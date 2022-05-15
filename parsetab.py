@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BACKSLASH COMMA DIVIDE DOT EQUALS ERROR IGNORE INDEX LBRAC LCHAV LEX LIST LITERALS LRBRAC MINUS NUMBER PELICA PERC PLUS QUOTE RBRAC RCHAV REGEX RETURN RRBRAC SSTR STR TIMES TOKENS YACCPROG : LEXERLEXER : LIT IGN TOK RULESLIT : PERC LITERALS EQUALS SSTRIGN : PERC IGNORE EQUALS SSTRTOK : PERC TOKENS EQUALS LISTRULES : RULE RULESRULES : ERRRULE : REGEX RETURN LBRAC SSTR COMMA ARGS RBRACERR : REGEX ERROR LBRAC INSTS RBRACINSTS : INSTS COMMA ARGINSTS : ARGARGS : ARGS COMMA ARGARGS : ARGARG : STRARG : NUMBERARG : STR LBRAC ARG RBRACARG : STR LRBRAC ARG RRBRACARG : STR DOT ARG ARG : INDEXARG : SSTR'
+_lr_signature = 'BACKSLASH CHAVSTXT COMMA DDOT DOT EQUALS ERROR IGNORE INDEX LBRAC LCHAV LEX LIST LITERALS LRBRAC NUMBER PELICA PERC PRECEDENCE QUOTE RBRAC RCHAV REGEX RETURN RRBRAC SSTR STR SYM TOKENS YACCPROG : LEXER GRAMLEXER : LIT IGN TOK TRULESIGN : PERC IGNORE EQUALS SSTRLIT : PERC LITERALS EQUALS SSTRTOK : PERC TOKENS EQUALS LISTTRULES : TRULE TRULESTRULES : TERRTRULE : REGEX RETURN LBRAC SSTR COMMA ARGS RBRACTERR : REGEX ERROR LBRAC INSTS RBRACINSTS : INSTS COMMA ARGINSTS : ARGARGS : ARGS COMMA ARGARGS : ARGARG : STRARG : NUMBERARG : STR LBRAC ARG RBRACARG : STR LIST             ARG : STR DOT ARG ARG : INDEXARG : SSTRGRAM : PRCDNC GRULESPRCDNC : PERC PRECEDENCE EQUALS LISTGRULES : GRULES GRULE GRULES : GRULE GRULE : STR DDOT PARAMS CHAVSTXTPARAMS : PARAMS PARAMPARAMS : PARAMPARAM : STRPARAM : PELICA SYM PELICA'
     
-_lr_action_items = {'PERC':([0,3,5,18,23,],[4,6,9,-3,-4,]),'$end':([1,2,12,14,19,35,],[0,-1,-2,-7,-6,-9,]),'LITERALS':([4,],[7,]),'IGNORE':([6,],[10,]),'EQUALS':([7,10,16,],[11,17,22,]),'REGEX':([8,13,26,47,],[15,15,-5,-8,]),'TOKENS':([9,],[16,]),'SSTR':([11,17,24,25,34,36,37,38,39,46,],[18,23,27,33,33,33,33,33,33,33,]),'RETURN':([15,],[20,]),'ERROR':([15,],[21,]),'LBRAC':([20,21,30,],[24,25,37,]),'LIST':([22,],[26,]),'STR':([25,34,36,37,38,39,46,],[30,30,30,30,30,30,30,]),'NUMBER':([25,34,36,37,38,39,46,],[31,31,31,31,31,31,31,]),'INDEX':([25,34,36,37,38,39,46,],[32,32,32,32,32,32,32,]),'COMMA':([27,28,29,30,31,32,33,40,41,42,45,48,49,50,],[34,36,-11,-14,-15,-19,-20,46,-13,-10,-18,-16,-17,-12,]),'RBRAC':([28,29,30,31,32,33,40,41,42,43,45,48,49,50,],[35,-11,-14,-15,-19,-20,47,-13,-10,48,-18,-16,-17,-12,]),'RRBRAC':([30,31,32,33,44,45,48,49,],[-14,-15,-19,-20,49,-18,-16,-17,]),'LRBRAC':([30,],[38,]),'DOT':([30,],[39,]),}
+_lr_action_items = {'PERC':([0,2,3,8,22,24,28,34,38,54,],[4,7,9,16,-2,-7,-4,-6,-3,-9,]),'$end':([1,5,11,12,19,39,],[0,-1,-21,-24,-23,-25,]),'LITERALS':([4,],[10,]),'STR':([6,11,12,19,20,29,30,31,33,39,40,43,45,53,55,56,58,64,],[13,13,-24,-23,29,-28,29,-27,-22,-25,-26,49,-29,49,49,49,49,49,]),'PRECEDENCE':([7,],[14,]),'IGNORE':([9,],[17,]),'EQUALS':([10,14,17,26,],[18,21,27,37,]),'DDOT':([13,],[20,]),'REGEX':([15,23,44,65,],[25,25,-5,-8,]),'TOKENS':([16,],[26,]),'SSTR':([18,27,42,43,53,55,56,58,64,],[28,38,46,52,52,52,52,52,52,]),'PELICA':([20,29,30,31,40,41,45,],[32,-28,32,-27,-26,45,-29,]),'LIST':([21,37,49,],[33,44,57,]),'RETURN':([25,],[35,]),'ERROR':([25,],[36,]),'CHAVSTXT':([29,30,31,40,45,],[-28,39,-27,-26,-29,]),'SYM':([32,],[41,]),'LBRAC':([35,36,49,],[42,43,56,]),'NUMBER':([43,53,55,56,58,64,],[50,50,50,50,50,50,]),'INDEX':([43,53,55,56,58,64,],[51,51,51,51,51,51,]),'COMMA':([46,47,48,49,50,51,52,57,59,60,61,63,66,67,],[53,55,-11,-14,-15,-19,-20,-17,64,-13,-10,-18,-16,-12,]),'RBRAC':([47,48,49,50,51,52,57,59,60,61,62,63,66,67,],[54,-11,-14,-15,-19,-20,-17,65,-13,-10,66,-18,-16,-12,]),'DOT':([49,],[58,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'PROG':([0,],[1,]),'LEXER':([0,],[2,]),'LIT':([0,],[3,]),'IGN':([3,],[5,]),'TOK':([5,],[8,]),'RULES':([8,13,],[12,19,]),'RULE':([8,13,],[13,13,]),'ERR':([8,13,],[14,14,]),'INSTS':([25,],[28,]),'ARG':([25,34,36,37,38,39,46,],[29,41,42,43,44,45,50,]),'ARGS':([34,],[40,]),}
+_lr_goto_items = {'PROG':([0,],[1,]),'LEXER':([0,],[2,]),'LIT':([0,],[3,]),'GRAM':([2,],[5,]),'PRCDNC':([2,],[6,]),'IGN':([3,],[8,]),'GRULES':([6,],[11,]),'GRULE':([6,11,],[12,19,]),'TOK':([8,],[15,]),'TRULES':([15,23,],[22,34,]),'TRULE':([15,23,],[23,23,]),'TERR':([15,23,],[24,24,]),'PARAMS':([20,],[30,]),'PARAM':([20,30,],[31,40,]),'INSTS':([43,],[47,]),'ARG':([43,53,55,56,58,64,],[48,60,61,62,63,67,]),'ARGS':([53,],[59,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,24 +27,33 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> PROG","S'",1,None,None,None),
-  ('PROG -> LEXER','PROG',1,'p_PROG','compilador.py',79),
-  ('LEXER -> LIT IGN TOK RULES','LEXER',4,'p_LEXER','compilador.py',86),
-  ('LIT -> PERC LITERALS EQUALS SSTR','LIT',4,'p_LIT','compilador.py',94),
+  ('PROG -> LEXER GRAM','PROG',2,'p_PROG','compilador.py',82),
+  ('LEXER -> LIT IGN TOK TRULES','LEXER',4,'p_LEXER','compilador.py',87),
   ('IGN -> PERC IGNORE EQUALS SSTR','IGN',4,'p_IGN','compilador.py',95),
-  ('TOK -> PERC TOKENS EQUALS LIST','TOK',4,'p_TOK','compilador.py',96),
-  ('RULES -> RULE RULES','RULES',2,'p_RULES_1','compilador.py',99),
-  ('RULES -> ERR','RULES',1,'p_RULES_2','compilador.py',100),
-  ('RULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC','RULE',7,'p_RULE_1','compilador.py',102),
-  ('ERR -> REGEX ERROR LBRAC INSTS RBRAC','ERR',5,'p_ERR_1','compilador.py',111),
-  ('INSTS -> INSTS COMMA ARG','INSTS',3,'p_INSTS_1','compilador.py',118),
-  ('INSTS -> ARG','INSTS',1,'p_INSTS_2','compilador.py',123),
-  ('ARGS -> ARGS COMMA ARG','ARGS',3,'p_ARGS_1','compilador.py',127),
-  ('ARGS -> ARG','ARGS',1,'p_ARGS_2','compilador.py',128),
-  ('ARG -> STR','ARG',1,'p_ARG_1','compilador.py',131),
-  ('ARG -> NUMBER','ARG',1,'p_ARG_2','compilador.py',132),
-  ('ARG -> STR LBRAC ARG RBRAC','ARG',4,'p_ARG_3','compilador.py',133),
-  ('ARG -> STR LRBRAC ARG RRBRAC','ARG',4,'p_ARG_4','compilador.py',134),
-  ('ARG -> STR DOT ARG','ARG',3,'p_ARG_5','compilador.py',135),
-  ('ARG -> INDEX','ARG',1,'p_ARG_6','compilador.py',136),
-  ('ARG -> SSTR','ARG',1,'p_ARG_7','compilador.py',137),
+  ('LIT -> PERC LITERALS EQUALS SSTR','LIT',4,'p_LIT','compilador.py',99),
+  ('TOK -> PERC TOKENS EQUALS LIST','TOK',4,'p_TOK','compilador.py',107),
+  ('TRULES -> TRULE TRULES','TRULES',2,'p_TRULES_1','compilador.py',112),
+  ('TRULES -> TERR','TRULES',1,'p_TRULES_2','compilador.py',113),
+  ('TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC','TRULE',7,'p_TRULE_1','compilador.py',115),
+  ('TERR -> REGEX ERROR LBRAC INSTS RBRAC','TERR',5,'p_TERR_1','compilador.py',124),
+  ('INSTS -> INSTS COMMA ARG','INSTS',3,'p_INSTS_1','compilador.py',131),
+  ('INSTS -> ARG','INSTS',1,'p_INSTS_2','compilador.py',136),
+  ('ARGS -> ARGS COMMA ARG','ARGS',3,'p_ARGS_1','compilador.py',140),
+  ('ARGS -> ARG','ARGS',1,'p_ARGS_2','compilador.py',141),
+  ('ARG -> STR','ARG',1,'p_ARG_1','compilador.py',144),
+  ('ARG -> NUMBER','ARG',1,'p_ARG_2','compilador.py',145),
+  ('ARG -> STR LBRAC ARG RBRAC','ARG',4,'p_ARG_3','compilador.py',146),
+  ('ARG -> STR LIST','ARG',2,'p_ARG_4','compilador.py',147),
+  ('ARG -> STR DOT ARG','ARG',3,'p_ARG_5','compilador.py',148),
+  ('ARG -> INDEX','ARG',1,'p_ARG_6','compilador.py',149),
+  ('ARG -> SSTR','ARG',1,'p_ARG_7','compilador.py',150),
+  ('GRAM -> PRCDNC GRULES','GRAM',2,'p_GRAM_1','compilador.py',152),
+  ('PRCDNC -> PERC PRECEDENCE EQUALS LIST','PRCDNC',4,'p_PRCDNC_1','compilador.py',158),
+  ('GRULES -> GRULES GRULE','GRULES',2,'p_GRULES_1','compilador.py',162),
+  ('GRULES -> GRULE','GRULES',1,'p_GRULES_2','compilador.py',163),
+  ('GRULE -> STR DDOT PARAMS CHAVSTXT','GRULE',4,'p_GRULE_1','compilador.py',165),
+  ('PARAMS -> PARAMS PARAM','PARAMS',2,'p_PARAMS_1','compilador.py',178),
+  ('PARAMS -> PARAM','PARAMS',1,'p_PARAMS_2','compilador.py',179),
+  ('PARAM -> STR','PARAM',1,'p_PARAM_1','compilador.py',181),
+  ('PARAM -> PELICA SYM PELICA','PARAM',3,'p_PARAM_2','compilador.py',184),
 ]
