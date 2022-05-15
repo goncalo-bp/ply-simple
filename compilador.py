@@ -6,11 +6,11 @@ import math
 
 # ANALISADOR LÉXICO
 reservadas = "tokens literals ignore return error yacc lex precedence ".split()
-tokens = ['EQUALS', 'PERC', 'SYM',
+tokens = ['EQUALS', 'PERC', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE',
           'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
           'QUOTE', 'PELICA', 'COMMA', 'DOT', 'DDOT', 'BACKSLASH',
           'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX',
-          'LIST', 'CHAVSTXT', 'CODE'] + [x.upper() for x in reservadas]
+          'LIST', 'CHAVSTXT'] + [x.upper() for x in reservadas]
 
 def t_SSTR(t):
     r'\w*\"(.+)\"'
@@ -48,8 +48,8 @@ def t_LBRAC(t):      r'\('; return t
 def t_RBRAC(t):      r'\)'; return t
 def t_LRBRAC(t):     r'\['; return t
 def t_RRBRAC(t):     r'\]'; return t
-def t_LCHAV(t):      r'{' ; return t
-def t_RCHAV(t):      r'}' ; return t
+def t_LCHAV(t):      r'\{'; return t
+def t_RCHAV(t):      r'\}'; return t
 
 def t_QUOTE(t):      r'\"'; return t
 def t_PELICA(t):     r'\''; return t
@@ -60,13 +60,10 @@ def t_BACKSLASH(t):  r'\\'; return t
 
 def t_EQUALS(t):     r'=' ; return t
 def t_PERC(t):       r'%' ; return t
-def t_SYM(t):
-    r'[+*/^~?!-]'
-    return t
-
-def t_CODE(t):
-    r'.*'
-    return t
+def t_PLUS(t):       r'\+'; return t
+def t_MINUS(t):      r'-' ; return t
+def t_TIMES(t):      r'\*'; return t
+def t_DIVIDE(t):     r'/' ; return t
 
 t_ignore = " \t\n"
 
@@ -87,12 +84,11 @@ def p_PROG(p):
     print(p[2])
 
 def p_LEXER(p):
-    "LEXER : CODE LIT IGN TOK TRULES"
+    "LEXER : LIT IGN TOK TRULES"
     p[0] = f"""{p[1]}
 {p[2]}
-{p[3]}
-{p[4]}\n
-{p[5]}
+{p[3]}\n
+{p[4]}
 """
 
 def p_IGN(p):
@@ -153,10 +149,9 @@ def p_ARG_6(p):  "ARG : INDEX"                   ;   p[0] = p[1]
 def p_ARG_7(p):  "ARG : SSTR"                    ;   p[0] = p[1]
 
 def p_GRAM_1(p): 
-    "GRAM : CODE PRCDNC GRULES"
-    p[0] = f"""{p[1]}\n
+    "GRAM : PRCDNC GRULES"
+    p[0] = f"""{p[1]}
 {p[2]}
-{p[3]}
 """
 
 def p_PRCDNC_1(p):
@@ -192,17 +187,14 @@ def p_PARAM_2(p):
     else:
         p[0] = "\'\'"
 
+def p_SYM_1(p): "SYM : EQUALS"  ;  p[0] = "="
+def p_SYM_2(p): "SYM : PLUS"    ;  p[0] = "+"
+def p_SYM_3(p): "SYM : MINUS"   ;  p[0] = "-"
+def p_SYM_4(p): "SYM : TIMES"   ;  p[0] = "*"
+def p_SYM_5(p): "SYM : DIVIDE"  ;  p[0] = "/"
+
 def p_error(p):
     print(f"Syntax error ", p)
-
-
-#lexer.input(sys.stdin.read())
-# Tokenize
-#while True:
-#    tok = lexer.token()
-#    if not tok: 
-#        break      # No more input
-#    print(tok)
 
 parser = yacc()
 parser.parse(sys.stdin.read())

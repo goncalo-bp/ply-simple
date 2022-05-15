@@ -1,7 +1,3 @@
-def getval(n):
-    if n not in ts: print(f"Undefined name ’{n}’")
-    return ts.get(n,0)
-
 %literals = "+-/*=()"
 %ignore = " \t\n"
 %tokens = [ 'VAR', 'NUMBER' ]
@@ -11,10 +7,11 @@ r'\d+(\.\d+)?' return("NUMBER", float(t.value))
 r'.' error(f"Illegal character {t.value[0]}, [{t.lexer.lineno}]",
            t.lexer.skip(1) )
 
-# symboltable : dictionary of variables
-ts = { }
-
 %precedence = [ ('left','+','-'), ('left','*','/'), ('right','UMINUS') ]
+
+
+stat : VAR '=' exp { ts[t[1]] = t[3] }
+stat : exp { print(t[1]) }
 
 exp : exp '+' exp { t[0] = t[1] + t[3] }
 exp : exp '-' exp { t[0] = t[1] - t[3] }
