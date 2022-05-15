@@ -10,7 +10,7 @@ reservadas = "tokens literals ignore return error yacc lex precedence ts def".sp
 tokens = ['EQUALS', 'PERC', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE',
           'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
           'QUOTE', 'PELICA', 'COMMA', 'DOT', 'DDOT', 'BACKSLASH',
-          'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX',
+          'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX', 'LITERAL',
           'LIST', 'CHAVSTXT', 'BEGINCODE', 'ALL'] + [x.upper() for x in reservadas]
 states = (('incode', 'exclusive'),)
 
@@ -48,6 +48,10 @@ def t_LIST(t):
 
 def t_CHAVSTXT(t):
     r'\{.+\}'
+    return t
+
+def t_LITERAL(t):
+    r'\'[,=(){}<>\[\]+\-*\/^]{1}\''
     return t
 
 def t_BEGINCODE(t):
@@ -89,12 +93,12 @@ ts = {"ltls" : []}
 
 def p_PROG(p):
     "PROG : LEXER GRAM BEGINCODE CODE"
-    print("\n# LEXER\n")
-    print(p[1])
-    print("\n# YACC\n")
-    print(p[2])
-    print("\n# PYTHON\n")
-    print(p[4])
+    p[0] = "\n# LEXER\n"
+    p[0] += (p[1])
+    p[0] += "\n# YACC\n"
+    p[0] += p[2]
+    p[0] += "\n# PYTHON\n"
+    p[0] += p[4]
 
 def p_CODE_1(p): "CODE : CODE ALL" ; p[0] = f"{p[1]}\n{p[2]}"
 def p_CODE_2(p): "CODE : ALL"      ; p[0] = p[1]
@@ -105,6 +109,7 @@ def p_LEXER(p):
 {p[2]}
 {p[3]}\n
 {p[4]}
+lexer = lex()
 """
 
 def p_IGN(p):
@@ -133,7 +138,8 @@ def p_TRULE_1(p):
     p[4] = p[4][:-1]
     p[0] = f"""def t_{p[4]}(t):
     {p[1]}
-    return {p[6]}
+    t.value = {p[6]}
+    return t
 """
 
 def p_TERR_1(p):
@@ -182,8 +188,8 @@ def p_PRCDNC_1(p):
     "PRCDNC : PERC PRECEDENCE EQUALS LIST"
     p[0] = f'precedence = {p[4]}\n'
 
-def p_GRULES_1(p):  "GRULES : GRULES GRULE "  ;  p[0] = p[1] + p[2]
-def p_GRULES_2(p):  "GRULES : GRULE "         ;  p[0] = p[1]
+def p_GRULES_1(p):  "GRULES : GRULES GRULE"  ;  p[0] = p[1] + p[2]
+def p_GRULES_2(p):  "GRULES : GRULE"         ;  p[0] = p[1]
 
 def p_GRULE_1(p):
     "GRULE : STR DDOT PARAMS CHAVSTXT"
@@ -194,7 +200,7 @@ def p_GRULE_1(p):
     else:
         ts[p[1]] = 1
     p[0] = f"""def p_{p[1]}_{ts[p[1]]}(t):
-    \"{p[1]} : {p[3]} \"
+    \"{p[1]} : {p[3]}\"
     {p[4]}
 """
 
@@ -204,21 +210,42 @@ def p_PARAMS_2(p):  "PARAMS : PARAM"        ; p[0] = f"{p[1]}"
 def p_PARAM_1(p):
     "PARAM : STR"
     p[0] = p[1]
-def p_PARAM_2(p):
-    "PARAM : PELICA SYM PELICA"
-    if p[2] in ts['ltls']:
-        p[0] = f"\'{p[2]}\'"
-    else:
-        p[0] = "\'\'"
 
-def p_SYM_1(p): "SYM : EQUALS"  ;  p[0] = "="
-def p_SYM_2(p): "SYM : PLUS"    ;  p[0] = "+"
-def p_SYM_3(p): "SYM : MINUS"   ;  p[0] = "-"
-def p_SYM_4(p): "SYM : TIMES"   ;  p[0] = "*"
-def p_SYM_5(p): "SYM : DIVIDE"  ;  p[0] = "/"
+def p_PARAM_2(p):
+    "PARAM : LITERAL"
+
+    # Tirar as plicas do LITERAL
+    p[1] = p[1][1:]
+    p[1] = p[1][:-1]
+
+    if p[1] in ts['ltls']:
+        # Caso exista, volta a colocar plicas e retorna
+        p[0] = f"\'{p[1]}\'"
+    else:
+        # Retorna literal "vazio"
+        p[0] = "\'\'"
+        print(f"ERROR: Undefined literal '{p[1]}'")
+
+
+def p_PARAM_3(p):
+    "PARAM : PERC STR"
+    p[0] = p[1] + p[2]
 
 def p_error(p):
     print(f"Syntax error ", p)
+    parser.success = False
 
+
+# Build the parser
 parser = yacc()
-parser.parse(sys.stdin.read())
+ts = {"ltls" : []}
+
+# Read program from input and parse it
+import sys
+parser.success = True
+codigo = parser.parse(sys.stdin.read())
+
+if parser.success:
+    print(codigo)
+else:
+    print("Programa com erros. Corrige e tente novamente...")
