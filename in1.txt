@@ -23,6 +23,5 @@ exp : exp '*' exp { t[0] = t[1] * t[3] }
 def p_error(t):
 
 def getval(n):
-y=yacc()
 
 y.parse("3+4*7")

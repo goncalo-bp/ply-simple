@@ -24,7 +24,6 @@ def t_STR(t):
     r'[A-Za-z_]+'
     if t.value in reservadas:
         t.type = t.value.upper()
-    print(t.value)
     return t
 
 def t_INDEX(t):
@@ -83,8 +82,10 @@ def p_PROG(p):
     print(p[2])
     print(p[3])
 
-def p_CODE_1(p): "CODE : FUNCTIONS"  ; p[0] = p[1]
-def p_CODE_2(p): "CODE : ARGS"       ; p[0] = p[1]
+def p_CODE_1(p): "CODE : CODE FUNCTIONS"  ; p[0] = p[1] + p[2]
+def p_CODE_2(p): "CODE : CODE ARGS"       ; p[0] = p[1] + p[2]
+def p_CODE_3(p): "CODE : FUNCTIONS"       ; p[0] = p[1]
+def p_CODE_4(p): "CODE : ARGS"            ; p[0] = p[1]
 
 def p_FUNCTIONS_1(p):
     "FUNCTIONS : FUNCTIONS FUNCTION"
@@ -95,7 +96,7 @@ def p_FUNCTIONS_2(p):
 
 def p_FUNCTION_1(p):
     "FUNCTION : DEF STR LBRAC STR RBRAC DDOT"
-    p[0] = f"def {p[2]}({p[3]}):"
+    p[0] = f"def {p[2]}({p[3]}):\n"
 
 def p_LEXER(p):
     "LEXER : LIT IGN TOK TRULES"
@@ -151,13 +152,12 @@ def p_ARGS_1(p):  "ARGS : ARGS COMMA ARGS"          ;  p[0] = f"{p[1]}, {p[3]}"
 def p_ARGS_2(p):  "ARGS : ARGS ARGS"                ;  p[0] = f"{p[1]} {p[3]}"
 def p_ARGS_3(p):  "ARGS : ARGS DOT ARGS"            ;  p[0] = f"{p[1]}.{p[3]}"
 def p_ARGS_4(p):  "ARGS : ARGS LBRAC ARGS RBRAC"    ;  p[0] = f"{p[1]}({p[3]})"
-def p_ARGS_5(p): "ARGS : ARGS EQUALS ARGS"          ;  p[0] = f"{p[1]} = {p[3]}"
-def p_ARGS_6(p): "ARGS : ARGS PLUS ARGS"            ;  p[0] = f"{p[1]} + {p[3]}"
-def p_ARGS_7(p): "ARGS : ARGS MINUS ARGS"           ;  p[0] = f"{p[1]} - {p[3]}"
-def p_ARGS_8(p): "ARGS : ARGS TIMES ARGS"           ;  p[0] = f"{p[1]} * {p[3]}"
-def p_ARGS_9(p): "ARGS : ARGS DIVIDE ARGS"          ;  p[0] = f"{p[1]} / {p[3]}"
-def p_ARGS_10(p):  "ARGS : ARG"                     ;  p[0] = p[1]
-
+def p_ARGS_5(p):  "ARGS : ARGS EQUALS ARGS"         ;  p[0] = f"{p[1]} = {p[3]}"
+def p_ARGS_6(p):  "ARGS : ARGS PLUS ARGS"           ;  p[0] = f"{p[1]} + {p[3]}"
+def p_ARGS_7(p):  "ARGS : ARGS MINUS ARGS"          ;  p[0] = f"{p[1]} - {p[3]}"
+def p_ARGS_8(p):  "ARGS : ARGS TIMES ARGS"          ;  p[0] = f"{p[1]} * {p[3]}"
+def p_ARGS_9(p):  "ARGS : ARGS DIVIDE ARGS"         ;  p[0] = f"{p[1]} / {p[3]}"
+def p_ARGS_10(p): "ARGS : ARG"                      ;  p[0] = p[1]
 
 def p_ARG_1(p):  "ARG : STR"                     ;   p[0] = p[1]
 def p_ARG_2(p):  "ARG : NUMBER"                  ;   p[0] = p[1]
