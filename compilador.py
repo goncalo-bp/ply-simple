@@ -7,7 +7,7 @@ import math
 # ANALISADOR LÉXICO
 
 reservadas = "tokens literals ignore return error yacc lex ".split()
-tokens = ['PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', ' PERCENT',
+tokens = ['PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS', 'PERC',
           'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
           'QUOTE', 'PELICA', 'COMMA', 'DOT', 'BACKSLASH',
           'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX',
@@ -60,7 +60,7 @@ def t_MINUS(t):      r'-' ; return t
 def t_TIMES(t):      r'\*'; return t
 def t_DIVIDE(t):     r'/' ; return t
 def t_EQUALS(t):     r'=' ; return t
-def t_PERCENT(t):     r'%' ; return t
+def t_PERC(t):       r'%' ; return t
 
 t_ignore = " \t\n"
 
@@ -90,9 +90,9 @@ def p_LEXER(p):
 {p[4]}
 """
 
-def p_LIT(p): "LIT : PERCENT LITERALS EQUALS SSTR" ; p[0] = f'literals = {p[4]}\n'
-def p_IGN(p): "IGN : PERCENT IGNORE EQUALS SSTR"   ; p[0] = f'ignore = {p[4]}\n'
-def p_TOK(p): "TOK : PERCENT TOKENS EQUALS LIST"   ; p[0] = f'tokens = {p[4]}\n'
+def p_LIT(p): "LIT : PERC LITERALS EQUALS SSTR" ; p[0] = f'literals = {p[4]}\n'
+def p_IGN(p): "IGN : PERC IGNORE EQUALS SSTR"   ; p[0] = f'ignore = {p[4]}\n'
+def p_TOK(p): "TOK : PERC TOKENS EQUALS LIST"   ; p[0] = f'tokens = {p[4]}\n'
 
 
 def p_RULES_1(p): "RULES : RULE RULES" ; p[0] = p[1] + p[2]
