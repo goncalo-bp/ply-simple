@@ -1,0 +1,560 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BACKSLASH
+    DIVIDE
+    LCHAV
+    LEX
+    MINUS
+    PELICA
+    PLUS
+    QUOTE
+    RCHAV
+    TIMES
+    YACC
+
+Grammar
+
+Rule 0     S' -> PROG
+Rule 1     PROG -> LEXER
+Rule 2     LEXER -> LIT IGN TOK RULES
+Rule 3     LIT -> LITERALS EQUALS SSTR
+Rule 4     IGN -> IGNORE EQUALS SSTR
+Rule 5     TOK -> TOKENS EQUALS LIST
+Rule 6     RULES -> RULE RULES
+Rule 7     RULES -> ERR
+Rule 8     RULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
+Rule 9     ERR -> REGEX ERROR LBRAC INSTS RBRAC
+Rule 10    INSTS -> INSTS COMMA ARG
+Rule 11    INSTS -> ARG
+Rule 12    ARGS -> ARGS COMMA ARG
+Rule 13    ARGS -> ARG
+Rule 14    ARG -> STR
+Rule 15    ARG -> NUMBER
+Rule 16    ARG -> STR LBRAC ARG RBRAC
+Rule 17    ARG -> STR LRBRAC ARG RRBRAC
+Rule 18    ARG -> STR DOT ARG
+Rule 19    ARG -> INDEX
+Rule 20    ARG -> SSTR
+
+Terminals, with rules where they appear
+
+BACKSLASH            : 
+COMMA                : 8 10 12
+DIVIDE               : 
+DOT                  : 18
+EQUALS               : 3 4 5
+ERROR                : 9
+IGNORE               : 4
+INDEX                : 19
+LBRAC                : 8 9 16
+LCHAV                : 
+LEX                  : 
+LIST                 : 5
+LITERALS             : 3
+LRBRAC               : 17
+MINUS                : 
+NUMBER               : 15
+PELICA               : 
+PLUS                 : 
+QUOTE                : 
+RBRAC                : 8 9 16
+RCHAV                : 
+REGEX                : 8 9
+RETURN               : 8
+RRBRAC               : 17
+SSTR                 : 3 4 8 20
+STR                  : 14 16 17 18
+TIMES                : 
+TOKENS               : 5
+YACC                 : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+ARG                  : 10 11 12 13 16 17 18
+ARGS                 : 8 12
+ERR                  : 7
+IGN                  : 2
+INSTS                : 9 10
+LEXER                : 1
+LIT                  : 2
+PROG                 : 0
+RULE                 : 6
+RULES                : 2 6
+TOK                  : 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . PROG
+    (1) PROG -> . LEXER
+    (2) LEXER -> . LIT IGN TOK RULES
+    (3) LIT -> . LITERALS EQUALS SSTR
+
+    LITERALS        shift and go to state 4
+
+    PROG                           shift and go to state 1
+    LEXER                          shift and go to state 2
+    LIT                            shift and go to state 3
+
+state 1
+
+    (0) S' -> PROG .
+
+
+
+state 2
+
+    (1) PROG -> LEXER .
+
+    $end            reduce using rule 1 (PROG -> LEXER .)
+
+
+state 3
+
+    (2) LEXER -> LIT . IGN TOK RULES
+    (4) IGN -> . IGNORE EQUALS SSTR
+
+    IGNORE          shift and go to state 6
+
+    IGN                            shift and go to state 5
+
+state 4
+
+    (3) LIT -> LITERALS . EQUALS SSTR
+
+    EQUALS          shift and go to state 7
+
+
+state 5
+
+    (2) LEXER -> LIT IGN . TOK RULES
+    (5) TOK -> . TOKENS EQUALS LIST
+
+    TOKENS          shift and go to state 9
+
+    TOK                            shift and go to state 8
+
+state 6
+
+    (4) IGN -> IGNORE . EQUALS SSTR
+
+    EQUALS          shift and go to state 10
+
+
+state 7
+
+    (3) LIT -> LITERALS EQUALS . SSTR
+
+    SSTR            shift and go to state 11
+
+
+state 8
+
+    (2) LEXER -> LIT IGN TOK . RULES
+    (6) RULES -> . RULE RULES
+    (7) RULES -> . ERR
+    (8) RULE -> . REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
+    (9) ERR -> . REGEX ERROR LBRAC INSTS RBRAC
+
+    REGEX           shift and go to state 15
+
+    RULES                          shift and go to state 12
+    RULE                           shift and go to state 13
+    ERR                            shift and go to state 14
+
+state 9
+
+    (5) TOK -> TOKENS . EQUALS LIST
+
+    EQUALS          shift and go to state 16
+
+
+state 10
+
+    (4) IGN -> IGNORE EQUALS . SSTR
+
+    SSTR            shift and go to state 17
+
+
+state 11
+
+    (3) LIT -> LITERALS EQUALS SSTR .
+
+    IGNORE          reduce using rule 3 (LIT -> LITERALS EQUALS SSTR .)
+
+
+state 12
+
+    (2) LEXER -> LIT IGN TOK RULES .
+
+    $end            reduce using rule 2 (LEXER -> LIT IGN TOK RULES .)
+
+
+state 13
+
+    (6) RULES -> RULE . RULES
+    (6) RULES -> . RULE RULES
+    (7) RULES -> . ERR
+    (8) RULE -> . REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
+    (9) ERR -> . REGEX ERROR LBRAC INSTS RBRAC
+
+    REGEX           shift and go to state 15
+
+    RULE                           shift and go to state 13
+    RULES                          shift and go to state 18
+    ERR                            shift and go to state 14
+
+state 14
+
+    (7) RULES -> ERR .
+
+    $end            reduce using rule 7 (RULES -> ERR .)
+
+
+state 15
+
+    (8) RULE -> REGEX . RETURN LBRAC SSTR COMMA ARGS RBRAC
+    (9) ERR -> REGEX . ERROR LBRAC INSTS RBRAC
+
+    RETURN          shift and go to state 19
+    ERROR           shift and go to state 20
+
+
+state 16
+
+    (5) TOK -> TOKENS EQUALS . LIST
+
+    LIST            shift and go to state 21
+
+
+state 17
+
+    (4) IGN -> IGNORE EQUALS SSTR .
+
+    TOKENS          reduce using rule 4 (IGN -> IGNORE EQUALS SSTR .)
+
+
+state 18
+
+    (6) RULES -> RULE RULES .
+
+    $end            reduce using rule 6 (RULES -> RULE RULES .)
+
+
+state 19
+
+    (8) RULE -> REGEX RETURN . LBRAC SSTR COMMA ARGS RBRAC
+
+    LBRAC           shift and go to state 22
+
+
+state 20
+
+    (9) ERR -> REGEX ERROR . LBRAC INSTS RBRAC
+
+    LBRAC           shift and go to state 23
+
+
+state 21
+
+    (5) TOK -> TOKENS EQUALS LIST .
+
+    REGEX           reduce using rule 5 (TOK -> TOKENS EQUALS LIST .)
+
+
+state 22
+
+    (8) RULE -> REGEX RETURN LBRAC . SSTR COMMA ARGS RBRAC
+
+    SSTR            shift and go to state 24
+
+
+state 23
+
+    (9) ERR -> REGEX ERROR LBRAC . INSTS RBRAC
+    (10) INSTS -> . INSTS COMMA ARG
+    (11) INSTS -> . ARG
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    INSTS                          shift and go to state 25
+    ARG                            shift and go to state 26
+
+state 24
+
+    (8) RULE -> REGEX RETURN LBRAC SSTR . COMMA ARGS RBRAC
+
+    COMMA           shift and go to state 31
+
+
+state 25
+
+    (9) ERR -> REGEX ERROR LBRAC INSTS . RBRAC
+    (10) INSTS -> INSTS . COMMA ARG
+
+    RBRAC           shift and go to state 32
+    COMMA           shift and go to state 33
+
+
+state 26
+
+    (11) INSTS -> ARG .
+
+    RBRAC           reduce using rule 11 (INSTS -> ARG .)
+    COMMA           reduce using rule 11 (INSTS -> ARG .)
+
+
+state 27
+
+    (14) ARG -> STR .
+    (16) ARG -> STR . LBRAC ARG RBRAC
+    (17) ARG -> STR . LRBRAC ARG RRBRAC
+    (18) ARG -> STR . DOT ARG
+
+    RBRAC           reduce using rule 14 (ARG -> STR .)
+    COMMA           reduce using rule 14 (ARG -> STR .)
+    RRBRAC          reduce using rule 14 (ARG -> STR .)
+    LBRAC           shift and go to state 34
+    LRBRAC          shift and go to state 35
+    DOT             shift and go to state 36
+
+
+state 28
+
+    (15) ARG -> NUMBER .
+
+    RBRAC           reduce using rule 15 (ARG -> NUMBER .)
+    COMMA           reduce using rule 15 (ARG -> NUMBER .)
+    RRBRAC          reduce using rule 15 (ARG -> NUMBER .)
+
+
+state 29
+
+    (19) ARG -> INDEX .
+
+    RBRAC           reduce using rule 19 (ARG -> INDEX .)
+    COMMA           reduce using rule 19 (ARG -> INDEX .)
+    RRBRAC          reduce using rule 19 (ARG -> INDEX .)
+
+
+state 30
+
+    (20) ARG -> SSTR .
+
+    RBRAC           reduce using rule 20 (ARG -> SSTR .)
+    COMMA           reduce using rule 20 (ARG -> SSTR .)
+    RRBRAC          reduce using rule 20 (ARG -> SSTR .)
+
+
+state 31
+
+    (8) RULE -> REGEX RETURN LBRAC SSTR COMMA . ARGS RBRAC
+    (12) ARGS -> . ARGS COMMA ARG
+    (13) ARGS -> . ARG
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    ARGS                           shift and go to state 37
+    ARG                            shift and go to state 38
+
+state 32
+
+    (9) ERR -> REGEX ERROR LBRAC INSTS RBRAC .
+
+    $end            reduce using rule 9 (ERR -> REGEX ERROR LBRAC INSTS RBRAC .)
+
+
+state 33
+
+    (10) INSTS -> INSTS COMMA . ARG
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    ARG                            shift and go to state 39
+
+state 34
+
+    (16) ARG -> STR LBRAC . ARG RBRAC
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    ARG                            shift and go to state 40
+
+state 35
+
+    (17) ARG -> STR LRBRAC . ARG RRBRAC
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    ARG                            shift and go to state 41
+
+state 36
+
+    (18) ARG -> STR DOT . ARG
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    ARG                            shift and go to state 42
+
+state 37
+
+    (8) RULE -> REGEX RETURN LBRAC SSTR COMMA ARGS . RBRAC
+    (12) ARGS -> ARGS . COMMA ARG
+
+    RBRAC           shift and go to state 44
+    COMMA           shift and go to state 43
+
+
+state 38
+
+    (13) ARGS -> ARG .
+
+    RBRAC           reduce using rule 13 (ARGS -> ARG .)
+    COMMA           reduce using rule 13 (ARGS -> ARG .)
+
+
+state 39
+
+    (10) INSTS -> INSTS COMMA ARG .
+
+    RBRAC           reduce using rule 10 (INSTS -> INSTS COMMA ARG .)
+    COMMA           reduce using rule 10 (INSTS -> INSTS COMMA ARG .)
+
+
+state 40
+
+    (16) ARG -> STR LBRAC ARG . RBRAC
+
+    RBRAC           shift and go to state 45
+
+
+state 41
+
+    (17) ARG -> STR LRBRAC ARG . RRBRAC
+
+    RRBRAC          shift and go to state 46
+
+
+state 42
+
+    (18) ARG -> STR DOT ARG .
+
+    RBRAC           reduce using rule 18 (ARG -> STR DOT ARG .)
+    COMMA           reduce using rule 18 (ARG -> STR DOT ARG .)
+    RRBRAC          reduce using rule 18 (ARG -> STR DOT ARG .)
+
+
+state 43
+
+    (12) ARGS -> ARGS COMMA . ARG
+    (14) ARG -> . STR
+    (15) ARG -> . NUMBER
+    (16) ARG -> . STR LBRAC ARG RBRAC
+    (17) ARG -> . STR LRBRAC ARG RRBRAC
+    (18) ARG -> . STR DOT ARG
+    (19) ARG -> . INDEX
+    (20) ARG -> . SSTR
+
+    STR             shift and go to state 27
+    NUMBER          shift and go to state 28
+    INDEX           shift and go to state 29
+    SSTR            shift and go to state 30
+
+    ARG                            shift and go to state 47
+
+state 44
+
+    (8) RULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC .
+
+    REGEX           reduce using rule 8 (RULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC .)
+
+
+state 45
+
+    (16) ARG -> STR LBRAC ARG RBRAC .
+
+    RBRAC           reduce using rule 16 (ARG -> STR LBRAC ARG RBRAC .)
+    COMMA           reduce using rule 16 (ARG -> STR LBRAC ARG RBRAC .)
+    RRBRAC          reduce using rule 16 (ARG -> STR LBRAC ARG RBRAC .)
+
+
+state 46
+
+    (17) ARG -> STR LRBRAC ARG RRBRAC .
+
+    RBRAC           reduce using rule 17 (ARG -> STR LRBRAC ARG RRBRAC .)
+    COMMA           reduce using rule 17 (ARG -> STR LRBRAC ARG RRBRAC .)
+    RRBRAC          reduce using rule 17 (ARG -> STR LRBRAC ARG RRBRAC .)
+
+
+state 47
+
+    (12) ARGS -> ARGS COMMA ARG .
+
+    RBRAC           reduce using rule 12 (ARGS -> ARGS COMMA ARG .)
+    COMMA           reduce using rule 12 (ARGS -> ARGS COMMA ARG .)
+

@@ -6,89 +6,145 @@ import math
 
 # ANALISADOR LÉXICO
 
-reservadas = "ler print int while".split()
-tokens = ['num','var'] + [x.upper() for x in reservadas]
-literals = "( ) + - / * = ? : . ; ^ , { }".split()
+reservadas = "tokens literals ignore return error yacc lex ".split()
+tokens = ['PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'EQUALS',
+          'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
+          'QUOTE', 'PELICA', 'COMMA', 'DOT', 'BACKSLASH',
+          'SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX',
+          'LIST'
+         ] + [x.upper() for x in reservadas]
 
-t_ignore = " \t\n"
+def t_SSTR(t):
+    r'\w*\"(.+)\"'
+    return t
 
-def t_var(t):
-    r'[a-z]+'
+def t_REGEX(t):
+    r'r\'(.*)\''
+    return t
+
+def t_STR(t):
+    r'[a-z][A-Za-z]*'
     if t.value in reservadas:
         t.type = t.value.upper()
     return t
 
-def t_num(t):
+def t_INDEX(t):
     r'\d+'
     t.value = int(t.value)
     return t
 
+def t_NUMBER(t):
+    r'\d+(\.\d+)?'
+    t.value = float(t.value)
+    return t
+
+def t_LIST(t):
+    r'\[.*\]'
+    return t
+
+def t_LBRAC(t):      r'\('; return t
+def t_RBRAC(t):      r'\)'; return t
+def t_LRBRAC(t):     r'\['; return t
+def t_RRBRAC(t):     r'\]'; return t
+def t_LCHAV(t):      r'{' ; return t
+def t_RCHAV(t):      r'}' ; return t
+
+def t_QUOTE(t):      r'\"'; return t
+def t_PELICA(t):     r'\''; return t
+def t_COMMA(t):      r',' ; return t
+def t_DOT(t):        r'\.'; return t
+def t_BACKSLASH(t):  r'\\'; return t
+
+def t_PLUS(t):       r'\+'; return t
+def t_MINUS(t):      r'-' ; return t
+def t_TIMES(t):      r'\*'; return t
+def t_DIVIDE(t):     r'/' ; return t
+def t_EQUALS(t):     r'=' ; return t
+
+t_ignore = " \t\n"
+
 def t_error(t):
-    r'.'
-    print("Invalid character",t)
+    print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
+
 
 lexer = lex()
 
 # GRAMÁTICA
 
+ts = {}
 
-ts = {'last' : 0, 'loopc' : 0}
+def p_PROG(p):
+    "PROG : LEXER"
+    #"PROG : LEXER PARSER CODE"
+    print(p[1])
+    #print(p[2])
+    #print(p[3])
 
-precedence = [
-#              ('left',':'),
-#              ('left','?'),
-              ('left','+','-'),
-#              ('left','*','/'),
-#              ('right','^'),
-              ('right','(')
-              ]
+def p_LEXER(p):
+    "LEXER : LIT IGN TOK RULES"
+    p[0] = f"""{p[1]}
+{p[2]}
+{p[3]}\n
+{p[4]}
+"""
 
-def p_P_1(p): r"P : Decls Insts"         ; print(f'{p[1]}start\n{p[2]}\nstop\n')
-
-def p_Decls_1(p): r"Decls : Decls Decl"  ; p[0] = p[1] + p[2]
-def p_Decls_2(p): r"Decls : "            ; p[0] = ""
-
-def p_Insts_1(p): r"Insts : Insts Inst"  ; p[0] = p[1] + p[2]
-def p_Insts_2(p): r"Insts : "            ; p[0] = ""
-
-def p_Decl_1(p): 
-    r"Decl : INT Vars ';'"
-    p[0] = p[2][0]
-    for x in p[2][1]:
-        ts[x] = (ts["last"] , p[1])
-        ts["last"] += 1
+def p_LIT(p): "LIT : LITERALS EQUALS SSTR" ; p[0] = f'literals = {p[3]}\n'
+def p_IGN(p): "IGN : IGNORE EQUALS SSTR"   ; p[0] = f'ignore = {p[3]}\n'
+def p_TOK(p): "TOK : TOKENS EQUALS LIST"   ; p[0] = f'tokens = {p[3]}\n'
 
 
-def p_Vars_1(p): r"Vars : Vars ',' var"  ; p[0] = (f'{p[1][0]}pushi 0 // {p[3]}\n' , p[1][1] + [p[3]])
-def p_Vars_2(p): r"Vars : var"           ; p[0] = (f'pushi 0 // {p[1]}\n' , [p[1]])
+def p_RULES_1(p): "RULES : RULE RULES" ; p[0] = p[1] + p[2]
+def p_RULES_2(p): "RULES : ERR"        ; p[0] = p[1]
 
-def p_Inst_1(p): r"Inst : var '=' Exp ';'" ; p[0] = f'{p[3]}storeg {ts[p[1]][0]}\n'
-def p_Inst_2(p): r"Inst : PRINT Exp ';'"   ; p[0] = f'{p[2]}writei\n'
-def p_Inst_3(p): r"Inst : '{' Insts '}'"   ; p[0] = p[2]
-def p_Inst_4(p): 
-    r"Inst : WHILE '(' Exp ')' Inst"
-    p[0] = f'''while{ts["loopc"]}:
-{p[3]}jz fimw{ts["loopc"]}
-{p[5]}jump while{ts["loopc"]}
-fimw{ts["loopc"]}:'''
-    ts["loopc"] += 1
+def p_RULE_1(p):
+    "RULE : REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC"
+    p[4] = p[4][1:]
+    p[4] = p[4][:-1]
+    p[0] = f"""def t_{p[4]}(t):
+    {p[1]}
+    return {p[6]}
+"""
+
+def p_ERR_1(p):
+    "ERR : REGEX ERROR LBRAC INSTS RBRAC"
+    p[0] = f"""def t_error(t):
+    {p[1]}
+    {p[4]}
+"""
+
+def p_INSTS_1(p):
+    "INSTS : INSTS COMMA ARG"
+    p[0] = f"""{p[1]}
+    {p[3]}
+"""
+def p_INSTS_2(p):
+    "INSTS : ARG"
+    p[0] = f"{p[1]}"
+
+def p_ARGS_1(p):  "ARGS : ARGS COMMA ARG"  ;  p[0] = f"{p[1]}, {p[3]}"
+def p_ARGS_2(p):  "ARGS : ARG"             ; p[0] = p[1]
 
 
-def p_Exp_1(p): "Exp : Exp '+' Exp"    ; p[0] = f'{p[1]}{p[3]}add\n'
-def p_Exp_2(p): "Exp : Exp '-' Exp"    ; p[0] = f'{p[1]}{p[3]}sub\n'
-def p_Exp_6(p): "Exp : '(' Exp ')'"    ; p[0] = p[2]
-def p_Exp_7(p): "Exp : num"            ; p[0] = f'pushi {p[1]}\n'
-def p_Exp_8(p): "Exp : var"            ; p[0] = f'pushg {ts[p[1]][0]}\n'
-def p_Exp_12(p): "Exp : LER "          ; p[0] = "read\natoi\n"
+def p_ARG_1(p):  "ARG : STR"                     ;   p[0] = p[1]
+def p_ARG_2(p):  "ARG : NUMBER"                  ;   p[0] = p[1]
+def p_ARG_3(p):  "ARG : STR LBRAC ARG RBRAC"     ;   p[0] = f"{p[1]}({p[3]})"
+def p_ARG_4(p):  "ARG : STR LRBRAC ARG RRBRAC"   ;   p[0] = f"{p[1]}[{p[3]}]"
+def p_ARG_5(p):  "ARG : STR DOT ARG "            ;   p[0] = f"{p[1]}.{p[3]}"
+def p_ARG_6(p):  "ARG : INDEX"                   ;   p[0] = p[1]
+def p_ARG_7(p):  "ARG : SSTR"                    ;   p[0] = p[1]
 
 def p_error(p):
-    print("Erro sintático:", p)
-    
-parser = yacc()
-# dá o output à medida que vamos colocando o input - experimentar descomentar estas duas linhas `
-# for linha in sys.stdin:
-# print(parser.parse(linha))
+    print(f"Syntax error ", p)
 
-# só dá o output após ctrl D
+
+#lexer.input(sys.stdin.read())
+# Tokenize
+#while True:
+#    tok = lexer.token()
+#    if not tok: 
+#        break      # No more input
+#    print(tok)
+
+parser = yacc()
 parser.parse(sys.stdin.read())
