@@ -89,8 +89,11 @@ ts = {"ltls" : []}
 
 def p_PROG(p):
     "PROG : LEXER GRAM BEGINCODE CODE"
+    print("\n# LEXER\n")
     print(p[1])
+    print("\n# YACC\n")
     print(p[2])
+    print("\n# PYTHON\n")
     print(p[4])
 
 def p_CODE_1(p): "CODE : CODE ALL" ; p[0] = f"{p[1]}\n{p[2]}"
