@@ -14,107 +14,125 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> PROG
-Rule 1     PROG -> LEXER GRAM
-Rule 2     LEXER -> LIT IGN TOK TRULES
-Rule 3     IGN -> PERC IGNORE EQUALS SSTR
-Rule 4     LIT -> PERC LITERALS EQUALS SSTR
-Rule 5     TOK -> PERC TOKENS EQUALS LIST
-Rule 6     TRULES -> TRULE TRULES
-Rule 7     TRULES -> TERR
-Rule 8     TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
-Rule 9     TERR -> REGEX ERROR LBRAC INSTS RBRAC
-Rule 10    INSTS -> INSTS COMMA ARG
-Rule 11    INSTS -> ARG
-Rule 12    ARGS -> ARGS COMMA ARG
-Rule 13    ARGS -> ARG
-Rule 14    ARG -> STR
-Rule 15    ARG -> NUMBER
-Rule 16    ARG -> STR LBRAC ARG RBRAC
-Rule 17    ARG -> STR LIST
-Rule 18    ARG -> STR DOT ARG
-Rule 19    ARG -> INDEX
-Rule 20    ARG -> SSTR
-Rule 21    GRAM -> PRCDNC GRULES
-Rule 22    PRCDNC -> PERC PRECEDENCE EQUALS LIST
-Rule 23    GRULES -> GRULES GRULE
-Rule 24    GRULES -> GRULE
-Rule 25    GRULE -> STR DDOT PARAMS CHAVSTXT
-Rule 26    PARAMS -> PARAMS PARAM
-Rule 27    PARAMS -> PARAM
-Rule 28    PARAM -> STR
-Rule 29    PARAM -> PELICA SYM PELICA
-Rule 30    SYM -> EQUALS
-Rule 31    SYM -> PLUS
-Rule 32    SYM -> MINUS
-Rule 33    SYM -> TIMES
-Rule 34    SYM -> DIVIDE
+Rule 1     PROG -> LEXER GRAM CODE
+Rule 2     CODE -> FUNCTIONS
+Rule 3     CODE -> ARGS
+Rule 4     FUNCTIONS -> FUNCTIONS FUNCTION
+Rule 5     FUNCTIONS -> FUNCTION
+Rule 6     FUNCTION -> DEF STR LBRAC STR RBRAC DDOT
+Rule 7     LEXER -> LIT IGN TOK TRULES
+Rule 8     IGN -> PERC IGNORE EQUALS SSTR
+Rule 9     LIT -> PERC LITERALS EQUALS SSTR
+Rule 10    TOK -> PERC TOKENS EQUALS LIST
+Rule 11    TRULES -> TRULE TRULES
+Rule 12    TRULES -> TERR
+Rule 13    TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
+Rule 14    TERR -> REGEX ERROR LBRAC INSTS RBRAC
+Rule 15    INSTS -> ARGS COMMA ARGS
+Rule 16    ARGS -> ARGS COMMA ARGS
+Rule 17    ARGS -> ARGS ARGS
+Rule 18    ARGS -> ARGS DOT ARGS
+Rule 19    ARGS -> ARGS LBRAC ARGS RBRAC
+Rule 20    ARGS -> ARGS EQUALS ARGS
+Rule 21    ARGS -> ARGS PLUS ARGS
+Rule 22    ARGS -> ARGS MINUS ARGS
+Rule 23    ARGS -> ARGS TIMES ARGS
+Rule 24    ARGS -> ARGS DIVIDE ARGS
+Rule 25    ARGS -> ARG
+Rule 26    ARG -> STR
+Rule 27    ARG -> NUMBER
+Rule 28    ARG -> LIST
+Rule 29    ARG -> INDEX
+Rule 30    ARG -> SSTR
+Rule 31    ARG -> CHAVSTXT
+Rule 32    GRAM -> PRCDNC TSYM GRULES
+Rule 33    TSYM -> TS EQUALS CHAVSTXT
+Rule 34    PRCDNC -> PERC PRECEDENCE EQUALS LIST
+Rule 35    GRULES -> GRULES GRULE
+Rule 36    GRULES -> GRULE
+Rule 37    GRULE -> STR DDOT PARAMS CHAVSTXT
+Rule 38    PARAMS -> PARAMS PARAM
+Rule 39    PARAMS -> PARAM
+Rule 40    PARAM -> STR
+Rule 41    PARAM -> PELICA SYM PELICA
+Rule 42    SYM -> EQUALS
+Rule 43    SYM -> PLUS
+Rule 44    SYM -> MINUS
+Rule 45    SYM -> TIMES
+Rule 46    SYM -> DIVIDE
 
 Terminals, with rules where they appear
 
 BACKSLASH            : 
-CHAVSTXT             : 25
-COMMA                : 8 10 12
-DDOT                 : 25
-DIVIDE               : 34
+CHAVSTXT             : 31 33 37
+COMMA                : 13 15 16
+DDOT                 : 6 37
+DEF                  : 6
+DIVIDE               : 24 46
 DOT                  : 18
-EQUALS               : 3 4 5 22 30
-ERROR                : 9
-IGNORE               : 3
-INDEX                : 19
-LBRAC                : 8 9 16
+EQUALS               : 8 9 10 20 33 34 42
+ERROR                : 14
+IGNORE               : 8
+INDEX                : 29
+LBRAC                : 6 13 14 19
 LCHAV                : 
 LEX                  : 
-LIST                 : 5 17 22
-LITERALS             : 4
+LIST                 : 10 28 34
+LITERALS             : 9
 LRBRAC               : 
-MINUS                : 32
-NUMBER               : 15
-PELICA               : 29 29
-PERC                 : 3 4 5 22
-PLUS                 : 31
-PRECEDENCE           : 22
+MINUS                : 22 44
+NUMBER               : 27
+PELICA               : 41 41
+PERC                 : 8 9 10 34
+PLUS                 : 21 43
+PRECEDENCE           : 34
 QUOTE                : 
-RBRAC                : 8 9 16
+RBRAC                : 6 13 14 19
 RCHAV                : 
-REGEX                : 8 9
-RETURN               : 8
+REGEX                : 13 14
+RETURN               : 13
 RRBRAC               : 
-SSTR                 : 3 4 8 20
-STR                  : 14 16 17 18 25 28
-TIMES                : 33
-TOKENS               : 5
+SSTR                 : 8 9 13 30
+STR                  : 6 6 26 37 40
+TIMES                : 23 45
+TOKENS               : 10
+TS                   : 33
 YACC                 : 
 error                : 
 
 Nonterminals, with rules where they appear
 
-ARG                  : 10 11 12 13 16 18
-ARGS                 : 8 12
+ARG                  : 25
+ARGS                 : 3 13 15 15 16 16 17 17 18 18 19 19 20 20 21 21 22 22 23 23 24 24
+CODE                 : 1
+FUNCTION             : 4 5
+FUNCTIONS            : 2 4
 GRAM                 : 1
-GRULE                : 23 24
-GRULES               : 21 23
-IGN                  : 2
-INSTS                : 9 10
+GRULE                : 35 36
+GRULES               : 32 35
+IGN                  : 7
+INSTS                : 14
 LEXER                : 1
-LIT                  : 2
-PARAM                : 26 27
-PARAMS               : 25 26
-PRCDNC               : 21
+LIT                  : 7
+PARAM                : 38 39
+PARAMS               : 37 38
+PRCDNC               : 32
 PROG                 : 0
-SYM                  : 29
-TERR                 : 7
-TOK                  : 2
-TRULE                : 6
-TRULES               : 2 6
+SYM                  : 41
+TERR                 : 12
+TOK                  : 7
+TRULE                : 11
+TRULES               : 7 11
+TSYM                 : 32
 
 Parsing method: LALR
 
 state 0
 
     (0) S' -> . PROG
-    (1) PROG -> . LEXER GRAM
-    (2) LEXER -> . LIT IGN TOK TRULES
-    (4) LIT -> . PERC LITERALS EQUALS SSTR
+    (1) PROG -> . LEXER GRAM CODE
+    (7) LEXER -> . LIT IGN TOK TRULES
+    (9) LIT -> . PERC LITERALS EQUALS SSTR
 
     PERC            shift and go to state 4
 
@@ -130,9 +148,9 @@ state 1
 
 state 2
 
-    (1) PROG -> LEXER . GRAM
-    (21) GRAM -> . PRCDNC GRULES
-    (22) PRCDNC -> . PERC PRECEDENCE EQUALS LIST
+    (1) PROG -> LEXER . GRAM CODE
+    (32) GRAM -> . PRCDNC TSYM GRULES
+    (34) PRCDNC -> . PERC PRECEDENCE EQUALS LIST
 
     PERC            shift and go to state 7
 
@@ -141,8 +159,8 @@ state 2
 
 state 3
 
-    (2) LEXER -> LIT . IGN TOK TRULES
-    (3) IGN -> . PERC IGNORE EQUALS SSTR
+    (7) LEXER -> LIT . IGN TOK TRULES
+    (8) IGN -> . PERC IGNORE EQUALS SSTR
 
     PERC            shift and go to state 9
 
@@ -150,637 +168,2105 @@ state 3
 
 state 4
 
-    (4) LIT -> PERC . LITERALS EQUALS SSTR
+    (9) LIT -> PERC . LITERALS EQUALS SSTR
 
     LITERALS        shift and go to state 10
 
 
 state 5
 
-    (1) PROG -> LEXER GRAM .
+    (1) PROG -> LEXER GRAM . CODE
+    (2) CODE -> . FUNCTIONS
+    (3) CODE -> . ARGS
+    (4) FUNCTIONS -> . FUNCTIONS FUNCTION
+    (5) FUNCTIONS -> . FUNCTION
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (6) FUNCTION -> . DEF STR LBRAC STR RBRAC DDOT
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    $end            reduce using rule 1 (PROG -> LEXER GRAM .)
+    DEF             shift and go to state 16
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    CODE                           shift and go to state 11
+    FUNCTIONS                      shift and go to state 12
+    ARGS                           shift and go to state 13
+    FUNCTION                       shift and go to state 14
+    ARG                            shift and go to state 15
 
 state 6
 
-    (21) GRAM -> PRCDNC . GRULES
-    (23) GRULES -> . GRULES GRULE
-    (24) GRULES -> . GRULE
-    (25) GRULE -> . STR DDOT PARAMS CHAVSTXT
+    (32) GRAM -> PRCDNC . TSYM GRULES
+    (33) TSYM -> . TS EQUALS CHAVSTXT
 
-    STR             shift and go to state 13
+    TS              shift and go to state 24
 
-    GRULES                         shift and go to state 11
-    GRULE                          shift and go to state 12
+    TSYM                           shift and go to state 23
 
 state 7
 
-    (22) PRCDNC -> PERC . PRECEDENCE EQUALS LIST
+    (34) PRCDNC -> PERC . PRECEDENCE EQUALS LIST
 
-    PRECEDENCE      shift and go to state 14
+    PRECEDENCE      shift and go to state 25
 
 
 state 8
 
-    (2) LEXER -> LIT IGN . TOK TRULES
-    (5) TOK -> . PERC TOKENS EQUALS LIST
+    (7) LEXER -> LIT IGN . TOK TRULES
+    (10) TOK -> . PERC TOKENS EQUALS LIST
 
-    PERC            shift and go to state 16
+    PERC            shift and go to state 27
 
-    TOK                            shift and go to state 15
+    TOK                            shift and go to state 26
 
 state 9
 
-    (3) IGN -> PERC . IGNORE EQUALS SSTR
+    (8) IGN -> PERC . IGNORE EQUALS SSTR
 
-    IGNORE          shift and go to state 17
+    IGNORE          shift and go to state 28
 
 
 state 10
 
-    (4) LIT -> PERC LITERALS . EQUALS SSTR
+    (9) LIT -> PERC LITERALS . EQUALS SSTR
 
-    EQUALS          shift and go to state 18
+    EQUALS          shift and go to state 29
 
 
 state 11
 
-    (21) GRAM -> PRCDNC GRULES .
-    (23) GRULES -> GRULES . GRULE
-    (25) GRULE -> . STR DDOT PARAMS CHAVSTXT
+    (1) PROG -> LEXER GRAM CODE .
 
-    $end            reduce using rule 21 (GRAM -> PRCDNC GRULES .)
-    STR             shift and go to state 13
+    $end            reduce using rule 1 (PROG -> LEXER GRAM CODE .)
 
-    GRULE                          shift and go to state 19
 
 state 12
 
-    (24) GRULES -> GRULE .
+    (2) CODE -> FUNCTIONS .
+    (4) FUNCTIONS -> FUNCTIONS . FUNCTION
+    (6) FUNCTION -> . DEF STR LBRAC STR RBRAC DDOT
 
-    STR             reduce using rule 24 (GRULES -> GRULE .)
-    $end            reduce using rule 24 (GRULES -> GRULE .)
+    $end            reduce using rule 2 (CODE -> FUNCTIONS .)
+    DEF             shift and go to state 16
 
+    FUNCTION                       shift and go to state 30
 
 state 13
 
-    (25) GRULE -> STR . DDOT PARAMS CHAVSTXT
+    (3) CODE -> ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    DDOT            shift and go to state 20
+    $end            reduce using rule 3 (CODE -> ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 14
 
-    (22) PRCDNC -> PERC PRECEDENCE . EQUALS LIST
+    (5) FUNCTIONS -> FUNCTION .
 
-    EQUALS          shift and go to state 21
+    DEF             reduce using rule 5 (FUNCTIONS -> FUNCTION .)
+    $end            reduce using rule 5 (FUNCTIONS -> FUNCTION .)
 
 
 state 15
 
-    (2) LEXER -> LIT IGN TOK . TRULES
-    (6) TRULES -> . TRULE TRULES
-    (7) TRULES -> . TERR
-    (8) TRULE -> . REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
-    (9) TERR -> . REGEX ERROR LBRAC INSTS RBRAC
+    (25) ARGS -> ARG .
 
-    REGEX           shift and go to state 25
+    COMMA           reduce using rule 25 (ARGS -> ARG .)
+    DOT             reduce using rule 25 (ARGS -> ARG .)
+    LBRAC           reduce using rule 25 (ARGS -> ARG .)
+    EQUALS          reduce using rule 25 (ARGS -> ARG .)
+    PLUS            reduce using rule 25 (ARGS -> ARG .)
+    MINUS           reduce using rule 25 (ARGS -> ARG .)
+    TIMES           reduce using rule 25 (ARGS -> ARG .)
+    DIVIDE          reduce using rule 25 (ARGS -> ARG .)
+    STR             reduce using rule 25 (ARGS -> ARG .)
+    NUMBER          reduce using rule 25 (ARGS -> ARG .)
+    LIST            reduce using rule 25 (ARGS -> ARG .)
+    INDEX           reduce using rule 25 (ARGS -> ARG .)
+    SSTR            reduce using rule 25 (ARGS -> ARG .)
+    CHAVSTXT        reduce using rule 25 (ARGS -> ARG .)
+    $end            reduce using rule 25 (ARGS -> ARG .)
+    RBRAC           reduce using rule 25 (ARGS -> ARG .)
 
-    TRULES                         shift and go to state 22
-    TRULE                          shift and go to state 23
-    TERR                           shift and go to state 24
 
 state 16
 
-    (5) TOK -> PERC . TOKENS EQUALS LIST
+    (6) FUNCTION -> DEF . STR LBRAC STR RBRAC DDOT
 
-    TOKENS          shift and go to state 26
+    STR             shift and go to state 40
 
 
 state 17
 
-    (3) IGN -> PERC IGNORE . EQUALS SSTR
+    (26) ARG -> STR .
 
-    EQUALS          shift and go to state 27
+    COMMA           reduce using rule 26 (ARG -> STR .)
+    DOT             reduce using rule 26 (ARG -> STR .)
+    LBRAC           reduce using rule 26 (ARG -> STR .)
+    EQUALS          reduce using rule 26 (ARG -> STR .)
+    PLUS            reduce using rule 26 (ARG -> STR .)
+    MINUS           reduce using rule 26 (ARG -> STR .)
+    TIMES           reduce using rule 26 (ARG -> STR .)
+    DIVIDE          reduce using rule 26 (ARG -> STR .)
+    STR             reduce using rule 26 (ARG -> STR .)
+    NUMBER          reduce using rule 26 (ARG -> STR .)
+    LIST            reduce using rule 26 (ARG -> STR .)
+    INDEX           reduce using rule 26 (ARG -> STR .)
+    SSTR            reduce using rule 26 (ARG -> STR .)
+    CHAVSTXT        reduce using rule 26 (ARG -> STR .)
+    $end            reduce using rule 26 (ARG -> STR .)
+    RBRAC           reduce using rule 26 (ARG -> STR .)
 
 
 state 18
 
-    (4) LIT -> PERC LITERALS EQUALS . SSTR
+    (27) ARG -> NUMBER .
 
-    SSTR            shift and go to state 28
+    COMMA           reduce using rule 27 (ARG -> NUMBER .)
+    DOT             reduce using rule 27 (ARG -> NUMBER .)
+    LBRAC           reduce using rule 27 (ARG -> NUMBER .)
+    EQUALS          reduce using rule 27 (ARG -> NUMBER .)
+    PLUS            reduce using rule 27 (ARG -> NUMBER .)
+    MINUS           reduce using rule 27 (ARG -> NUMBER .)
+    TIMES           reduce using rule 27 (ARG -> NUMBER .)
+    DIVIDE          reduce using rule 27 (ARG -> NUMBER .)
+    STR             reduce using rule 27 (ARG -> NUMBER .)
+    NUMBER          reduce using rule 27 (ARG -> NUMBER .)
+    LIST            reduce using rule 27 (ARG -> NUMBER .)
+    INDEX           reduce using rule 27 (ARG -> NUMBER .)
+    SSTR            reduce using rule 27 (ARG -> NUMBER .)
+    CHAVSTXT        reduce using rule 27 (ARG -> NUMBER .)
+    $end            reduce using rule 27 (ARG -> NUMBER .)
+    RBRAC           reduce using rule 27 (ARG -> NUMBER .)
 
 
 state 19
 
-    (23) GRULES -> GRULES GRULE .
+    (28) ARG -> LIST .
 
-    STR             reduce using rule 23 (GRULES -> GRULES GRULE .)
-    $end            reduce using rule 23 (GRULES -> GRULES GRULE .)
+    COMMA           reduce using rule 28 (ARG -> LIST .)
+    DOT             reduce using rule 28 (ARG -> LIST .)
+    LBRAC           reduce using rule 28 (ARG -> LIST .)
+    EQUALS          reduce using rule 28 (ARG -> LIST .)
+    PLUS            reduce using rule 28 (ARG -> LIST .)
+    MINUS           reduce using rule 28 (ARG -> LIST .)
+    TIMES           reduce using rule 28 (ARG -> LIST .)
+    DIVIDE          reduce using rule 28 (ARG -> LIST .)
+    STR             reduce using rule 28 (ARG -> LIST .)
+    NUMBER          reduce using rule 28 (ARG -> LIST .)
+    LIST            reduce using rule 28 (ARG -> LIST .)
+    INDEX           reduce using rule 28 (ARG -> LIST .)
+    SSTR            reduce using rule 28 (ARG -> LIST .)
+    CHAVSTXT        reduce using rule 28 (ARG -> LIST .)
+    $end            reduce using rule 28 (ARG -> LIST .)
+    RBRAC           reduce using rule 28 (ARG -> LIST .)
 
 
 state 20
 
-    (25) GRULE -> STR DDOT . PARAMS CHAVSTXT
-    (26) PARAMS -> . PARAMS PARAM
-    (27) PARAMS -> . PARAM
-    (28) PARAM -> . STR
-    (29) PARAM -> . PELICA SYM PELICA
+    (29) ARG -> INDEX .
 
-    STR             shift and go to state 29
-    PELICA          shift and go to state 32
+    COMMA           reduce using rule 29 (ARG -> INDEX .)
+    DOT             reduce using rule 29 (ARG -> INDEX .)
+    LBRAC           reduce using rule 29 (ARG -> INDEX .)
+    EQUALS          reduce using rule 29 (ARG -> INDEX .)
+    PLUS            reduce using rule 29 (ARG -> INDEX .)
+    MINUS           reduce using rule 29 (ARG -> INDEX .)
+    TIMES           reduce using rule 29 (ARG -> INDEX .)
+    DIVIDE          reduce using rule 29 (ARG -> INDEX .)
+    STR             reduce using rule 29 (ARG -> INDEX .)
+    NUMBER          reduce using rule 29 (ARG -> INDEX .)
+    LIST            reduce using rule 29 (ARG -> INDEX .)
+    INDEX           reduce using rule 29 (ARG -> INDEX .)
+    SSTR            reduce using rule 29 (ARG -> INDEX .)
+    CHAVSTXT        reduce using rule 29 (ARG -> INDEX .)
+    $end            reduce using rule 29 (ARG -> INDEX .)
+    RBRAC           reduce using rule 29 (ARG -> INDEX .)
 
-    PARAMS                         shift and go to state 30
-    PARAM                          shift and go to state 31
 
 state 21
 
-    (22) PRCDNC -> PERC PRECEDENCE EQUALS . LIST
+    (30) ARG -> SSTR .
 
-    LIST            shift and go to state 33
+    COMMA           reduce using rule 30 (ARG -> SSTR .)
+    DOT             reduce using rule 30 (ARG -> SSTR .)
+    LBRAC           reduce using rule 30 (ARG -> SSTR .)
+    EQUALS          reduce using rule 30 (ARG -> SSTR .)
+    PLUS            reduce using rule 30 (ARG -> SSTR .)
+    MINUS           reduce using rule 30 (ARG -> SSTR .)
+    TIMES           reduce using rule 30 (ARG -> SSTR .)
+    DIVIDE          reduce using rule 30 (ARG -> SSTR .)
+    STR             reduce using rule 30 (ARG -> SSTR .)
+    NUMBER          reduce using rule 30 (ARG -> SSTR .)
+    LIST            reduce using rule 30 (ARG -> SSTR .)
+    INDEX           reduce using rule 30 (ARG -> SSTR .)
+    SSTR            reduce using rule 30 (ARG -> SSTR .)
+    CHAVSTXT        reduce using rule 30 (ARG -> SSTR .)
+    $end            reduce using rule 30 (ARG -> SSTR .)
+    RBRAC           reduce using rule 30 (ARG -> SSTR .)
 
 
 state 22
 
-    (2) LEXER -> LIT IGN TOK TRULES .
+    (31) ARG -> CHAVSTXT .
 
-    PERC            reduce using rule 2 (LEXER -> LIT IGN TOK TRULES .)
+    COMMA           reduce using rule 31 (ARG -> CHAVSTXT .)
+    DOT             reduce using rule 31 (ARG -> CHAVSTXT .)
+    LBRAC           reduce using rule 31 (ARG -> CHAVSTXT .)
+    EQUALS          reduce using rule 31 (ARG -> CHAVSTXT .)
+    PLUS            reduce using rule 31 (ARG -> CHAVSTXT .)
+    MINUS           reduce using rule 31 (ARG -> CHAVSTXT .)
+    TIMES           reduce using rule 31 (ARG -> CHAVSTXT .)
+    DIVIDE          reduce using rule 31 (ARG -> CHAVSTXT .)
+    STR             reduce using rule 31 (ARG -> CHAVSTXT .)
+    NUMBER          reduce using rule 31 (ARG -> CHAVSTXT .)
+    LIST            reduce using rule 31 (ARG -> CHAVSTXT .)
+    INDEX           reduce using rule 31 (ARG -> CHAVSTXT .)
+    SSTR            reduce using rule 31 (ARG -> CHAVSTXT .)
+    CHAVSTXT        reduce using rule 31 (ARG -> CHAVSTXT .)
+    $end            reduce using rule 31 (ARG -> CHAVSTXT .)
+    RBRAC           reduce using rule 31 (ARG -> CHAVSTXT .)
 
 
 state 23
 
-    (6) TRULES -> TRULE . TRULES
-    (6) TRULES -> . TRULE TRULES
-    (7) TRULES -> . TERR
-    (8) TRULE -> . REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
-    (9) TERR -> . REGEX ERROR LBRAC INSTS RBRAC
+    (32) GRAM -> PRCDNC TSYM . GRULES
+    (35) GRULES -> . GRULES GRULE
+    (36) GRULES -> . GRULE
+    (37) GRULE -> . STR DDOT PARAMS CHAVSTXT
 
-    REGEX           shift and go to state 25
+    STR             shift and go to state 43
 
-    TRULE                          shift and go to state 23
-    TRULES                         shift and go to state 34
-    TERR                           shift and go to state 24
+    GRULES                         shift and go to state 41
+    GRULE                          shift and go to state 42
 
 state 24
 
-    (7) TRULES -> TERR .
+    (33) TSYM -> TS . EQUALS CHAVSTXT
 
-    PERC            reduce using rule 7 (TRULES -> TERR .)
+    EQUALS          shift and go to state 44
 
 
 state 25
 
-    (8) TRULE -> REGEX . RETURN LBRAC SSTR COMMA ARGS RBRAC
-    (9) TERR -> REGEX . ERROR LBRAC INSTS RBRAC
+    (34) PRCDNC -> PERC PRECEDENCE . EQUALS LIST
 
-    RETURN          shift and go to state 35
-    ERROR           shift and go to state 36
+    EQUALS          shift and go to state 45
 
 
 state 26
 
-    (5) TOK -> PERC TOKENS . EQUALS LIST
+    (7) LEXER -> LIT IGN TOK . TRULES
+    (11) TRULES -> . TRULE TRULES
+    (12) TRULES -> . TERR
+    (13) TRULE -> . REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
+    (14) TERR -> . REGEX ERROR LBRAC INSTS RBRAC
 
-    EQUALS          shift and go to state 37
+    REGEX           shift and go to state 49
 
+    TRULES                         shift and go to state 46
+    TRULE                          shift and go to state 47
+    TERR                           shift and go to state 48
 
 state 27
 
-    (3) IGN -> PERC IGNORE EQUALS . SSTR
+    (10) TOK -> PERC . TOKENS EQUALS LIST
 
-    SSTR            shift and go to state 38
+    TOKENS          shift and go to state 50
 
 
 state 28
 
-    (4) LIT -> PERC LITERALS EQUALS SSTR .
+    (8) IGN -> PERC IGNORE . EQUALS SSTR
 
-    PERC            reduce using rule 4 (LIT -> PERC LITERALS EQUALS SSTR .)
+    EQUALS          shift and go to state 51
 
 
 state 29
 
-    (28) PARAM -> STR .
+    (9) LIT -> PERC LITERALS EQUALS . SSTR
 
-    CHAVSTXT        reduce using rule 28 (PARAM -> STR .)
-    STR             reduce using rule 28 (PARAM -> STR .)
-    PELICA          reduce using rule 28 (PARAM -> STR .)
+    SSTR            shift and go to state 52
 
 
 state 30
 
-    (25) GRULE -> STR DDOT PARAMS . CHAVSTXT
-    (26) PARAMS -> PARAMS . PARAM
-    (28) PARAM -> . STR
-    (29) PARAM -> . PELICA SYM PELICA
+    (4) FUNCTIONS -> FUNCTIONS FUNCTION .
 
-    CHAVSTXT        shift and go to state 39
-    STR             shift and go to state 29
-    PELICA          shift and go to state 32
+    DEF             reduce using rule 4 (FUNCTIONS -> FUNCTIONS FUNCTION .)
+    $end            reduce using rule 4 (FUNCTIONS -> FUNCTIONS FUNCTION .)
 
-    PARAM                          shift and go to state 40
 
 state 31
 
-    (27) PARAMS -> PARAM .
+    (17) ARGS -> ARGS ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    CHAVSTXT        reduce using rule 27 (PARAMS -> PARAM .)
-    STR             reduce using rule 27 (PARAMS -> PARAM .)
-    PELICA          reduce using rule 27 (PARAMS -> PARAM .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 17 (ARGS -> ARGS ARGS .)
+    RBRAC           reduce using rule 17 (ARGS -> ARGS ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+  ! COMMA           [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! DOT             [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! LBRAC           [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! EQUALS          [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! PLUS            [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! MINUS           [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! TIMES           [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! DIVIDE          [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! STR             [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! NUMBER          [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! LIST            [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! INDEX           [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! SSTR            [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 17 (ARGS -> ARGS ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 32
 
-    (29) PARAM -> PELICA . SYM PELICA
-    (30) SYM -> . EQUALS
-    (31) SYM -> . PLUS
-    (32) SYM -> . MINUS
-    (33) SYM -> . TIMES
-    (34) SYM -> . DIVIDE
+    (16) ARGS -> ARGS COMMA . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    EQUALS          shift and go to state 42
-    PLUS            shift and go to state 43
-    MINUS           shift and go to state 44
-    TIMES           shift and go to state 45
-    DIVIDE          shift and go to state 46
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
-    SYM                            shift and go to state 41
+    ARGS                           shift and go to state 53
+    ARG                            shift and go to state 15
 
 state 33
 
-    (22) PRCDNC -> PERC PRECEDENCE EQUALS LIST .
+    (18) ARGS -> ARGS DOT . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    STR             reduce using rule 22 (PRCDNC -> PERC PRECEDENCE EQUALS LIST .)
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 54
+    ARG                            shift and go to state 15
 
 state 34
 
-    (6) TRULES -> TRULE TRULES .
+    (19) ARGS -> ARGS LBRAC . ARGS RBRAC
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    PERC            reduce using rule 6 (TRULES -> TRULE TRULES .)
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 55
+    ARG                            shift and go to state 15
 
 state 35
 
-    (8) TRULE -> REGEX RETURN . LBRAC SSTR COMMA ARGS RBRAC
+    (20) ARGS -> ARGS EQUALS . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    LBRAC           shift and go to state 47
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 56
+    ARG                            shift and go to state 15
 
 state 36
 
-    (9) TERR -> REGEX ERROR . LBRAC INSTS RBRAC
+    (21) ARGS -> ARGS PLUS . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    LBRAC           shift and go to state 48
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 57
+    ARG                            shift and go to state 15
 
 state 37
 
-    (5) TOK -> PERC TOKENS EQUALS . LIST
+    (22) ARGS -> ARGS MINUS . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    LIST            shift and go to state 49
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 58
+    ARG                            shift and go to state 15
 
 state 38
 
-    (3) IGN -> PERC IGNORE EQUALS SSTR .
+    (23) ARGS -> ARGS TIMES . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    PERC            reduce using rule 3 (IGN -> PERC IGNORE EQUALS SSTR .)
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 59
+    ARG                            shift and go to state 15
 
 state 39
 
-    (25) GRULE -> STR DDOT PARAMS CHAVSTXT .
+    (24) ARGS -> ARGS DIVIDE . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    STR             reduce using rule 25 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
-    $end            reduce using rule 25 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 60
+    ARG                            shift and go to state 15
 
 state 40
 
-    (26) PARAMS -> PARAMS PARAM .
+    (6) FUNCTION -> DEF STR . LBRAC STR RBRAC DDOT
 
-    CHAVSTXT        reduce using rule 26 (PARAMS -> PARAMS PARAM .)
-    STR             reduce using rule 26 (PARAMS -> PARAMS PARAM .)
-    PELICA          reduce using rule 26 (PARAMS -> PARAMS PARAM .)
+    LBRAC           shift and go to state 61
 
 
 state 41
 
-    (29) PARAM -> PELICA SYM . PELICA
+    (32) GRAM -> PRCDNC TSYM GRULES .
+    (35) GRULES -> GRULES . GRULE
+    (37) GRULE -> . STR DDOT PARAMS CHAVSTXT
 
-    PELICA          shift and go to state 50
+  ! shift/reduce conflict for STR resolved as shift
+    DEF             reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .)
+    NUMBER          reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .)
+    LIST            reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .)
+    INDEX           reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .)
+    SSTR            reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .)
+    CHAVSTXT        reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .)
+    STR             shift and go to state 43
 
+  ! STR             [ reduce using rule 32 (GRAM -> PRCDNC TSYM GRULES .) ]
+
+    GRULE                          shift and go to state 62
 
 state 42
 
-    (30) SYM -> EQUALS .
+    (36) GRULES -> GRULE .
 
-    PELICA          reduce using rule 30 (SYM -> EQUALS .)
+    STR             reduce using rule 36 (GRULES -> GRULE .)
+    DEF             reduce using rule 36 (GRULES -> GRULE .)
+    NUMBER          reduce using rule 36 (GRULES -> GRULE .)
+    LIST            reduce using rule 36 (GRULES -> GRULE .)
+    INDEX           reduce using rule 36 (GRULES -> GRULE .)
+    SSTR            reduce using rule 36 (GRULES -> GRULE .)
+    CHAVSTXT        reduce using rule 36 (GRULES -> GRULE .)
 
 
 state 43
 
-    (31) SYM -> PLUS .
+    (37) GRULE -> STR . DDOT PARAMS CHAVSTXT
 
-    PELICA          reduce using rule 31 (SYM -> PLUS .)
+    DDOT            shift and go to state 63
 
 
 state 44
 
-    (32) SYM -> MINUS .
+    (33) TSYM -> TS EQUALS . CHAVSTXT
 
-    PELICA          reduce using rule 32 (SYM -> MINUS .)
+    CHAVSTXT        shift and go to state 64
 
 
 state 45
 
-    (33) SYM -> TIMES .
+    (34) PRCDNC -> PERC PRECEDENCE EQUALS . LIST
 
-    PELICA          reduce using rule 33 (SYM -> TIMES .)
+    LIST            shift and go to state 65
 
 
 state 46
 
-    (34) SYM -> DIVIDE .
+    (7) LEXER -> LIT IGN TOK TRULES .
 
-    PELICA          reduce using rule 34 (SYM -> DIVIDE .)
+    PERC            reduce using rule 7 (LEXER -> LIT IGN TOK TRULES .)
 
 
 state 47
 
-    (8) TRULE -> REGEX RETURN LBRAC . SSTR COMMA ARGS RBRAC
+    (11) TRULES -> TRULE . TRULES
+    (11) TRULES -> . TRULE TRULES
+    (12) TRULES -> . TERR
+    (13) TRULE -> . REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC
+    (14) TERR -> . REGEX ERROR LBRAC INSTS RBRAC
 
-    SSTR            shift and go to state 51
+    REGEX           shift and go to state 49
 
+    TRULE                          shift and go to state 47
+    TRULES                         shift and go to state 66
+    TERR                           shift and go to state 48
 
 state 48
 
-    (9) TERR -> REGEX ERROR LBRAC . INSTS RBRAC
-    (10) INSTS -> . INSTS COMMA ARG
-    (11) INSTS -> . ARG
-    (14) ARG -> . STR
-    (15) ARG -> . NUMBER
-    (16) ARG -> . STR LBRAC ARG RBRAC
-    (17) ARG -> . STR LIST
-    (18) ARG -> . STR DOT ARG
-    (19) ARG -> . INDEX
-    (20) ARG -> . SSTR
+    (12) TRULES -> TERR .
 
-    STR             shift and go to state 54
-    NUMBER          shift and go to state 55
-    INDEX           shift and go to state 56
-    SSTR            shift and go to state 57
+    PERC            reduce using rule 12 (TRULES -> TERR .)
 
-    INSTS                          shift and go to state 52
-    ARG                            shift and go to state 53
 
 state 49
 
-    (5) TOK -> PERC TOKENS EQUALS LIST .
+    (13) TRULE -> REGEX . RETURN LBRAC SSTR COMMA ARGS RBRAC
+    (14) TERR -> REGEX . ERROR LBRAC INSTS RBRAC
 
-    REGEX           reduce using rule 5 (TOK -> PERC TOKENS EQUALS LIST .)
+    RETURN          shift and go to state 67
+    ERROR           shift and go to state 68
 
 
 state 50
 
-    (29) PARAM -> PELICA SYM PELICA .
+    (10) TOK -> PERC TOKENS . EQUALS LIST
 
-    CHAVSTXT        reduce using rule 29 (PARAM -> PELICA SYM PELICA .)
-    STR             reduce using rule 29 (PARAM -> PELICA SYM PELICA .)
-    PELICA          reduce using rule 29 (PARAM -> PELICA SYM PELICA .)
+    EQUALS          shift and go to state 69
 
 
 state 51
 
-    (8) TRULE -> REGEX RETURN LBRAC SSTR . COMMA ARGS RBRAC
+    (8) IGN -> PERC IGNORE EQUALS . SSTR
 
-    COMMA           shift and go to state 58
+    SSTR            shift and go to state 70
 
 
 state 52
 
-    (9) TERR -> REGEX ERROR LBRAC INSTS . RBRAC
-    (10) INSTS -> INSTS . COMMA ARG
+    (9) LIT -> PERC LITERALS EQUALS SSTR .
 
-    RBRAC           shift and go to state 59
-    COMMA           shift and go to state 60
+    PERC            reduce using rule 9 (LIT -> PERC LITERALS EQUALS SSTR .)
 
 
 state 53
 
-    (11) INSTS -> ARG .
+    (16) ARGS -> ARGS COMMA ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    RBRAC           reduce using rule 11 (INSTS -> ARG .)
-    COMMA           reduce using rule 11 (INSTS -> ARG .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 16 (ARGS -> ARGS COMMA ARGS .)
+    RBRAC           reduce using rule 16 (ARGS -> ARGS COMMA ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+  ! COMMA           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! DOT             [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! LBRAC           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! EQUALS          [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! PLUS            [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! MINUS           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! TIMES           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! DIVIDE          [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! STR             [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! NUMBER          [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! LIST            [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! INDEX           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! SSTR            [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 54
 
-    (14) ARG -> STR .
-    (16) ARG -> STR . LBRAC ARG RBRAC
-    (17) ARG -> STR . LIST
-    (18) ARG -> STR . DOT ARG
+    (18) ARGS -> ARGS DOT ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    RBRAC           reduce using rule 14 (ARG -> STR .)
-    COMMA           reduce using rule 14 (ARG -> STR .)
-    LBRAC           shift and go to state 61
-    LIST            shift and go to state 62
-    DOT             shift and go to state 63
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 18 (ARGS -> ARGS DOT ARGS .)
+    RBRAC           reduce using rule 18 (ARGS -> ARGS DOT ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+  ! COMMA           [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! DOT             [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! LBRAC           [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! EQUALS          [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! PLUS            [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! MINUS           [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! TIMES           [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! DIVIDE          [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! STR             [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! NUMBER          [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! LIST            [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! INDEX           [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! SSTR            [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 18 (ARGS -> ARGS DOT ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 55
 
-    (15) ARG -> NUMBER .
+    (19) ARGS -> ARGS LBRAC ARGS . RBRAC
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    RBRAC           reduce using rule 15 (ARG -> NUMBER .)
-    COMMA           reduce using rule 15 (ARG -> NUMBER .)
+    RBRAC           shift and go to state 71
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 56
 
-    (19) ARG -> INDEX .
+    (20) ARGS -> ARGS EQUALS ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    RBRAC           reduce using rule 19 (ARG -> INDEX .)
-    COMMA           reduce using rule 19 (ARG -> INDEX .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .)
+    RBRAC           reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+  ! COMMA           [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! DOT             [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! LBRAC           [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! EQUALS          [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! PLUS            [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! MINUS           [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! TIMES           [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! DIVIDE          [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! STR             [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! NUMBER          [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! LIST            [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! INDEX           [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! SSTR            [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 20 (ARGS -> ARGS EQUALS ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 57
 
-    (20) ARG -> SSTR .
+    (21) ARGS -> ARGS PLUS ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    RBRAC           reduce using rule 20 (ARG -> SSTR .)
-    COMMA           reduce using rule 20 (ARG -> SSTR .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 21 (ARGS -> ARGS PLUS ARGS .)
+    RBRAC           reduce using rule 21 (ARGS -> ARGS PLUS ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+  ! COMMA           [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! DOT             [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! LBRAC           [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! EQUALS          [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! PLUS            [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! MINUS           [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! TIMES           [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! DIVIDE          [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! STR             [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! NUMBER          [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! LIST            [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! INDEX           [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! SSTR            [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 21 (ARGS -> ARGS PLUS ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 58
 
-    (8) TRULE -> REGEX RETURN LBRAC SSTR COMMA . ARGS RBRAC
-    (12) ARGS -> . ARGS COMMA ARG
-    (13) ARGS -> . ARG
-    (14) ARG -> . STR
-    (15) ARG -> . NUMBER
-    (16) ARG -> . STR LBRAC ARG RBRAC
-    (17) ARG -> . STR LIST
-    (18) ARG -> . STR DOT ARG
-    (19) ARG -> . INDEX
-    (20) ARG -> . SSTR
+    (22) ARGS -> ARGS MINUS ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    STR             shift and go to state 54
-    NUMBER          shift and go to state 55
-    INDEX           shift and go to state 56
-    SSTR            shift and go to state 57
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 22 (ARGS -> ARGS MINUS ARGS .)
+    RBRAC           reduce using rule 22 (ARGS -> ARGS MINUS ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
-    ARGS                           shift and go to state 64
-    ARG                            shift and go to state 65
+  ! COMMA           [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! DOT             [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! LBRAC           [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! EQUALS          [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! PLUS            [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! MINUS           [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! TIMES           [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! DIVIDE          [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! STR             [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! NUMBER          [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! LIST            [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! INDEX           [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! SSTR            [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 22 (ARGS -> ARGS MINUS ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 59
 
-    (9) TERR -> REGEX ERROR LBRAC INSTS RBRAC .
+    (23) ARGS -> ARGS TIMES ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    PERC            reduce using rule 9 (TERR -> REGEX ERROR LBRAC INSTS RBRAC .)
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 23 (ARGS -> ARGS TIMES ARGS .)
+    RBRAC           reduce using rule 23 (ARGS -> ARGS TIMES ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
+  ! COMMA           [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! DOT             [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! LBRAC           [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! EQUALS          [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! PLUS            [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! MINUS           [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! TIMES           [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! DIVIDE          [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! STR             [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! NUMBER          [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! LIST            [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! INDEX           [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! SSTR            [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 23 (ARGS -> ARGS TIMES ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 60
 
-    (10) INSTS -> INSTS COMMA . ARG
-    (14) ARG -> . STR
-    (15) ARG -> . NUMBER
-    (16) ARG -> . STR LBRAC ARG RBRAC
-    (17) ARG -> . STR LIST
-    (18) ARG -> . STR DOT ARG
-    (19) ARG -> . INDEX
-    (20) ARG -> . SSTR
+    (24) ARGS -> ARGS DIVIDE ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
 
-    STR             shift and go to state 54
-    NUMBER          shift and go to state 55
-    INDEX           shift and go to state 56
-    SSTR            shift and go to state 57
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    $end            reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .)
+    RBRAC           reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
 
-    ARG                            shift and go to state 66
+  ! COMMA           [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! DOT             [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! LBRAC           [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! EQUALS          [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! PLUS            [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! MINUS           [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! TIMES           [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! DIVIDE          [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! STR             [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! NUMBER          [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! LIST            [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! INDEX           [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! SSTR            [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 24 (ARGS -> ARGS DIVIDE ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
 
 state 61
 
-    (16) ARG -> STR LBRAC . ARG RBRAC
-    (14) ARG -> . STR
-    (15) ARG -> . NUMBER
-    (16) ARG -> . STR LBRAC ARG RBRAC
-    (17) ARG -> . STR LIST
-    (18) ARG -> . STR DOT ARG
-    (19) ARG -> . INDEX
-    (20) ARG -> . SSTR
+    (6) FUNCTION -> DEF STR LBRAC . STR RBRAC DDOT
 
-    STR             shift and go to state 54
-    NUMBER          shift and go to state 55
-    INDEX           shift and go to state 56
-    SSTR            shift and go to state 57
+    STR             shift and go to state 72
 
-    ARG                            shift and go to state 67
 
 state 62
 
-    (17) ARG -> STR LIST .
+    (35) GRULES -> GRULES GRULE .
 
-    RBRAC           reduce using rule 17 (ARG -> STR LIST .)
-    COMMA           reduce using rule 17 (ARG -> STR LIST .)
+    STR             reduce using rule 35 (GRULES -> GRULES GRULE .)
+    DEF             reduce using rule 35 (GRULES -> GRULES GRULE .)
+    NUMBER          reduce using rule 35 (GRULES -> GRULES GRULE .)
+    LIST            reduce using rule 35 (GRULES -> GRULES GRULE .)
+    INDEX           reduce using rule 35 (GRULES -> GRULES GRULE .)
+    SSTR            reduce using rule 35 (GRULES -> GRULES GRULE .)
+    CHAVSTXT        reduce using rule 35 (GRULES -> GRULES GRULE .)
 
 
 state 63
 
-    (18) ARG -> STR DOT . ARG
-    (14) ARG -> . STR
-    (15) ARG -> . NUMBER
-    (16) ARG -> . STR LBRAC ARG RBRAC
-    (17) ARG -> . STR LIST
-    (18) ARG -> . STR DOT ARG
-    (19) ARG -> . INDEX
-    (20) ARG -> . SSTR
+    (37) GRULE -> STR DDOT . PARAMS CHAVSTXT
+    (38) PARAMS -> . PARAMS PARAM
+    (39) PARAMS -> . PARAM
+    (40) PARAM -> . STR
+    (41) PARAM -> . PELICA SYM PELICA
 
-    STR             shift and go to state 54
-    NUMBER          shift and go to state 55
-    INDEX           shift and go to state 56
-    SSTR            shift and go to state 57
+    STR             shift and go to state 73
+    PELICA          shift and go to state 76
 
-    ARG                            shift and go to state 68
+    PARAMS                         shift and go to state 74
+    PARAM                          shift and go to state 75
 
 state 64
 
-    (8) TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS . RBRAC
-    (12) ARGS -> ARGS . COMMA ARG
+    (33) TSYM -> TS EQUALS CHAVSTXT .
 
-    RBRAC           shift and go to state 70
-    COMMA           shift and go to state 69
+    STR             reduce using rule 33 (TSYM -> TS EQUALS CHAVSTXT .)
 
 
 state 65
 
-    (13) ARGS -> ARG .
+    (34) PRCDNC -> PERC PRECEDENCE EQUALS LIST .
 
-    RBRAC           reduce using rule 13 (ARGS -> ARG .)
-    COMMA           reduce using rule 13 (ARGS -> ARG .)
+    TS              reduce using rule 34 (PRCDNC -> PERC PRECEDENCE EQUALS LIST .)
 
 
 state 66
 
-    (10) INSTS -> INSTS COMMA ARG .
+    (11) TRULES -> TRULE TRULES .
 
-    RBRAC           reduce using rule 10 (INSTS -> INSTS COMMA ARG .)
-    COMMA           reduce using rule 10 (INSTS -> INSTS COMMA ARG .)
+    PERC            reduce using rule 11 (TRULES -> TRULE TRULES .)
 
 
 state 67
 
-    (16) ARG -> STR LBRAC ARG . RBRAC
+    (13) TRULE -> REGEX RETURN . LBRAC SSTR COMMA ARGS RBRAC
 
-    RBRAC           shift and go to state 71
+    LBRAC           shift and go to state 77
 
 
 state 68
 
-    (18) ARG -> STR DOT ARG .
+    (14) TERR -> REGEX ERROR . LBRAC INSTS RBRAC
 
-    RBRAC           reduce using rule 18 (ARG -> STR DOT ARG .)
-    COMMA           reduce using rule 18 (ARG -> STR DOT ARG .)
+    LBRAC           shift and go to state 78
 
 
 state 69
 
-    (12) ARGS -> ARGS COMMA . ARG
-    (14) ARG -> . STR
-    (15) ARG -> . NUMBER
-    (16) ARG -> . STR LBRAC ARG RBRAC
-    (17) ARG -> . STR LIST
-    (18) ARG -> . STR DOT ARG
-    (19) ARG -> . INDEX
-    (20) ARG -> . SSTR
+    (10) TOK -> PERC TOKENS EQUALS . LIST
 
-    STR             shift and go to state 54
-    NUMBER          shift and go to state 55
-    INDEX           shift and go to state 56
-    SSTR            shift and go to state 57
+    LIST            shift and go to state 79
 
-    ARG                            shift and go to state 72
 
 state 70
 
-    (8) TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC .
+    (8) IGN -> PERC IGNORE EQUALS SSTR .
 
-    REGEX           reduce using rule 8 (TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC .)
+    PERC            reduce using rule 8 (IGN -> PERC IGNORE EQUALS SSTR .)
 
 
 state 71
 
-    (16) ARG -> STR LBRAC ARG RBRAC .
+    (19) ARGS -> ARGS LBRAC ARGS RBRAC .
 
-    RBRAC           reduce using rule 16 (ARG -> STR LBRAC ARG RBRAC .)
-    COMMA           reduce using rule 16 (ARG -> STR LBRAC ARG RBRAC .)
+    COMMA           reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    DOT             reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    LBRAC           reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    EQUALS          reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    PLUS            reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    MINUS           reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    TIMES           reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    DIVIDE          reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    STR             reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    NUMBER          reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    LIST            reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    INDEX           reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    SSTR            reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    CHAVSTXT        reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    $end            reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
+    RBRAC           reduce using rule 19 (ARGS -> ARGS LBRAC ARGS RBRAC .)
 
 
 state 72
 
-    (12) ARGS -> ARGS COMMA ARG .
+    (6) FUNCTION -> DEF STR LBRAC STR . RBRAC DDOT
 
-    RBRAC           reduce using rule 12 (ARGS -> ARGS COMMA ARG .)
-    COMMA           reduce using rule 12 (ARGS -> ARGS COMMA ARG .)
+    RBRAC           shift and go to state 80
 
+
+state 73
+
+    (40) PARAM -> STR .
+
+    CHAVSTXT        reduce using rule 40 (PARAM -> STR .)
+    STR             reduce using rule 40 (PARAM -> STR .)
+    PELICA          reduce using rule 40 (PARAM -> STR .)
+
+
+state 74
+
+    (37) GRULE -> STR DDOT PARAMS . CHAVSTXT
+    (38) PARAMS -> PARAMS . PARAM
+    (40) PARAM -> . STR
+    (41) PARAM -> . PELICA SYM PELICA
+
+    CHAVSTXT        shift and go to state 81
+    STR             shift and go to state 73
+    PELICA          shift and go to state 76
+
+    PARAM                          shift and go to state 82
+
+state 75
+
+    (39) PARAMS -> PARAM .
+
+    CHAVSTXT        reduce using rule 39 (PARAMS -> PARAM .)
+    STR             reduce using rule 39 (PARAMS -> PARAM .)
+    PELICA          reduce using rule 39 (PARAMS -> PARAM .)
+
+
+state 76
+
+    (41) PARAM -> PELICA . SYM PELICA
+    (42) SYM -> . EQUALS
+    (43) SYM -> . PLUS
+    (44) SYM -> . MINUS
+    (45) SYM -> . TIMES
+    (46) SYM -> . DIVIDE
+
+    EQUALS          shift and go to state 84
+    PLUS            shift and go to state 85
+    MINUS           shift and go to state 86
+    TIMES           shift and go to state 87
+    DIVIDE          shift and go to state 88
+
+    SYM                            shift and go to state 83
+
+state 77
+
+    (13) TRULE -> REGEX RETURN LBRAC . SSTR COMMA ARGS RBRAC
+
+    SSTR            shift and go to state 89
+
+
+state 78
+
+    (14) TERR -> REGEX ERROR LBRAC . INSTS RBRAC
+    (15) INSTS -> . ARGS COMMA ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
+
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
+
+    INSTS                          shift and go to state 90
+    ARGS                           shift and go to state 91
+    ARG                            shift and go to state 15
+
+state 79
+
+    (10) TOK -> PERC TOKENS EQUALS LIST .
+
+    REGEX           reduce using rule 10 (TOK -> PERC TOKENS EQUALS LIST .)
+
+
+state 80
+
+    (6) FUNCTION -> DEF STR LBRAC STR RBRAC . DDOT
+
+    DDOT            shift and go to state 92
+
+
+state 81
+
+    (37) GRULE -> STR DDOT PARAMS CHAVSTXT .
+
+    STR             reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    DEF             reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    NUMBER          reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    LIST            reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    INDEX           reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    SSTR            reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+    CHAVSTXT        reduce using rule 37 (GRULE -> STR DDOT PARAMS CHAVSTXT .)
+
+
+state 82
+
+    (38) PARAMS -> PARAMS PARAM .
+
+    CHAVSTXT        reduce using rule 38 (PARAMS -> PARAMS PARAM .)
+    STR             reduce using rule 38 (PARAMS -> PARAMS PARAM .)
+    PELICA          reduce using rule 38 (PARAMS -> PARAMS PARAM .)
+
+
+state 83
+
+    (41) PARAM -> PELICA SYM . PELICA
+
+    PELICA          shift and go to state 93
+
+
+state 84
+
+    (42) SYM -> EQUALS .
+
+    PELICA          reduce using rule 42 (SYM -> EQUALS .)
+
+
+state 85
+
+    (43) SYM -> PLUS .
+
+    PELICA          reduce using rule 43 (SYM -> PLUS .)
+
+
+state 86
+
+    (44) SYM -> MINUS .
+
+    PELICA          reduce using rule 44 (SYM -> MINUS .)
+
+
+state 87
+
+    (45) SYM -> TIMES .
+
+    PELICA          reduce using rule 45 (SYM -> TIMES .)
+
+
+state 88
+
+    (46) SYM -> DIVIDE .
+
+    PELICA          reduce using rule 46 (SYM -> DIVIDE .)
+
+
+state 89
+
+    (13) TRULE -> REGEX RETURN LBRAC SSTR . COMMA ARGS RBRAC
+
+    COMMA           shift and go to state 94
+
+
+state 90
+
+    (14) TERR -> REGEX ERROR LBRAC INSTS . RBRAC
+
+    RBRAC           shift and go to state 95
+
+
+state 91
+
+    (15) INSTS -> ARGS . COMMA ARGS
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
+
+    COMMA           shift and go to state 96
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
+
+state 92
+
+    (6) FUNCTION -> DEF STR LBRAC STR RBRAC DDOT .
+
+    DEF             reduce using rule 6 (FUNCTION -> DEF STR LBRAC STR RBRAC DDOT .)
+    $end            reduce using rule 6 (FUNCTION -> DEF STR LBRAC STR RBRAC DDOT .)
+
+
+state 93
+
+    (41) PARAM -> PELICA SYM PELICA .
+
+    CHAVSTXT        reduce using rule 41 (PARAM -> PELICA SYM PELICA .)
+    STR             reduce using rule 41 (PARAM -> PELICA SYM PELICA .)
+    PELICA          reduce using rule 41 (PARAM -> PELICA SYM PELICA .)
+
+
+state 94
+
+    (13) TRULE -> REGEX RETURN LBRAC SSTR COMMA . ARGS RBRAC
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
+
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
+
+    ARGS                           shift and go to state 97
+    ARG                            shift and go to state 15
+
+state 95
+
+    (14) TERR -> REGEX ERROR LBRAC INSTS RBRAC .
+
+    PERC            reduce using rule 14 (TERR -> REGEX ERROR LBRAC INSTS RBRAC .)
+
+
+state 96
+
+    (15) INSTS -> ARGS COMMA . ARGS
+    (16) ARGS -> ARGS COMMA . ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
+
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
+
+    ARGS                           shift and go to state 98
+    ARG                            shift and go to state 15
+
+state 97
+
+    (13) TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS . RBRAC
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
+
+    RBRAC           shift and go to state 99
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
+
+state 98
+
+    (15) INSTS -> ARGS COMMA ARGS .
+    (16) ARGS -> ARGS COMMA ARGS .
+    (16) ARGS -> ARGS . COMMA ARGS
+    (17) ARGS -> ARGS . ARGS
+    (18) ARGS -> ARGS . DOT ARGS
+    (19) ARGS -> ARGS . LBRAC ARGS RBRAC
+    (20) ARGS -> ARGS . EQUALS ARGS
+    (21) ARGS -> ARGS . PLUS ARGS
+    (22) ARGS -> ARGS . MINUS ARGS
+    (23) ARGS -> ARGS . TIMES ARGS
+    (24) ARGS -> ARGS . DIVIDE ARGS
+    (16) ARGS -> . ARGS COMMA ARGS
+    (17) ARGS -> . ARGS ARGS
+    (18) ARGS -> . ARGS DOT ARGS
+    (19) ARGS -> . ARGS LBRAC ARGS RBRAC
+    (20) ARGS -> . ARGS EQUALS ARGS
+    (21) ARGS -> . ARGS PLUS ARGS
+    (22) ARGS -> . ARGS MINUS ARGS
+    (23) ARGS -> . ARGS TIMES ARGS
+    (24) ARGS -> . ARGS DIVIDE ARGS
+    (25) ARGS -> . ARG
+    (26) ARG -> . STR
+    (27) ARG -> . NUMBER
+    (28) ARG -> . LIST
+    (29) ARG -> . INDEX
+    (30) ARG -> . SSTR
+    (31) ARG -> . CHAVSTXT
+
+  ! shift/reduce conflict for COMMA resolved as shift
+  ! shift/reduce conflict for DOT resolved as shift
+  ! shift/reduce conflict for LBRAC resolved as shift
+  ! shift/reduce conflict for EQUALS resolved as shift
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for TIMES resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+  ! shift/reduce conflict for STR resolved as shift
+  ! shift/reduce conflict for NUMBER resolved as shift
+  ! shift/reduce conflict for LIST resolved as shift
+  ! shift/reduce conflict for INDEX resolved as shift
+  ! shift/reduce conflict for SSTR resolved as shift
+  ! shift/reduce conflict for CHAVSTXT resolved as shift
+    RBRAC           reduce using rule 15 (INSTS -> ARGS COMMA ARGS .)
+    COMMA           shift and go to state 32
+    DOT             shift and go to state 33
+    LBRAC           shift and go to state 34
+    EQUALS          shift and go to state 35
+    PLUS            shift and go to state 36
+    MINUS           shift and go to state 37
+    TIMES           shift and go to state 38
+    DIVIDE          shift and go to state 39
+    STR             shift and go to state 17
+    NUMBER          shift and go to state 18
+    LIST            shift and go to state 19
+    INDEX           shift and go to state 20
+    SSTR            shift and go to state 21
+    CHAVSTXT        shift and go to state 22
+
+  ! COMMA           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! DOT             [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! LBRAC           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! EQUALS          [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! PLUS            [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! MINUS           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! TIMES           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! DIVIDE          [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! STR             [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! NUMBER          [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! LIST            [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! INDEX           [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! SSTR            [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+  ! CHAVSTXT        [ reduce using rule 16 (ARGS -> ARGS COMMA ARGS .) ]
+
+    ARGS                           shift and go to state 31
+    ARG                            shift and go to state 15
+
+state 99
+
+    (13) TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC .
+
+    REGEX           reduce using rule 13 (TRULE -> REGEX RETURN LBRAC SSTR COMMA ARGS RBRAC .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for COMMA in state 31 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 31 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 31 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 31 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 31 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 31 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 31 resolved as shift
+WARNING: shift/reduce conflict for STR in state 31 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 31 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 31 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 31 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 31 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 31 resolved as shift
+WARNING: shift/reduce conflict for STR in state 41 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 53 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 53 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 53 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 53 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 53 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 53 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 53 resolved as shift
+WARNING: shift/reduce conflict for STR in state 53 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 53 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 53 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 53 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 53 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 53 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 54 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 54 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 54 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 54 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 54 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 54 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 54 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 54 resolved as shift
+WARNING: shift/reduce conflict for STR in state 54 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 54 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 54 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 54 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 54 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 54 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 56 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 56 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 56 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 56 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 56 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 56 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 56 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 56 resolved as shift
+WARNING: shift/reduce conflict for STR in state 56 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 56 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 56 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 56 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 56 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 56 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 57 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 57 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 57 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 57 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 57 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 57 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 57 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 57 resolved as shift
+WARNING: shift/reduce conflict for STR in state 57 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 57 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 57 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 57 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 57 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 57 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 58 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 58 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 58 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 58 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 58 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 58 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 58 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 58 resolved as shift
+WARNING: shift/reduce conflict for STR in state 58 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 58 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 58 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 58 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 58 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 58 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 59 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 59 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 59 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 59 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 59 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 59 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 59 resolved as shift
+WARNING: shift/reduce conflict for STR in state 59 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 59 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 59 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 59 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 59 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 59 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 60 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 60 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 60 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 60 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 60 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 60 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 60 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 60 resolved as shift
+WARNING: shift/reduce conflict for STR in state 60 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 60 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 60 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 60 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 60 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 60 resolved as shift
+WARNING: shift/reduce conflict for COMMA in state 98 resolved as shift
+WARNING: shift/reduce conflict for DOT in state 98 resolved as shift
+WARNING: shift/reduce conflict for LBRAC in state 98 resolved as shift
+WARNING: shift/reduce conflict for EQUALS in state 98 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 98 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 98 resolved as shift
+WARNING: shift/reduce conflict for TIMES in state 98 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 98 resolved as shift
+WARNING: shift/reduce conflict for STR in state 98 resolved as shift
+WARNING: shift/reduce conflict for NUMBER in state 98 resolved as shift
+WARNING: shift/reduce conflict for LIST in state 98 resolved as shift
+WARNING: shift/reduce conflict for INDEX in state 98 resolved as shift
+WARNING: shift/reduce conflict for SSTR in state 98 resolved as shift
+WARNING: shift/reduce conflict for CHAVSTXT in state 98 resolved as shift

@@ -5,7 +5,7 @@ import re
 import math
 
 # ANALISADOR LÉXICO
-reservadas = "tokens literals ignore return error yacc lex precedence ".split()
+reservadas = "tokens literals ignore return error yacc lex precedence ts def".split()
 tokens = ['EQUALS', 'PERC', 'PLUS', 'MINUS', 'TIMES', 'DIVIDE',
           'LBRAC', 'RBRAC', 'LRBRAC', 'RRBRAC', 'LCHAV', 'RCHAV',
           'QUOTE', 'PELICA', 'COMMA', 'DOT', 'DDOT', 'BACKSLASH',
@@ -21,9 +21,10 @@ def t_REGEX(t):
     return t
 
 def t_STR(t):
-    r'[A-Za-z]+'
+    r'[A-Za-z_]+'
     if t.value in reservadas:
         t.type = t.value.upper()
+    print(t.value)
     return t
 
 def t_INDEX(t):
@@ -50,14 +51,12 @@ def t_LRBRAC(t):     r'\['; return t
 def t_RRBRAC(t):     r'\]'; return t
 def t_LCHAV(t):      r'\{'; return t
 def t_RCHAV(t):      r'\}'; return t
-
 def t_QUOTE(t):      r'\"'; return t
 def t_PELICA(t):     r'\''; return t
 def t_COMMA(t):      r',' ; return t
 def t_DOT(t):        r'\.'; return t
 def t_DDOT(t):       r':' ; return t
 def t_BACKSLASH(t):  r'\\'; return t
-
 def t_EQUALS(t):     r'=' ; return t
 def t_PERC(t):       r'%' ; return t
 def t_PLUS(t):       r'\+'; return t
@@ -79,9 +78,24 @@ lexer = lex()
 ts = {"ltls" : []}
 
 def p_PROG(p):
-    "PROG : LEXER GRAM"
+    "PROG : LEXER GRAM CODE"
     print(p[1])
     print(p[2])
+    print(p[3])
+
+def p_CODE_1(p): "CODE : FUNCTIONS"  ; p[0] = p[1]
+def p_CODE_2(p): "CODE : ARGS"       ; p[0] = p[1]
+
+def p_FUNCTIONS_1(p):
+    "FUNCTIONS : FUNCTIONS FUNCTION"
+    p[0] = f"{p[1]}\n{p[2]}"
+def p_FUNCTIONS_2(p):
+    "FUNCTIONS : FUNCTION"
+    p[0] = p[1]
+
+def p_FUNCTION_1(p):
+    "FUNCTION : DEF STR LBRAC STR RBRAC DDOT"
+    p[0] = f"def {p[2]}({p[3]}):"
 
 def p_LEXER(p):
     "LEXER : LIT IGN TOK TRULES"
@@ -128,31 +142,40 @@ def p_TERR_1(p):
 """
 
 def p_INSTS_1(p):
-    "INSTS : INSTS COMMA ARG"
+    "INSTS : ARGS COMMA ARGS"
     p[0] = f"""{p[1]}
     {p[3]}
 """
-def p_INSTS_2(p):
-    "INSTS : ARG"
-    p[0] = f"{p[1]}"
 
-def p_ARGS_1(p):  "ARGS : ARGS COMMA ARG"  ;  p[0] = f"{p[1]}, {p[3]}"
-def p_ARGS_2(p):  "ARGS : ARG"             ;  p[0] = p[1]
+def p_ARGS_1(p):  "ARGS : ARGS COMMA ARGS"          ;  p[0] = f"{p[1]}, {p[3]}"
+def p_ARGS_2(p):  "ARGS : ARGS ARGS"                ;  p[0] = f"{p[1]} {p[3]}"
+def p_ARGS_3(p):  "ARGS : ARGS DOT ARGS"            ;  p[0] = f"{p[1]}.{p[3]}"
+def p_ARGS_4(p):  "ARGS : ARGS LBRAC ARGS RBRAC"    ;  p[0] = f"{p[1]}({p[3]})"
+def p_ARGS_5(p): "ARGS : ARGS EQUALS ARGS"          ;  p[0] = f"{p[1]} = {p[3]}"
+def p_ARGS_6(p): "ARGS : ARGS PLUS ARGS"            ;  p[0] = f"{p[1]} + {p[3]}"
+def p_ARGS_7(p): "ARGS : ARGS MINUS ARGS"           ;  p[0] = f"{p[1]} - {p[3]}"
+def p_ARGS_8(p): "ARGS : ARGS TIMES ARGS"           ;  p[0] = f"{p[1]} * {p[3]}"
+def p_ARGS_9(p): "ARGS : ARGS DIVIDE ARGS"          ;  p[0] = f"{p[1]} / {p[3]}"
+def p_ARGS_10(p):  "ARGS : ARG"                     ;  p[0] = p[1]
 
 
 def p_ARG_1(p):  "ARG : STR"                     ;   p[0] = p[1]
 def p_ARG_2(p):  "ARG : NUMBER"                  ;   p[0] = p[1]
-def p_ARG_3(p):  "ARG : STR LBRAC ARG RBRAC"     ;   p[0] = f"{p[1]}({p[3]})"
-def p_ARG_4(p):  "ARG : STR LIST             "   ;   p[0] = f"{p[1]}{p[2]}"
-def p_ARG_5(p):  "ARG : STR DOT ARG "            ;   p[0] = f"{p[1]}.{p[3]}"
-def p_ARG_6(p):  "ARG : INDEX"                   ;   p[0] = p[1]
-def p_ARG_7(p):  "ARG : SSTR"                    ;   p[0] = p[1]
+def p_ARG_3(p):  "ARG : LIST"                    ;   p[0] = p[1]
+def p_ARG_4(p):  "ARG : INDEX"                   ;   p[0] = p[1]
+def p_ARG_5(p):  "ARG : SSTR"                    ;   p[0] = p[1]
+def p_ARG_6(p):  "ARG : CHAVSTXT"                ;   p[0] = p[1]
 
 def p_GRAM_1(p): 
-    "GRAM : PRCDNC GRULES"
+    "GRAM : PRCDNC TSYM GRULES"
     p[0] = f"""{p[1]}
 {p[2]}
+{p[3]}
 """
+
+def p_TSYM_1(p):
+    "TSYM : TS EQUALS CHAVSTXT"
+    p[0] = f"ts = {p[3]}\n"
 
 def p_PRCDNC_1(p):
     "PRCDNC : PERC PRECEDENCE EQUALS LIST"

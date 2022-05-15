@@ -4,11 +4,12 @@
 
 r'[a-zA-Z_][a-zA-Z0-9_]*' return("VAR", t.value)
 r'\d+(\.\d+)?' return("NUMBER", float(t.value))
-r'.' error(f"Illegal character {t.value[0]}, [{t.lexer.lineno}]",
+r'.' error(f"Illegal character {t.value[0]}, [{t.lexer.lineno}]", 
            t.lexer.skip(1) )
 
 %precedence = [ ('left','+','-'), ('left','*','/'), ('right','UMINUS') ]
 
+ts = { }
 
 stat : VAR '=' exp { ts[t[1]] = t[3] }
 stat : exp { print(t[1]) }
@@ -18,3 +19,10 @@ exp : exp '-' exp { t[0] = t[1] - t[3] }
 exp : exp '*' exp { t[0] = t[1] * t[3] }
 exp : exp '/' exp { t[0] = t[1] / t[3] }
 exp : exp '*' exp { t[0] = t[1] * t[3] }
+
+def p_error(t):
+
+def getval(n):
+y=yacc()
+
+y.parse("3+4*7")
