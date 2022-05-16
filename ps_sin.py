@@ -1,5 +1,5 @@
 from ply.yacc import yacc
-from PLYsimple_lex import tokens, literals, states
+from ps_lex import tokens, literals, states
 
 
 def p_PROG(p):
@@ -60,27 +60,19 @@ def p_Terr(p):
 """
 
 def p_Insts(p):
-    "Insts : Args ',' Args"
-    p[0] = f"""{p[1]}
+    "Insts : Arg ',' Arg"
+    p[0] = f"""print({p[1]})
     {p[3]}
 """
 
-def p_Args_1(p):  "Args : Args ',' Args"          ;  p[0] = f"{p[1]}, {p[3]}"
-def p_Args_2(p):  "Args : Args Args"                ;  p[0] = f"{p[1]} {p[3]}"
-def p_Args_3(p):  "Args : Args '.' Args"            ;  p[0] = f"{p[1]}.{p[3]}"
-def p_Args_4(p):  "Args : Args '(' Args ')'"    ;  p[0] = f"{p[1]}({p[3]})"
-def p_Args_5(p):  "Args : Args '=' Args"         ;  p[0] = f"{p[1]} = {p[3]}"
-def p_Args_6(p):  "Args : Args '+' Args"           ;  p[0] = f"{p[1]} + {p[3]}"
-def p_Args_7(p):  "Args : Args '-' Args"          ;  p[0] = f"{p[1]} - {p[3]}"
-def p_Args_8(p):  "Args : Args '*' Args"          ;  p[0] = f"{p[1]} * {p[3]}"
-def p_Args_9(p):  "Args : Args '/' Args"         ;  p[0] = f"{p[1]} / {p[3]}"
-def p_Args_10(p): "Args : Arg"                      ;  p[0] = p[1]
+def p_Args_list(p):   "Args : Args ',' Arg"           ;  p[0] = f"{p[1]}, {p[3]}"
+def p_Args_single(p): "Args : Arg"                    ;  p[0] = p[1]
 
-def p_Arg_1(p):  "Arg : STR"                     ;   p[0] = p[1]
-def p_Arg_2(p):  "Arg : NUMBER"                  ;   p[0] = p[1]
-def p_Arg_3(p):  "Arg : LIST"                    ;   p[0] = p[1]
-def p_Arg_4(p):  "Arg : SSTR"                    ;   p[0] = p[1]
-def p_Arg_5(p):  "Arg : CHAVSTXT"                ;   p[0] = p[1]
+def p_Arg_str(p): "Arg : STR"           ; p[0] = p[1]
+def p_Arg_func_str(p): "Arg : STR '(' STR ')'" ; p[0] = p[1] + p[2] + p[3] + p[4]
+def p_Arg_func_number(p): "Arg : STR '(' NUMBER ')'" ; p[0] = p[1] + p[2] + str(p[3]) + p[4]
+def p_Arg_sstr(p):  "Arg : SSTR"        ;   p[0] = p[1]
+
 
 def p_Gram(p): 
     "Gram : Precedence SymbTab Grules"

@@ -6,13 +6,19 @@ literals = ['(', ')', '[', ']', '{', '}', '"', '\'', ',', '.', ':', '\\', '=', '
 reservadas = "tokens literals ignore return error yacc lex precedence ts def".split()
 
 tokens = ['SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX', 'LITERAL',
-          'LIST', 'CHAVSTXT', 'ALL'] + [x.upper() for x in reservadas]
+          'LIST', 'CHAVSTXT', 'ALL', 'TXT'] + [x.upper() for x in reservadas]
 
 states = (('incode', 'exclusive'),)
 
 def t_incode_ALL(t):
     r'.+'
     return t
+
+def t_begin_incode(t):
+    r'%%'
+    t.lexer.begin('incode')
+
+
 
 def t_SSTR(t):
     r'\w*\"(.+)\"'
@@ -23,7 +29,7 @@ def t_REGEX(t):
     return t
 
 def t_STR(t):
-    r'[A-Za-z_]+'
+    r'[A-Za-z_.]+'
     if t.value in reservadas:
         t.type = t.value.upper()
     return t
@@ -44,10 +50,6 @@ def t_CHAVSTXT(t):
 def t_LITERAL(t):
     r'\'[,=(){}<>\[\]+\-*\/^]{1}\''
     return t
-
-def t_begin_incode(t):
-    r'%%'
-    t.lexer.begin('incode')
 
 
 t_ignore = " \t\n"
