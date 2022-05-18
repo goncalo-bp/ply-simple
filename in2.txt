@@ -14,7 +14,7 @@ ABin : '(' ')' { t[0] = 0 }
 
 def p_error(p):
     print(f"Syntax error: ", p)
-
+    y.success = False
 
 # Build the parser
 y=yacc()
@@ -22,11 +22,11 @@ y=yacc()
 
 # Read line from input and parse it
 import sys
-
 for linha in sys.stdin:
-    y.sucess = True
+    y.success = True
     y.parse(linha)
-    if y.sucess:
+
+    if y.success:
         print("Frase valida: ", linha)
     else:
         print("Frase invalida... Corrija e tente novamente!")
