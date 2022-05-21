@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "ALL BEGINCODE CHAVSTXT DEF ERROR IGNORE INDEX LEX LIST LITERAL LITERALS NUMBER PRECEDENCE REGEX RETURN SSTR STR TOKENS TS YACCPROG : LEXER GRAM BEGINCODE CODECODE : CODE ALLCODE : ALLLEXER : LIT IGN TOK TRULESIGN : '%' IGNORE '=' SSTRLIT : '%' LITERALS '=' SSTRTOK : '%' TOKENS '=' LISTTRULES : TRULE TRULESTRULES : TERRTRULE : REGEX RETURN '(' SSTR ',' ARGS ')'TERR : REGEX ERROR '(' INSTS ')'INSTS : ARGS ',' ARGSARGS : ARGS ',' ARGSARGS : ARGS ARGSARGS : ARGS '.' ARGSARGS : ARGS '(' ARGS ')'ARGS : ARGS '=' ARGSARGS : ARGS '+' ARGSARGS : ARGS '-' ARGSARGS : ARGS '*' ARGSARGS : ARGS '/' ARGSARGS : ARGARG : STRARG : NUMBERARG : LISTARG : INDEXARG : SSTRARG : CHAVSTXTGRAM : PRCDNC TSYM GRULESTSYM : TS '=' CHAVSTXTPRCDNC : '%' PRECEDENCE '=' LISTGRULES : GRULES GRULEGRULES : GRULEGRULE : STR ':' PARAMS CHAVSTXTPARAMS : PARAMS PARAMPARAMS : PARAMPARAM : STRPARAM : LITERALPARAM : '%' STR"
+_lr_signature = 'BSLASH COMMA CodeAll CodeBegin DOT EQ Float Int LCHAV LESS LPAR LSPAR LexBegin LexError LexIgnore LexLiterals LexRule LexTokens MINUS MORE PELICA PERC PLUS QUOTE RCHAV RPAR RSPAR SLASH Str TIMES UNDERSCORE YaccBegin YaccPrecedence YaccRule YaccTSProg : LexBegin Lexer YaccBegin Yacc CodeBegin CodeLexer : LexLits LexIgnore LexTokens LexRules LexErrLexLits : LexLiteralsLexLits : LexRules : LexRules LexRuleLexRules : LexRuleLexErr : LexErrorYacc : YaccPrecedence YaccTS YaccRulesYaccRules : YaccRules YaccRuleYaccRules : YaccRuleCode : Code CodeAllCode : CodeAll'
     
-_lr_action_items = {'%':([0,2,3,8,26,28,32,35,38,42,43,44,45,46,52,53,65,],[4,7,9,16,-4,-9,-6,47,-8,-5,-37,47,-36,-38,-35,-39,-11,]),'$end':([1,19,20,33,],[0,-1,-3,-2,]),'LITERALS':([4,],[10,]),'BEGINCODE':([5,21,22,34,51,],[11,-29,-33,-32,-34,]),'TS':([6,37,],[13,-31,]),'PRECEDENCE':([7,],[14,]),'IGNORE':([9,],[17,]),'=':([10,13,14,17,30,56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[18,24,25,31,41,70,-22,-23,-24,-25,-26,-27,-28,70,70,70,70,70,70,70,70,70,70,70,-16,]),'ALL':([11,19,20,33,],[20,33,-3,-2,]),'STR':([12,21,22,34,35,36,43,44,45,46,47,49,51,52,53,56,57,58,59,60,61,62,63,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,],[23,23,-33,-32,43,-30,-37,43,-36,-38,53,58,-34,-35,-39,58,-22,-23,-24,-25,-26,-27,-28,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,58,-16,]),'REGEX':([15,27,50,85,],[29,29,-7,-10,]),'TOKENS':([16,],[30,]),'SSTR':([18,31,48,49,56,57,58,59,60,61,62,63,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,],[32,42,54,62,62,-22,-23,-24,-25,-26,-27,-28,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,-16,]),':':([23,],[35,]),'CHAVSTXT':([24,43,44,45,46,49,52,53,56,57,58,59,60,61,62,63,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,],[36,-37,51,-36,-38,63,-35,-39,63,-22,-23,-24,-25,-26,-27,-28,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,63,-16,]),'LIST':([25,41,49,56,57,58,59,60,61,62,63,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,],[37,50,60,60,-22,-23,-24,-25,-26,-27,-28,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,60,-16,]),'RETURN':([29,],[39,]),'ERROR':([29,],[40,]),'LITERAL':([35,43,44,45,46,52,53,],[46,-37,46,-36,-38,-35,-39,]),'(':([39,40,56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[48,49,69,-22,-23,-24,-25,-26,-27,-28,69,69,69,69,69,69,69,69,69,69,69,-16,]),'NUMBER':([49,56,57,58,59,60,61,62,63,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,],[59,59,-22,-23,-24,-25,-26,-27,-28,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,59,-16,]),'INDEX':([49,56,57,58,59,60,61,62,63,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,87,],[61,61,-22,-23,-24,-25,-26,-27,-28,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,61,-16,]),',':([54,56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[64,67,-22,-23,-24,-25,-26,-27,-28,76,76,76,76,76,76,76,76,76,76,76,-16,]),')':([55,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[65,-22,-23,-24,-25,-26,-27,-28,-14,85,-12,-15,87,-17,-18,-19,-20,-21,-13,-16,]),'.':([56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[68,-22,-23,-24,-25,-26,-27,-28,68,68,68,68,68,68,68,68,68,68,68,-16,]),'+':([56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[71,-22,-23,-24,-25,-26,-27,-28,71,71,71,71,71,71,71,71,71,71,71,-16,]),'-':([56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[72,-22,-23,-24,-25,-26,-27,-28,72,72,72,72,72,72,72,72,72,72,72,-16,]),'*':([56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[73,-22,-23,-24,-25,-26,-27,-28,73,73,73,73,73,73,73,73,73,73,73,-16,]),'/':([56,57,58,59,60,61,62,63,66,75,77,78,79,80,81,82,83,84,86,87,],[74,-22,-23,-24,-25,-26,-27,-28,74,74,74,74,74,74,74,74,74,74,74,-16,]),}
+_lr_action_items = {'LexBegin':([0,],[2,]),'$end':([1,15,16,22,],[0,-1,-12,-11,]),'LexLiterals':([2,],[5,]),'LexIgnore':([2,4,5,],[-4,7,-3,]),'YaccBegin':([3,19,21,],[6,-2,-7,]),'YaccPrecedence':([6,],[9,]),'LexTokens':([7,],[10,]),'CodeBegin':([8,17,18,23,],[11,-8,-10,-9,]),'YaccTS':([9,],[12,]),'LexRule':([10,13,14,20,],[14,20,-6,-5,]),'CodeAll':([11,15,16,22,],[16,22,-12,-11,]),'YaccRule':([12,17,18,23,],[18,23,-10,-9,]),'LexError':([13,14,20,],[21,-6,-5,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'PROG':([0,],[1,]),'LEXER':([0,],[2,]),'LIT':([0,],[3,]),'GRAM':([2,],[5,]),'PRCDNC':([2,],[6,]),'IGN':([3,],[8,]),'TSYM':([6,],[12,]),'TOK':([8,],[15,]),'CODE':([11,],[19,]),'GRULES':([12,],[21,]),'GRULE':([12,21,],[22,34,]),'TRULES':([15,27,],[26,38,]),'TRULE':([15,27,],[27,27,]),'TERR':([15,27,],[28,28,]),'PARAMS':([35,],[44,]),'PARAM':([35,44,],[45,52,]),'INSTS':([49,],[55,]),'ARGS':([49,56,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,],[56,66,75,66,77,78,79,80,81,82,83,84,66,86,66,66,66,66,66,66,66,66,66,]),'ARG':([49,56,64,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,86,],[57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,57,]),}
+_lr_goto_items = {'Prog':([0,],[1,]),'Lexer':([2,],[3,]),'LexLits':([2,],[4,]),'Yacc':([6,],[8,]),'LexRules':([10,],[13,]),'Code':([11,],[15,]),'YaccRules':([12,],[17,]),'LexErr':([13,],[19,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,44 +26,17 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> PROG","S'",1,None,None,None),
-  ('PROG -> LEXER GRAM BEGINCODE CODE','PROG',4,'p_PROG','compilador.py',75),
-  ('CODE -> CODE ALL','CODE',2,'p_CODE_1','compilador.py',84),
-  ('CODE -> ALL','CODE',1,'p_CODE_2','compilador.py',85),
-  ('LEXER -> LIT IGN TOK TRULES','LEXER',4,'p_LEXER','compilador.py',87),
-  ('IGN -> % IGNORE = SSTR','IGN',4,'p_IGN','compilador.py',96),
-  ('LIT -> % LITERALS = SSTR','LIT',4,'p_LIT','compilador.py',100),
-  ('TOK -> % TOKENS = LIST','TOK',4,'p_TOK','compilador.py',108),
-  ('TRULES -> TRULE TRULES','TRULES',2,'p_TRULES_1','compilador.py',113),
-  ('TRULES -> TERR','TRULES',1,'p_TRULES_2','compilador.py',114),
-  ('TRULE -> REGEX RETURN ( SSTR , ARGS )','TRULE',7,'p_TRULE_1','compilador.py',116),
-  ('TERR -> REGEX ERROR ( INSTS )','TERR',5,'p_TERR_1','compilador.py',126),
-  ('INSTS -> ARGS , ARGS','INSTS',3,'p_INSTS_1','compilador.py',133),
-  ('ARGS -> ARGS , ARGS','ARGS',3,'p_ARGS_1','compilador.py',139),
-  ('ARGS -> ARGS ARGS','ARGS',2,'p_ARGS_2','compilador.py',140),
-  ('ARGS -> ARGS . ARGS','ARGS',3,'p_ARGS_3','compilador.py',141),
-  ('ARGS -> ARGS ( ARGS )','ARGS',4,'p_ARGS_4','compilador.py',142),
-  ('ARGS -> ARGS = ARGS','ARGS',3,'p_ARGS_5','compilador.py',143),
-  ('ARGS -> ARGS + ARGS','ARGS',3,'p_ARGS_6','compilador.py',144),
-  ('ARGS -> ARGS - ARGS','ARGS',3,'p_ARGS_7','compilador.py',145),
-  ('ARGS -> ARGS * ARGS','ARGS',3,'p_ARGS_8','compilador.py',146),
-  ('ARGS -> ARGS / ARGS','ARGS',3,'p_ARGS_9','compilador.py',147),
-  ('ARGS -> ARG','ARGS',1,'p_ARGS_10','compilador.py',148),
-  ('ARG -> STR','ARG',1,'p_ARG_1','compilador.py',150),
-  ('ARG -> NUMBER','ARG',1,'p_ARG_2','compilador.py',151),
-  ('ARG -> LIST','ARG',1,'p_ARG_3','compilador.py',152),
-  ('ARG -> INDEX','ARG',1,'p_ARG_4','compilador.py',153),
-  ('ARG -> SSTR','ARG',1,'p_ARG_5','compilador.py',154),
-  ('ARG -> CHAVSTXT','ARG',1,'p_ARG_6','compilador.py',155),
-  ('GRAM -> PRCDNC TSYM GRULES','GRAM',3,'p_GRAM_1','compilador.py',157),
-  ('TSYM -> TS = CHAVSTXT','TSYM',3,'p_TSYM_1','compilador.py',164),
-  ('PRCDNC -> % PRECEDENCE = LIST','PRCDNC',4,'p_PRCDNC_1','compilador.py',168),
-  ('GRULES -> GRULES GRULE','GRULES',2,'p_GRULES_1','compilador.py',172),
-  ('GRULES -> GRULE','GRULES',1,'p_GRULES_2','compilador.py',173),
-  ('GRULE -> STR : PARAMS CHAVSTXT','GRULE',4,'p_GRULE_1','compilador.py',175),
-  ('PARAMS -> PARAMS PARAM','PARAMS',2,'p_PARAMS_1','compilador.py',188),
-  ('PARAMS -> PARAM','PARAMS',1,'p_PARAMS_2','compilador.py',189),
-  ('PARAM -> STR','PARAM',1,'p_PARAM_1','compilador.py',191),
-  ('PARAM -> LITERAL','PARAM',1,'p_PARAM_2','compilador.py',195),
-  ('PARAM -> % STR','PARAM',2,'p_PARAM_3','compilador.py',211),
+  ("S' -> Prog","S'",1,None,None,None),
+  ('Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code','Prog',6,'p_Prog','compilador.py',131),
+  ('Lexer -> LexLits LexIgnore LexTokens LexRules LexErr','Lexer',5,'p_Lexer','compilador.py',142),
+  ('LexLits -> LexLiterals','LexLits',1,'p_LexLits_1','compilador.py',147),
+  ('LexLits -> <empty>','LexLits',0,'p_LexLits_2','compilador.py',157),
+  ('LexRules -> LexRules LexRule','LexRules',2,'p_LexRules_1','compilador.py',161),
+  ('LexRules -> LexRule','LexRules',1,'p_LexRules_2','compilador.py',169),
+  ('LexErr -> LexError','LexErr',1,'p_LexErr','compilador.py',177),
+  ('Yacc -> YaccPrecedence YaccTS YaccRules','Yacc',3,'p_Yacc','compilador.py',189),
+  ('YaccRules -> YaccRules YaccRule','YaccRules',2,'p_YaccRules_1','compilador.py',193),
+  ('YaccRules -> YaccRule','YaccRules',1,'p_YaccRules_2','compilador.py',209),
+  ('Code -> Code CodeAll','Code',2,'p_Code_1','compilador.py',226),
+  ('Code -> CodeAll','Code',1,'p_Code_2','compilador.py',227),
 ]

@@ -1,0 +1,54 @@
+%literals = "+*()"
+%ignore = " \t\n"
+%tokens = ["num"]
+
+r'\d+'  return("num", int(t.value))
+r'.'    error(f"illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
+
+ts = { }
+
+Z       : Sext                  { print(t[1]) }
+Sext    : '(' '+' Lista ')'     { t[0] = mySum(t[3]) }
+Sext    : '(' '*' Lista ')'     { t[0] = mytrod(t[3]) }
+Sext    : num                   { t[0] = t[1] }
+Lista   : Sext Lista            { t[0] = [t[1]] + t[2] }
+Lista   : Sext Sext             { t[0] = [t[1]] + [t[2]] }
+
+%%
+
+def mySum(l):
+    r = 0
+    for elem in l:
+        r += elem
+    return r
+
+def myProd(l):
+    r = 1
+    for elem in l:
+        r *= elem
+    return r
+
+
+
+
+
+
+def p_error(p):
+    print(f"Syntax error: ", p)
+    y.success = False
+
+# Build the parser
+y=yacc()
+
+
+# Read line from input and parse it
+import sys
+for linha in sys.stdin:
+    y.success = True
+    result = y.parse(linha)
+
+    if y.success:
+        print("Frase valida: ", linha)
+        print(result)
+    else:
+        print("Frase invalida... Corrija e tente novamente!")

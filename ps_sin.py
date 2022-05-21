@@ -1,10 +1,11 @@
 from ply.yacc import yacc
-from PLYsimple_lex import tokens, literals, states
+from ps_lex import tokens, literals, states
 
 
 def p_PROG(p):
     "Prog : Lexer Gram Code"
-    p[0] = "\n# LEXER\n"
+    p[0] = "\nfrom ply.lex import lex\nfrom ply.yacc import yacc\n"
+    p[0] += "\n# LEXER\n"
     p[0] += p[1]
     p[0] += "\n# YACC\n"
     p[0] += p[2]
@@ -31,7 +32,7 @@ def p_Literals(p):
 
 def p_Ignore(p):
     "Ignore : '%' IGNORE '=' SSTR"
-    p[0] = f'ignore = {p[4]}'
+    p[0] = f't_ignore = {p[4]}'
 
 
 def p_Tokens(p):
@@ -60,27 +61,19 @@ def p_Terr(p):
 """
 
 def p_Insts(p):
-    "Insts : Args ',' Args"
-    p[0] = f"""{p[1]}
+    "Insts : Arg ',' Arg"
+    p[0] = f"""print({p[1]})
     {p[3]}
 """
 
-def p_Args_1(p):  "Args : Args ',' Args"          ;  p[0] = f"{p[1]}, {p[3]}"
-def p_Args_2(p):  "Args : Args Args"                ;  p[0] = f"{p[1]} {p[3]}"
-def p_Args_3(p):  "Args : Args '.' Args"            ;  p[0] = f"{p[1]}.{p[3]}"
-def p_Args_4(p):  "Args : Args '(' Args ')'"    ;  p[0] = f"{p[1]}({p[3]})"
-def p_Args_5(p):  "Args : Args '=' Args"         ;  p[0] = f"{p[1]} = {p[3]}"
-def p_Args_6(p):  "Args : Args '+' Args"           ;  p[0] = f"{p[1]} + {p[3]}"
-def p_Args_7(p):  "Args : Args '-' Args"          ;  p[0] = f"{p[1]} - {p[3]}"
-def p_Args_8(p):  "Args : Args '*' Args"          ;  p[0] = f"{p[1]} * {p[3]}"
-def p_Args_9(p):  "Args : Args '/' Args"         ;  p[0] = f"{p[1]} / {p[3]}"
-def p_Args_10(p): "Args : Arg"                      ;  p[0] = p[1]
+def p_Args_list(p):   "Args : Args ',' Arg"           ;  p[0] = f"{p[1]}, {p[3]}"
+def p_Args_single(p): "Args : Arg"                    ;  p[0] = p[1]
 
-def p_Arg_1(p):  "Arg : STR"                     ;   p[0] = p[1]
-def p_Arg_2(p):  "Arg : NUMBER"                  ;   p[0] = p[1]
-def p_Arg_3(p):  "Arg : LIST"                    ;   p[0] = p[1]
-def p_Arg_4(p):  "Arg : SSTR"                    ;   p[0] = p[1]
-def p_Arg_5(p):  "Arg : CHAVSTXT"                ;   p[0] = p[1]
+def p_Arg_str(p): "Arg : STR"           ; p[0] = p[1]
+def p_Arg_func_str(p): "Arg : STR '(' STR ')'" ; p[0] = p[1] + p[2] + p[3] + p[4]
+def p_Arg_func_number(p): "Arg : STR '(' NUMBER ')'" ; p[0] = p[1] + p[2] + str(p[3]) + p[4]
+def p_Arg_sstr(p):  "Arg : SSTR"        ;   p[0] = p[1]
+
 
 def p_Gram(p): 
     "Gram : Precedence SymbTab Grules"
@@ -89,13 +82,19 @@ def p_Gram(p):
 {p[3]}
 """
 
-def p_SymbTab(p):
-    "SymbTab : TS '=' CHAVSTXT"
-    p[0] = f"ts = {p[3]}\n"
 
 def p_Precedence(p):
     "Precedence : '%' PRECEDENCE '=' LIST"
     p[0] = f'precedence = {p[4]}\n'
+
+def p_Precedence_empty(p):
+    "Precedence : "
+    p[0] = ""
+
+def p_SymbTab(p):
+    "SymbTab : TS '=' CHAVSTXT"
+    p[0] = f"ts = {p[3]}\n"
+
 
 def p_Grules_list(p):   "Grules : Grules Grule"  ;  p[0] = p[1] + p[2]
 def p_Grule_single(p):  "Grules : Grule"         ;  p[0] = p[1]
@@ -115,6 +114,7 @@ def p_Grule(p):
 
 def p_Params_list(p):    "Params : Params Param" ; p[0] = f"{p[1]} {p[2]}"
 def p_Params_single(p):  "Params : Param"        ; p[0] = f"{p[1]}"
+def p_Params_empty(p):   "Params : "             ; p[0] = ""
 
 def p_Param_str(p):
     "Param : STR"

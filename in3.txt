@@ -1,0 +1,35 @@
+%literals = "[],"
+%ignore = " \t\n"
+%tokens = ["NUM"]
+
+r'\d+' return("NUM", t.value)
+r'.' error(f"Illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
+
+ts = { }
+
+lista : '[' ']'             { }
+lista : '[' NUM resto ']'   { }
+resto : ',' NUM resto       { }
+resto :                     { }
+
+%%
+
+def p_error(p):
+    print(f"Syntax error: ", p)
+    y.success = False
+
+# Build the parser
+y=yacc()
+
+
+# Read line from input and parse it
+import sys
+for linha in sys.stdin:
+    y.success = True
+    y.parse(linha)
+
+    if y.success:
+        print("Frase valida: ", linha)
+    else:
+        print("Frase invalida... Corrija e tente novamente!")
+
