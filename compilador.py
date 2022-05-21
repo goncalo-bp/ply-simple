@@ -1,3 +1,5 @@
+from lib2to3.pgen2 import literals
+from mimetypes import init
 from operator import truediv
 from ply.lex import lex
 from ply.yacc import yacc 
@@ -5,223 +7,267 @@ import sys
 import re
 import math
 
-# ANALISADOR LÉXICO
-literals = ['(', ')', '[', ']', '{', '}', '"', '\'', ',', '.', ':', '\\', '=', '%', '+', '-', '*', '/']
-reservadas = "tokens literals ignore return error yacc lex precedence ts def".split()
-tokens = ['SSTR', 'STR', 'REGEX', 'NUMBER', 'INDEX', 'LITERAL',
-          'LIST', 'CHAVSTXT', 'BEGINCODE', 'ALL'] + [x.upper() for x in reservadas]
-states = (('incode', 'exclusive'),)
+literals = []
+tokens = ['LexBegin', 'YaccBegin', 'CodeBegin',
+          'LPAR', 'RPAR', 'LSPAR', 'RSPAR', 'LCHAV', 'RCHAV', 
+          'LESS', 'MORE', 'EQ', 'PLUS', 'MINUS', 'TIMES',
+          'SLASH', 'BSLASH', 'PERC',
+          'QUOTE', 'PELICA', 'UNDERSCORE', 'DOT', 'COMMA',
+          'Str', 'Int', 'Float',
+          'LexLiterals', 'LexTokens', 'LexIgnore', 'LexRule', 'LexError',
+          'YaccPrecedence', 'YaccTS', 'YaccRule',
+          'CodeAll']
+states = (('StateLex', 'exclusive'), 
+          ('StateYacc', 'exclusive'),
+          ('StateCode', 'exclusive'))
 
-def t_incode_ALL(t):
+def t_ANY_LexBegin(t):
+    r'%%\ *\t*LEX'
+    t.lexer.begin('StateLex')
+    return t
+
+def t_StateLex_LexLiterals(t):
+    r'%literals\ *=\ *\".*\"'
+    t.value = t.value[1:]
+    return t
+
+def t_StateLex_LexTokens(t):
+    r'%tokens\ *=\ *\[.*\]'
+    t.value = t.value[1:]
+    return t
+
+def t_StateLex_LexIgnore(t):
+    r'%ignore\ *=\ *\".*\"'
+    t.value = t.value[1:]
+    return t
+
+def t_StateLex_LexRule(t):
+    r'r\'.*\'\ *\t*return\(.*\)'
+    return t
+
+def t_StateLex_LexError(t):
+    r'r\'.*\'\ *\t*error\(.*\)'
+    return t
+
+def t_ANY_YaccBegin(t):
+    r'%%\ *\t*YACC'
+    t.lexer.begin('StateYacc')
+    return t
+
+def t_StateYacc_YaccPrecedence(t):
+    r'%precedence\ *=\ *\[.*\]'
+    t.value = t.value[1:]
+    return t
+
+def t_StateYacc_YaccTS(t):
+    r'ts\ *=\ *\{.*\}'
+    return t
+
+def t_StateYacc_YaccRule(t):
+    r'\w+\ *\t*:\ *\t*.*{.*}'
+    return t
+
+def t_ANY_CodeBegin(t):
+    r'%%\ *\t*'
+    t.lexer.begin('StateCode')
+    return t
+
+def t_StateCode_CodeAll(t):
     r'.+'
     return t
 
-def t_SSTR(t):
-    r'\w*\"(.+)\"'
-    return t
-
-def t_REGEX(t):
-    r'r\'(.*)\''
-    return t
-
-def t_STR(t):
+def t_ANY_Str(t):
     r'[A-Za-z_]+'
-    if t.value in reservadas:
-        t.type = t.value.upper()
     return t
 
-def t_INDEX(t):
+def t_ANY_Int(t):
     r'\d+'
-    t.value = int(t.value)
     return t
 
-def t_NUMBER(t):
-    r'\d+(\.\d+)?'
-    t.value = float(t.value)
+def t_ANY_Float(t):
+    r'\d+.\d+'
     return t
 
-def t_LIST(t):
-    r'\[.+\]'
-    return t
-
-def t_CHAVSTXT(t):
-    r'\{.+\}'
-    return t
-
-def t_LITERAL(t):
-    r'\'[,=(){}<>\[\]+\-*\/^]{1}\''
-    return t
-
-def t_BEGINCODE(t):
-    r'%%'
-    t.lexer.begin('incode')
-    return t
-
-
-t_ignore = " \t\n"
-t_incode_ignore = "\n"
+def t_ANY_LPAR(t):         r'\(' ; return t
+def t_ANY_RPAR(t):         r'\)' ; return t
+def t_ANY_LSPAR(t):        r'\[' ; return t
+def t_ANY_RSPAR(t):        r'\]' ; return t
+def t_ANY_LCHAV(t):        r'{'  ; return t
+def t_ANY_RCHAV(t):        r'}'  ; return t
+def t_ANY_LESS(t):         r'<'  ; return t
+def t_ANY_MORE(t):         r'>'  ; return t
+def t_ANY_EQ(t):           r'='  ; return t
+def t_ANY_PLUS(t):         r'\+' ; return t
+def t_ANY_MINUS(t):        r'-'  ; return t
+def t_ANY_TIMES(t):        r'\*' ; return t
+def t_ANY_SLASH(t):        r'/'  ; return t
+def t_ANY_BSLASH(t):       r'\\' ; return t
+def t_ANY_PERC(t):         r'%'  ; return t
+def t_ANY_QUOTE(t):        r'\"' ; return t
+def t_ANY_PELICA(t):       r'\'' ; return t
+def t_ANY_UNDERSCORE(t):   r'_'  ; return t
+def t_ANY_DOT(t):          r'\.' ; return t
+def t_ANY_COMMA(t):        r','  ; return t
 
 def t_ANY_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
+t_StateLex_ignore = "\t \n"
+t_StateYacc_ignore = "\t \n"
+t_StateCode_ignore = "\n"
+t_ignore = "\t \n"
+
+
 lexer = lex()
 
-# GRAMÁTICA
+#lexer.input(sys.stdin.read())
+#for tok in lexer:
+#    print(tok)
 
-ts = {"ltls" : []}
+ts = { }
 
-def p_PROG(p):
-    "PROG : LEXER GRAM BEGINCODE CODE"
-    p[0] = "\n# LEXER\n"
-    p[0] += (p[1])
-    p[0] += "\n# YACC\n"
+def p_Prog(p):
+    "Prog : LexBegin Lexer YaccBegin Yacc CodeBegin Code"
+    p[0]  = "\n# LEXER\n\n"
     p[0] += p[2]
-    p[0] += "\n# PYTHON\n"
+    p[0] += "\n# YACC\n\n"
     p[0] += p[4]
+    p[0] += "\n# RAW PYTHON\n\n"
+    p[0] += p[6]
 
-def p_CODE_1(p): "CODE : CODE ALL" ; p[0] = f"{p[1]}\n{p[2]}"
-def p_CODE_2(p): "CODE : ALL"      ; p[0] = p[1]
+# :::::::::::::::::: Lex :::::::::::::::::
 
-def p_LEXER(p):
-    "LEXER : LIT IGN TOK TRULES"
-    p[0] = f"""{p[1]}
-{p[2]}
-{p[3]}\n
-{p[4]}
-lexer = lex()
-"""
+def p_Lexer(p):
+    "Lexer : LexLits LexIgnore LexTokens LexRules LexErr"
+    p[0] = f"{p[1]}\n{p[3]}\n\nt_{p[2]}\n\n{p[4]}\n{p[5]}\n"
 
-def p_IGN(p):
-    "IGN : '%' IGNORE '=' SSTR"
-    p[0] = f'ignore = {p[4]}'
+# AJEITAR LITERALS
+def p_LexLits_1(p): 
+    "LexLits : LexLiterals"
+    lits = re.match(r'\w+\ *\t*=\ *\t*\"(.*)\"', p[1])
+    p[0] = "literals = "
+    p[0] += '['
+    for c in lits[1]:
+        p[0]+= f"'{c}', "
+    p[0] = p[0][:-2]
+    p[0] += ']'
 
-def p_LIT(p): 
-    "LIT : '%' LITERALS '=' SSTR"
-    p[0] = f'literals = {p[4]}'
-    p[4] = p[4][:-1]
-    p[4] = p[4][1:]
-    for x in p[4]:
-        ts['ltls'].append(x)
+def p_LexLits_2(p): 
+    "LexLits : "
+    p[0] = ""
 
-def p_TOK(p):
-    "TOK : '%' TOKENS '=' LIST"
-    p[0] = f'tokens = {p[4]}'
-
-
-def p_TRULES_1(p): "TRULES : TRULE TRULES" ; p[0] = p[1] + p[2]
-def p_TRULES_2(p): "TRULES : TERR"         ; p[0] = p[1]
-
-def p_TRULE_1(p):
-    "TRULE : REGEX RETURN '(' SSTR ',' ARGS ')'"
-    p[4] = p[4][1:]
-    p[4] = p[4][:-1]
-    p[0] = f"""def t_{p[4]}(t):
-    {p[1]}
-    t.value = {p[6]}
-    return t
-"""
-
-def p_TERR_1(p):
-    "TERR : REGEX ERROR '(' INSTS ')'"
-    p[0] = f"""def t_error(t):
-    {p[1]}
-    {p[4]}
-"""
-
-def p_INSTS_1(p):
-    "INSTS : ARGS ',' ARGS"
-    p[0] = f"""{p[1]}
-    {p[3]}
-"""
-
-def p_ARGS_1(p):  "ARGS : ARGS ',' ARGS"          ;  p[0] = f"{p[1]}, {p[3]}"
-def p_ARGS_2(p):  "ARGS : ARGS ARGS"                ;  p[0] = f"{p[1]} {p[3]}"
-def p_ARGS_3(p):  "ARGS : ARGS '.' ARGS"            ;  p[0] = f"{p[1]}.{p[3]}"
-def p_ARGS_4(p):  "ARGS : ARGS '(' ARGS ')'"    ;  p[0] = f"{p[1]}({p[3]})"
-def p_ARGS_5(p):  "ARGS : ARGS '=' ARGS"         ;  p[0] = f"{p[1]} = {p[3]}"
-def p_ARGS_6(p):  "ARGS : ARGS '+' ARGS"           ;  p[0] = f"{p[1]} + {p[3]}"
-def p_ARGS_7(p):  "ARGS : ARGS '-' ARGS"          ;  p[0] = f"{p[1]} - {p[3]}"
-def p_ARGS_8(p):  "ARGS : ARGS '*' ARGS"          ;  p[0] = f"{p[1]} * {p[3]}"
-def p_ARGS_9(p):  "ARGS : ARGS '/' ARGS"         ;  p[0] = f"{p[1]} / {p[3]}"
-def p_ARGS_10(p): "ARGS : ARG"                      ;  p[0] = p[1]
-
-def p_ARG_1(p):  "ARG : STR"                     ;   p[0] = p[1]
-def p_ARG_2(p):  "ARG : NUMBER"                  ;   p[0] = p[1]
-def p_ARG_3(p):  "ARG : LIST"                    ;   p[0] = p[1]
-def p_ARG_4(p):  "ARG : INDEX"                   ;   p[0] = p[1]
-def p_ARG_5(p):  "ARG : SSTR"                    ;   p[0] = p[1]
-def p_ARG_6(p):  "ARG : CHAVSTXT"                ;   p[0] = p[1]
-
-def p_GRAM_1(p): 
-    "GRAM : PRCDNC TSYM GRULES"
-    p[0] = f"""{p[1]}
-{p[2]}
-{p[3]}
-"""
-
-def p_TSYM_1(p):
-    "TSYM : TS '=' CHAVSTXT"
-    p[0] = f"ts = {p[3]}\n"
-
-def p_PRCDNC_1(p):
-    "PRCDNC : '%' PRECEDENCE '=' LIST"
-    p[0] = f'precedence = {p[4]}\n'
-
-def p_GRULES_1(p):  "GRULES : GRULES GRULE"  ;  p[0] = p[1] + p[2]
-def p_GRULES_2(p):  "GRULES : GRULE"         ;  p[0] = p[1]
-
-def p_GRULE_1(p):
-    "GRULE : STR ':' PARAMS CHAVSTXT"
-    p[4] = p[4][2:]
-    p[4] = p[4][:-2]
-    if p[1] in ts:
-        ts[p[1]] = ts[p[1]] + 1
-    else:
-        ts[p[1]] = 1
-    p[0] = f"""def p_{p[1]}_{ts[p[1]]}(t):
-    \"{p[1]} : {p[3]}\"
-    {p[4]}
-"""
-
-def p_PARAMS_1(p):  "PARAMS : PARAMS PARAM" ; p[0] = f"{p[1]} {p[2]}"
-def p_PARAMS_2(p):  "PARAMS : PARAM"        ; p[0] = f"{p[1]}"
-
-def p_PARAM_1(p):
-    "PARAM : STR"
+def p_LexRules_1(p):
+    "LexRules : LexRules LexRule"
     p[0] = p[1]
+    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",(.*)\)', p[2])
+    p[0] += f"""def t_{params[2]}(t):
+    {params[1]}
+    return {params[3]}
+"""
+def p_LexRules_2(p):
+    "LexRules : LexRule"
+    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",(.*)\)', p[1])
+    p[0] = f"""def t_{params[2]}(t):
+    {params[1]}
+    return {params[3]}
+"""
 
-def p_PARAM_2(p):
-    "PARAM : LITERAL"
+def p_LexErr(p):
+    "LexErr : LexError"
+    params = re.match(r'(r\'.*\')\ *\t*error\((.*)\)', p[1])
+    p[0] = "def t_error(t):\n"
+    l = splitByMarks(params[2])
+    for arg in l:
+        while arg[0] == ' ':
+            arg = arg[1:]
+        p[0] += f"    {arg}\n"
 
-    # Tirar as plicas do LITERAL
-    p[1] = p[1][1:]
-    p[1] = p[1][:-1]
+# ::::::::::::::::: Yacc :::::::::::::::::
 
-    if p[1] in ts['ltls']:
-        # Caso exista, volta a colocar plicas e retorna
-        p[0] = f"\'{p[1]}\'"
+def p_Yacc(p):
+    "Yacc : YaccPrecedence YaccTS YaccRules"
+    p[0] = f"{p[1]}\n{p[2]}\n\n{p[3]}\n"
+
+def p_YaccRules_1(p):
+    "YaccRules : YaccRules YaccRule"
+    p[0] = p[1]
+    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*){(.*)}', p[2])
+    if params[1] in ts:
+        ts[params[1]] = ts[params[1]] + 1
     else:
-        # Retorna literal "vazio"
-        p[0] = "\'\'"
-        print(f"ERROR: Undefined literal '{p[1]}'")
+        ts[params[1]] = 1
+    inst = params[3]
+    while inst[0] == ' ':
+        inst = inst[1:]
+    p[0] += f"""def p_{params[1]}_{ts[params[1]]}(t):
+    \"{params[1]} : {params[2]}\"
+    {inst}
+"""
 
+def p_YaccRules_2(p):
+    "YaccRules : YaccRule"
+    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*){(.*)}', p[1])
+    if params[1] in ts:
+        ts[params[1]] = ts[params[1]] + 1
+    else:
+        ts[params[1]] = 1
+    inst = params[3]
+    while inst[0] == ' ':
+        inst = inst[1:]
+    p[0] = f"""def p_{params[1]}_{ts[params[1]]}(t):
+    \"{params[1]} : {params[2]}\"
+    {inst}
+"""
 
-def p_PARAM_3(p):
-    "PARAM : '%' STR"
-    p[0] = p[1] + p[2]
+# ::::::::::::::::: Code :::::::::::::::::
+
+def p_Code_1(p): "Code : Code CodeAll" ; p[0] = f"{p[1]}\n{p[2]}"
+def p_Code_2(p): "Code : CodeAll"      ; p[0] = p[1]
 
 def p_error(p):
     print(f"Syntax error ", p)
     parser.success = False
 
 
-# Build the parser
-parser = yacc()
-ts = {"ltls" : []}
+# ::::::::::::::::: AUX :::::::::::::::::
 
-# Read program from input and parse it
-import sys
+def splitByMarks(s):
+    lst = list()
+    init_mark = { '(' : 0 , '[' : 1 , '{' : 2 , '\'' : 3 , '\"' : 4 }
+    end_mark  = { 0 : ')' , 1 : ']' , 2 : '}' , 3 : '\'' , 4 : '\"' }
+    last_bracket = ''
+    index = -1
+    word = ""
+    closing = False
+    for c in s:
+        if c in init_mark and last_bracket not in init_mark:
+            last_bracket = c
+            index = init_mark[c]
+            closing = False
+        elif c in end_mark.values() and end_mark[index] == c:
+            last_bracket = end_mark[index]
+            closing = True
+        if c == ',' and last_bracket in end_mark.values() and closing:
+            lst.append(word)
+            word = ""
+            continue
+        elif c == ',' and last_bracket in init_mark:
+            word += c
+            continue
+        elif c == ',':
+            lst.append(word)
+            word = ""
+            continue
+        word += c
+    lst.append(word)
+    return lst
+
+# :::::::::::::::::::::::::::::::::::::::
+
+
+parser = yacc()
+
 parser.success = True
 codigo = parser.parse(sys.stdin.read())
 
