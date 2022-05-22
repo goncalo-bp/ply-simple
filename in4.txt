@@ -4,7 +4,7 @@
 %ignore = " \t\n"
 %tokens = ["texto"]
 
-r'\"[^"]+\"'    return("texto", t.value)
+r'\"[^"]+\"'    return("texto", t)
 r'.'            error(f"illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
 
 %% YACC
