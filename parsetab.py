@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BSLASH COMMA CodeAll CodeBegin DOT EQ Float Int LCHAV LESS LPAR LSPAR LexBegin LexError LexIgnore LexLiterals LexRule LexTokens MINUS MORE PELICA PERC PLUS QUOTE RCHAV RPAR RSPAR SLASH Str TIMES UNDERSCORE YaccBegin YaccPrecedence YaccRule YaccTSProg : LexBegin Lexer YaccBegin Yacc CodeBegin CodeLexer : LexLits LexIgnore LexTokens LexRules LexErrLexLits : LexLiteralsLexLits : LexRules : LexRules LexRuleLexRules : LexRuleLexErr : LexErrorYacc : YaccPrec YaccTSym YaccRulesYaccPrec : YaccPrecedenceYaccPrec : YaccTSym : YaccTSYaccTSym : YaccRules : YaccRules YaccRuleYaccRules : YaccRuleCode : Code CodeAllCode : CodeAll'
+_lr_signature = "textoZ : Dir                               Dir : '(' texto Ficheiros SubDirs ')'   Ficheiros : '[' texto RestoFicheiros ']'      Ficheiros : RestoFicheiros : texto RestoFicheiros              RestoFicheiros : SubDirs : Dir SubDirs                       SubDirs : "
     
-_lr_action_items = {'LexBegin':([0,],[2,]),'$end':([1,17,18,24,],[0,-1,-16,-15,]),'LexLiterals':([2,],[5,]),'LexIgnore':([2,4,5,],[-4,7,-3,]),'YaccBegin':([3,21,23,],[6,-2,-7,]),'YaccPrecedence':([6,],[10,]),'YaccTS':([6,9,10,],[-10,14,-9,]),'YaccRule':([6,9,10,13,14,19,20,25,],[-10,-12,-9,20,-11,25,-14,-13,]),'LexTokens':([7,],[11,]),'CodeBegin':([8,19,20,25,],[12,-8,-14,-13,]),'LexRule':([11,15,16,22,],[16,22,-6,-5,]),'CodeAll':([12,17,18,24,],[18,24,-16,-15,]),'LexError':([15,16,22,],[23,-6,-5,]),}
+_lr_action_items = {'(':([0,4,5,8,10,15,],[3,-4,3,3,-2,-3,]),'$end':([1,2,10,],[0,-1,-2,]),'texto':([3,6,9,12,],[4,9,12,12,]),'[':([4,],[6,]),')':([4,5,7,8,10,11,15,],[-4,-8,10,-8,-2,-7,-3,]),']':([9,12,13,14,],[-6,-6,15,-5,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Prog':([0,],[1,]),'Lexer':([2,],[3,]),'LexLits':([2,],[4,]),'Yacc':([6,],[8,]),'YaccPrec':([6,],[9,]),'YaccTSym':([9,],[13,]),'LexRules':([11,],[15,]),'Code':([12,],[17,]),'YaccRules':([13,],[19,]),'LexErr':([15,],[21,]),}
+_lr_goto_items = {'Z':([0,],[1,]),'Dir':([0,5,8,],[2,8,8,]),'Ficheiros':([4,],[5,]),'SubDirs':([5,8,],[7,11,]),'RestoFicheiros':([9,12,],[13,14,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,21 +26,13 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> Prog","S'",1,None,None,None),
-  ('Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code','Prog',6,'p_Prog','compilador.py',131),
-  ('Lexer -> LexLits LexIgnore LexTokens LexRules LexErr','Lexer',5,'p_Lexer','compilador.py',143),
-  ('LexLits -> LexLiterals','LexLits',1,'p_LexLits_1','compilador.py',148),
-  ('LexLits -> <empty>','LexLits',0,'p_LexLits_2','compilador.py',158),
-  ('LexRules -> LexRules LexRule','LexRules',2,'p_LexRules_1','compilador.py',162),
-  ('LexRules -> LexRule','LexRules',1,'p_LexRules_2','compilador.py',170),
-  ('LexErr -> LexError','LexErr',1,'p_LexErr','compilador.py',178),
-  ('Yacc -> YaccPrec YaccTSym YaccRules','Yacc',3,'p_Yacc','compilador.py',190),
-  ('YaccPrec -> YaccPrecedence','YaccPrec',1,'p_YaccPrec_1','compilador.py',194),
-  ('YaccPrec -> <empty>','YaccPrec',0,'p_YaccPrec_2','compilador.py',195),
-  ('YaccTSym -> YaccTS','YaccTSym',1,'p_YaccTSym_1','compilador.py',197),
-  ('YaccTSym -> <empty>','YaccTSym',0,'p_YaccTSym_2','compilador.py',198),
-  ('YaccRules -> YaccRules YaccRule','YaccRules',2,'p_YaccRules_1','compilador.py',200),
-  ('YaccRules -> YaccRule','YaccRules',1,'p_YaccRules_2','compilador.py',216),
-  ('Code -> Code CodeAll','Code',2,'p_Code_1','compilador.py',233),
-  ('Code -> CodeAll','Code',1,'p_Code_2','compilador.py',234),
+  ("S' -> Z","S'",1,None,None,None),
+  ('Z -> Dir','Z',1,'p_Z_1','out4.py',26),
+  ('Dir -> ( texto Ficheiros SubDirs )','Dir',5,'p_Dir_1','out4.py',29),
+  ('Ficheiros -> [ texto RestoFicheiros ]','Ficheiros',4,'p_Ficheiros_1','out4.py',32),
+  ('Ficheiros -> <empty>','Ficheiros',0,'p_Ficheiros_2','out4.py',35),
+  ('RestoFicheiros -> texto RestoFicheiros','RestoFicheiros',2,'p_RestoFicheiros_1','out4.py',38),
+  ('RestoFicheiros -> <empty>','RestoFicheiros',0,'p_RestoFicheiros_2','out4.py',41),
+  ('SubDirs -> Dir SubDirs','SubDirs',2,'p_SubDirs_1','out4.py',44),
+  ('SubDirs -> <empty>','SubDirs',0,'p_SubDirs_2','out4.py',47),
 ]

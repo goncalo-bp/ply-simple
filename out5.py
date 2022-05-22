@@ -11,33 +11,32 @@ def t_num(t):
     return t
 
 def t_error(t):
+    r'.'
     f"illegal char {t.value[0]} line {t.lexer.lineno}"
     t.lexer.skip(1)
 
-
 # YACC
-
 
 ts = { }
 
 def p_Z_1(t):
     "Z : Sext                  "
-    print(t[1])
+    t[0] = t[1] 
 def p_Sext_1(t):
     "Sext : '(' '+' Lista ')'     "
-    t[0] = mySum(t[3])
+    t[0] = mySum(t[3]) 
 def p_Sext_2(t):
     "Sext : '(' '*' Lista ')'     "
-    t[0] = myProd(t[3])
+    t[0] = myProd(t[3]) 
 def p_Sext_3(t):
     "Sext : num                   "
-    t[0] = t[1]
+    t[0] = t[1] 
 def p_Lista_1(t):
     "Lista : Sext Lista            "
-    t[0] = [t[1]] + t[2]
+    t[0] = [t[1]] + t[2] 
 def p_Lista_2(t):
     "Lista : Sext Sext             "
-    t[0] = [t[1]] + [t[2]]
+    t[0] = [t[1]] + [t[2]] 
 
 
 # RAW PYTHON
@@ -49,25 +48,30 @@ def mySum(l):
     for elem in l:
         r += elem
     return r
+
 def myProd(l):
     r = 1
     for elem in l:
         r *= elem
     return r
+
 def p_error(p):
     print(f"Syntax error: ", p)
     y.success = False
+
 # Build the lexer
 l=lex()
+
 # Build the parser
 y=yacc()
+
 # Read line from input and parse it
 import sys
 for linha in sys.stdin:
     y.success = True
     result = y.parse(linha)
     if y.success:
-        print("Frase valida: ", linha)
-        print(result)
+        print("Frase valida: ", linha[:-1])
+        print("Resultado: ", result, '\n')
     else:
         print("Frase invalida... Corrija e tente novamente!")

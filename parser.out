@@ -1,325 +1,175 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    BSLASH
-    COMMA
-    DOT
-    EQ
-    Float
-    Int
-    LCHAV
-    LESS
-    LPAR
-    LSPAR
-    MINUS
-    MORE
-    PELICA
-    PERC
-    PLUS
-    QUOTE
-    RCHAV
-    RPAR
-    RSPAR
-    SLASH
-    Str
-    TIMES
-    UNDERSCORE
-
 Grammar
 
-Rule 0     S' -> Prog
-Rule 1     Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code
-Rule 2     Lexer -> LexLits LexIgnore LexTokens LexRules LexErr
-Rule 3     LexLits -> LexLiterals
-Rule 4     LexLits -> <empty>
-Rule 5     LexRules -> LexRules LexRule
-Rule 6     LexRules -> LexRule
-Rule 7     LexErr -> LexError
-Rule 8     Yacc -> YaccPrec YaccTSym YaccRules
-Rule 9     YaccPrec -> YaccPrecedence
-Rule 10    YaccPrec -> <empty>
-Rule 11    YaccTSym -> YaccTS
-Rule 12    YaccTSym -> <empty>
-Rule 13    YaccRules -> YaccRules YaccRule
-Rule 14    YaccRules -> YaccRule
-Rule 15    Code -> Code CodeAll
-Rule 16    Code -> CodeAll
+Rule 0     S' -> Z
+Rule 1     Z -> Dir
+Rule 2     Dir -> ( texto Ficheiros SubDirs )
+Rule 3     Ficheiros -> [ texto RestoFicheiros ]
+Rule 4     Ficheiros -> <empty>
+Rule 5     RestoFicheiros -> texto RestoFicheiros
+Rule 6     RestoFicheiros -> <empty>
+Rule 7     SubDirs -> Dir SubDirs
+Rule 8     SubDirs -> <empty>
 
 Terminals, with rules where they appear
 
-BSLASH               : 
-COMMA                : 
-CodeAll              : 15 16
-CodeBegin            : 1
-DOT                  : 
-EQ                   : 
-Float                : 
-Int                  : 
-LCHAV                : 
-LESS                 : 
-LPAR                 : 
-LSPAR                : 
-LexBegin             : 1
-LexError             : 7
-LexIgnore            : 2
-LexLiterals          : 3
-LexRule              : 5 6
-LexTokens            : 2
-MINUS                : 
-MORE                 : 
-PELICA               : 
-PERC                 : 
-PLUS                 : 
-QUOTE                : 
-RCHAV                : 
-RPAR                 : 
-RSPAR                : 
-SLASH                : 
-Str                  : 
-TIMES                : 
-UNDERSCORE           : 
-YaccBegin            : 1
-YaccPrecedence       : 9
-YaccRule             : 13 14
-YaccTS               : 11
+(                    : 2
+)                    : 2
+[                    : 3
+]                    : 3
 error                : 
+texto                : 2 3 5
 
 Nonterminals, with rules where they appear
 
-Code                 : 1 15
-LexErr               : 2
-LexLits              : 2
-LexRules             : 2 5
-Lexer                : 1
-Prog                 : 0
-Yacc                 : 1
-YaccPrec             : 8
-YaccRules            : 8 13
-YaccTSym             : 8
+Dir                  : 1 7
+Ficheiros            : 2
+RestoFicheiros       : 3 5
+SubDirs              : 2 7
+Z                    : 0
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . Prog
-    (1) Prog -> . LexBegin Lexer YaccBegin Yacc CodeBegin Code
+    (0) S' -> . Z
+    (1) Z -> . Dir
+    (2) Dir -> . ( texto Ficheiros SubDirs )
 
-    LexBegin        shift and go to state 2
+    (               shift and go to state 3
 
-    Prog                           shift and go to state 1
+    Z                              shift and go to state 1
+    Dir                            shift and go to state 2
 
 state 1
 
-    (0) S' -> Prog .
+    (0) S' -> Z .
 
 
 
 state 2
 
-    (1) Prog -> LexBegin . Lexer YaccBegin Yacc CodeBegin Code
-    (2) Lexer -> . LexLits LexIgnore LexTokens LexRules LexErr
-    (3) LexLits -> . LexLiterals
-    (4) LexLits -> .
+    (1) Z -> Dir .
 
-    LexLiterals     shift and go to state 5
-    LexIgnore       reduce using rule 4 (LexLits -> .)
+    $end            reduce using rule 1 (Z -> Dir .)
 
-    Lexer                          shift and go to state 3
-    LexLits                        shift and go to state 4
 
 state 3
 
-    (1) Prog -> LexBegin Lexer . YaccBegin Yacc CodeBegin Code
+    (2) Dir -> ( . texto Ficheiros SubDirs )
 
-    YaccBegin       shift and go to state 6
+    texto           shift and go to state 4
 
 
 state 4
 
-    (2) Lexer -> LexLits . LexIgnore LexTokens LexRules LexErr
+    (2) Dir -> ( texto . Ficheiros SubDirs )
+    (3) Ficheiros -> . [ texto RestoFicheiros ]
+    (4) Ficheiros -> .
 
-    LexIgnore       shift and go to state 7
+    [               shift and go to state 6
+    (               reduce using rule 4 (Ficheiros -> .)
+    )               reduce using rule 4 (Ficheiros -> .)
 
+    Ficheiros                      shift and go to state 5
 
 state 5
 
-    (3) LexLits -> LexLiterals .
+    (2) Dir -> ( texto Ficheiros . SubDirs )
+    (7) SubDirs -> . Dir SubDirs
+    (8) SubDirs -> .
+    (2) Dir -> . ( texto Ficheiros SubDirs )
 
-    LexIgnore       reduce using rule 3 (LexLits -> LexLiterals .)
+    )               reduce using rule 8 (SubDirs -> .)
+    (               shift and go to state 3
 
+    SubDirs                        shift and go to state 7
+    Dir                            shift and go to state 8
 
 state 6
 
-    (1) Prog -> LexBegin Lexer YaccBegin . Yacc CodeBegin Code
-    (8) Yacc -> . YaccPrec YaccTSym YaccRules
-    (9) YaccPrec -> . YaccPrecedence
-    (10) YaccPrec -> .
+    (3) Ficheiros -> [ . texto RestoFicheiros ]
 
-    YaccPrecedence  shift and go to state 10
-    YaccTS          reduce using rule 10 (YaccPrec -> .)
-    YaccRule        reduce using rule 10 (YaccPrec -> .)
+    texto           shift and go to state 9
 
-    Yacc                           shift and go to state 8
-    YaccPrec                       shift and go to state 9
 
 state 7
 
-    (2) Lexer -> LexLits LexIgnore . LexTokens LexRules LexErr
+    (2) Dir -> ( texto Ficheiros SubDirs . )
 
-    LexTokens       shift and go to state 11
+    )               shift and go to state 10
 
 
 state 8
 
-    (1) Prog -> LexBegin Lexer YaccBegin Yacc . CodeBegin Code
+    (7) SubDirs -> Dir . SubDirs
+    (7) SubDirs -> . Dir SubDirs
+    (8) SubDirs -> .
+    (2) Dir -> . ( texto Ficheiros SubDirs )
 
-    CodeBegin       shift and go to state 12
+    )               reduce using rule 8 (SubDirs -> .)
+    (               shift and go to state 3
 
+    Dir                            shift and go to state 8
+    SubDirs                        shift and go to state 11
 
 state 9
 
-    (8) Yacc -> YaccPrec . YaccTSym YaccRules
-    (11) YaccTSym -> . YaccTS
-    (12) YaccTSym -> .
+    (3) Ficheiros -> [ texto . RestoFicheiros ]
+    (5) RestoFicheiros -> . texto RestoFicheiros
+    (6) RestoFicheiros -> .
 
-    YaccTS          shift and go to state 14
-    YaccRule        reduce using rule 12 (YaccTSym -> .)
+    texto           shift and go to state 12
+    ]               reduce using rule 6 (RestoFicheiros -> .)
 
-    YaccTSym                       shift and go to state 13
+    RestoFicheiros                 shift and go to state 13
 
 state 10
 
-    (9) YaccPrec -> YaccPrecedence .
+    (2) Dir -> ( texto Ficheiros SubDirs ) .
 
-    YaccTS          reduce using rule 9 (YaccPrec -> YaccPrecedence .)
-    YaccRule        reduce using rule 9 (YaccPrec -> YaccPrecedence .)
+    $end            reduce using rule 2 (Dir -> ( texto Ficheiros SubDirs ) .)
+    (               reduce using rule 2 (Dir -> ( texto Ficheiros SubDirs ) .)
+    )               reduce using rule 2 (Dir -> ( texto Ficheiros SubDirs ) .)
 
 
 state 11
 
-    (2) Lexer -> LexLits LexIgnore LexTokens . LexRules LexErr
-    (5) LexRules -> . LexRules LexRule
-    (6) LexRules -> . LexRule
+    (7) SubDirs -> Dir SubDirs .
 
-    LexRule         shift and go to state 16
+    )               reduce using rule 7 (SubDirs -> Dir SubDirs .)
 
-    LexRules                       shift and go to state 15
 
 state 12
 
-    (1) Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin . Code
-    (15) Code -> . Code CodeAll
-    (16) Code -> . CodeAll
+    (5) RestoFicheiros -> texto . RestoFicheiros
+    (5) RestoFicheiros -> . texto RestoFicheiros
+    (6) RestoFicheiros -> .
 
-    CodeAll         shift and go to state 18
+    texto           shift and go to state 12
+    ]               reduce using rule 6 (RestoFicheiros -> .)
 
-    Code                           shift and go to state 17
+    RestoFicheiros                 shift and go to state 14
 
 state 13
 
-    (8) Yacc -> YaccPrec YaccTSym . YaccRules
-    (13) YaccRules -> . YaccRules YaccRule
-    (14) YaccRules -> . YaccRule
+    (3) Ficheiros -> [ texto RestoFicheiros . ]
 
-    YaccRule        shift and go to state 20
+    ]               shift and go to state 15
 
-    YaccRules                      shift and go to state 19
 
 state 14
 
-    (11) YaccTSym -> YaccTS .
+    (5) RestoFicheiros -> texto RestoFicheiros .
 
-    YaccRule        reduce using rule 11 (YaccTSym -> YaccTS .)
+    ]               reduce using rule 5 (RestoFicheiros -> texto RestoFicheiros .)
 
 
 state 15
 
-    (2) Lexer -> LexLits LexIgnore LexTokens LexRules . LexErr
-    (5) LexRules -> LexRules . LexRule
-    (7) LexErr -> . LexError
+    (3) Ficheiros -> [ texto RestoFicheiros ] .
 
-    LexRule         shift and go to state 22
-    LexError        shift and go to state 23
-
-    LexErr                         shift and go to state 21
-
-state 16
-
-    (6) LexRules -> LexRule .
-
-    LexRule         reduce using rule 6 (LexRules -> LexRule .)
-    LexError        reduce using rule 6 (LexRules -> LexRule .)
-
-
-state 17
-
-    (1) Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code .
-    (15) Code -> Code . CodeAll
-
-    $end            reduce using rule 1 (Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code .)
-    CodeAll         shift and go to state 24
-
-
-state 18
-
-    (16) Code -> CodeAll .
-
-    CodeAll         reduce using rule 16 (Code -> CodeAll .)
-    $end            reduce using rule 16 (Code -> CodeAll .)
-
-
-state 19
-
-    (8) Yacc -> YaccPrec YaccTSym YaccRules .
-    (13) YaccRules -> YaccRules . YaccRule
-
-    CodeBegin       reduce using rule 8 (Yacc -> YaccPrec YaccTSym YaccRules .)
-    YaccRule        shift and go to state 25
-
-
-state 20
-
-    (14) YaccRules -> YaccRule .
-
-    YaccRule        reduce using rule 14 (YaccRules -> YaccRule .)
-    CodeBegin       reduce using rule 14 (YaccRules -> YaccRule .)
-
-
-state 21
-
-    (2) Lexer -> LexLits LexIgnore LexTokens LexRules LexErr .
-
-    YaccBegin       reduce using rule 2 (Lexer -> LexLits LexIgnore LexTokens LexRules LexErr .)
-
-
-state 22
-
-    (5) LexRules -> LexRules LexRule .
-
-    LexRule         reduce using rule 5 (LexRules -> LexRules LexRule .)
-    LexError        reduce using rule 5 (LexRules -> LexRules LexRule .)
-
-
-state 23
-
-    (7) LexErr -> LexError .
-
-    YaccBegin       reduce using rule 7 (LexErr -> LexError .)
-
-
-state 24
-
-    (15) Code -> Code CodeAll .
-
-    CodeAll         reduce using rule 15 (Code -> Code CodeAll .)
-    $end            reduce using rule 15 (Code -> Code CodeAll .)
-
-
-state 25
-
-    (13) YaccRules -> YaccRules YaccRule .
-
-    YaccRule        reduce using rule 13 (YaccRules -> YaccRules YaccRule .)
-    CodeBegin       reduce using rule 13 (YaccRules -> YaccRules YaccRule .)
+    (               reduce using rule 3 (Ficheiros -> [ texto RestoFicheiros ] .)
+    )               reduce using rule 3 (Ficheiros -> [ texto RestoFicheiros ] .)
 

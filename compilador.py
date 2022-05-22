@@ -110,7 +110,7 @@ def t_ANY_DOT(t):          r'\.' ; return t
 def t_ANY_COMMA(t):        r','  ; return t
 
 def t_ANY_error(t):
-    print("Illegal character '%s'" % t.value[0])
+    #print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
 t_StateLex_ignore = "\t \n"
@@ -133,7 +133,7 @@ def p_Prog(p):
     p[0] += p[2]
     p[0] += "\n# YACC\n\n"
     p[0] += p[4]
-    p[0] += "\n# RAW PYTHON\n\n"
+    p[0] += "\n# RAW PYTHON\n"
     p[0] += p[6]
 
 # :::::::::::::::::: Lex :::::::::::::::::
@@ -160,25 +160,45 @@ def p_LexLits_2(p):
 def p_LexRules_1(p):
     "LexRules : LexRules LexRule"
     p[0] = p[1]
-    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",?\ *(.*)\)', p[2])
-    p[0] += f"""def t_{params[2]}(t):
+    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",\ *(.*)\)', p[2])
+    tipo = re.match(r'(\w+)\(t.value\)', params[3])
+    if tipo:
+        p[0] += f"""
+def t_{params[2]}(t):
     {params[1]}
-    {params[3] if params[3] else ""}
+    t.value = {tipo[1]}(t.value)
     return t
 """
+    else:
+        p[0] += f"""
+def t_{params[2]}(t):
+    {params[1]}
+    return t
+"""
+
 def p_LexRules_2(p):
     "LexRules : LexRule"
-    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",?\ *(.*)\)', p[1])
-    p[0] = f"""def t_{params[2]}(t):
+    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",\ *(.*)\)', p[1])
+    tipo = re.match(r'(\w+)\(t.value\)', params[3])
+    if tipo:
+        p[0] = f"""
+def t_{params[2]}(t):
     {params[1]}
-    {params[3] if params[3] else ""}
+    t.value = {tipo[1]}(t.value)
+    return t
+"""
+    else:
+        p[0] = f"""
+def t_{params[2]}(t):
+    {params[1]}
     return t
 """
 
 def p_LexErr(p):
     "LexErr : LexError"
     params = re.match(r'(r\'.*\')\ *\t*error\((.*)\)', p[1])
-    p[0] = "def t_error(t):\n"
+    p[0]  = "def t_error(t):\n"
+    p[0] += f"    {params[1]}\n"
     l = splitByMarks(params[2])
     for arg in l:
         while arg[0] == ' ':

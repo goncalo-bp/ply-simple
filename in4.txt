@@ -4,14 +4,14 @@
 %ignore = " \t\n"
 %tokens = ["texto"]
 
-r'\"[^"]+\"'    return("texto")
+r'\"[^"]+\"'    return("texto", t.value)
 r'.'            error(f"illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
 
 %% YACC
 
 ts = { }
 
-Z               : Dir                               { for cmd in t[1]: print(cmd) }
+Z               : Dir                               { t[0] = t[1]}
 Dir             : '(' texto Ficheiros SubDirs ')'   { t[0] = [ "mkdir " + t[2],  "cd " + t[2], t[3] ] + t[4] }
 Ficheiros       : '[' texto RestoFicheiros ']'      { t[0] = "touch " + t[2] + " " + t[3] }
 Ficheiros       :                                   { t[0] = "" }
@@ -20,13 +20,10 @@ RestoFicheiros  :                                   { t[0] = "" }
 SubDirs         : Dir SubDirs                       { t[0] = t[1] + t[2] }
 SubDirs         :                                   { t[0] = ["cd .."] }
 
-
-
 %%
 
 from ply.lex import lex
 from ply.yacc import yacc
-
 
 def p_error(p):
     print(f"Syntax error: ", p)
@@ -38,16 +35,13 @@ lexer=lex()
 # Build the parser
 y=yacc()
 
-
 # Read line from input and parse it
 import sys
 for linha in sys.stdin:
     y.success = True
     result = y.parse(linha)
-
     if y.success:
-        print("Frase valida: ", linha)
-        print(result)
+        for cmd in result: print(cmd) 
     else:
         print("Frase invalida... Corrija e tente novamente!")
 
