@@ -46,3 +46,6 @@ for linha in sys.stdin:
         print(result)
     else:
         print("Frase invalida... Corrija e tente novamente!")
+
+# Exemplo input
+# ("4a1s" ["notas.txt" "testes.txt"] ("cg") ("adi") ("io") ("pl") ("eptn" ["formulario.txt"]) ("so"))
