@@ -142,7 +142,7 @@ def p_Lexer(p):
     "Lexer : LexLits LexIgnore LexTokens LexRules LexErr"
     p[0] = f"{p[1]}\n{p[3]}\n\nt_{p[2]}\n\n{p[4]}\n{p[5]}\n"
 
-# AJEITAR LITERALS
+
 def p_LexLits_1(p): 
     "LexLits : LexLiterals"
     lits = re.match(r'\w+\ *\t*=\ *\t*\"(.*)\"', p[1])
@@ -198,7 +198,7 @@ def p_YaccTSym_2(p): "YaccTSym : "               ; p[0] = ""
 def p_YaccRules_1(p):
     "YaccRules : YaccRules YaccRule"
     p[0] = p[1]
-    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*)\{(.*)\}', p[2])
+    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*){(.*)}', p[2])
     if params[1] in ts:
         ts[params[1]] = ts[params[1]] + 1
     else:
@@ -210,10 +210,9 @@ def p_YaccRules_1(p):
     \"{params[1]} : {params[2]}\"
     {inst}
 """
-
 def p_YaccRules_2(p):
     "YaccRules : YaccRule"
-    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*)\{(.*)\}', p[1])
+    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*){(.*)}', p[1])
     if params[1] in ts:
         ts[params[1]] = ts[params[1]] + 1
     else:
