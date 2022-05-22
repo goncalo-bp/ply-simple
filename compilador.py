@@ -129,7 +129,8 @@ ts = { }
 
 def p_Prog(p):
     "Prog : LexBegin Lexer YaccBegin Yacc CodeBegin Code"
-    p[0]  = "\n# LEXER\n\n"
+    p[0]  = imports
+    p[0] += "\n# LEXER\n\n"
     p[0] += p[2]
     p[0] += "\n# YACC\n\n"
     p[0] += p[4]
@@ -186,19 +187,25 @@ def p_LexErr(p):
 # ::::::::::::::::: Yacc :::::::::::::::::
 
 def p_Yacc(p):
-    "Yacc : YaccPrecedence YaccTS YaccRules"
+    "Yacc : YaccPrec YaccTSym YaccRules"
     p[0] = f"{p[1]}\n{p[2]}\n\n{p[3]}\n"
+
+def p_YaccPrec_1(p): "YaccPrec : YaccPrecedence" ; p[0] = p[1]
+def p_YaccPrec_2(p): "YaccPrec : "               ; p[0] = ""
+
+def p_YaccTSym_1(p): "YaccTSym : YaccTS"         ; p[0] = p[1]
+def p_YaccTSym_2(p): "YaccTSym : "               ; p[0] = ""
 
 def p_YaccRules_1(p):
     "YaccRules : YaccRules YaccRule"
     p[0] = p[1]
-    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*){(.*)}', p[2])
+    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*)\{(.*)\}', p[2])
     if params[1] in ts:
         ts[params[1]] = ts[params[1]] + 1
     else:
         ts[params[1]] = 1
     inst = params[3]
-    while inst[0] == ' ':
+    while inst and inst[0] == ' ':
         inst = inst[1:]
     p[0] += f"""def p_{params[1]}_{ts[params[1]]}(t):
     \"{params[1]} : {params[2]}\"
@@ -207,13 +214,13 @@ def p_YaccRules_1(p):
 
 def p_YaccRules_2(p):
     "YaccRules : YaccRule"
-    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*){(.*)}', p[1])
+    params = re.match(r'(\w+)\ *\t*:\ *\t*(.*)\{(.*)\}', p[1])
     if params[1] in ts:
         ts[params[1]] = ts[params[1]] + 1
     else:
         ts[params[1]] = 1
     inst = params[3]
-    while inst[0] == ' ':
+    while inst and inst[0] == ' ':
         inst = inst[1:]
     p[0] = f"""def p_{params[1]}_{ts[params[1]]}(t):
     \"{params[1]} : {params[2]}\"
@@ -262,6 +269,11 @@ def splitByMarks(s):
         word += c
     lst.append(word)
     return lst
+
+imports = """
+from ply.lex import lex
+from ply.yacc import yacc
+"""
 
 # :::::::::::::::::::::::::::::::::::::::
 

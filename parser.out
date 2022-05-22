@@ -36,17 +36,21 @@ Rule 4     LexLits -> <empty>
 Rule 5     LexRules -> LexRules LexRule
 Rule 6     LexRules -> LexRule
 Rule 7     LexErr -> LexError
-Rule 8     Yacc -> YaccPrecedence YaccTS YaccRules
-Rule 9     YaccRules -> YaccRules YaccRule
-Rule 10    YaccRules -> YaccRule
-Rule 11    Code -> Code CodeAll
-Rule 12    Code -> CodeAll
+Rule 8     Yacc -> YaccPrec YaccTSym YaccRules
+Rule 9     YaccPrec -> YaccPrecedence
+Rule 10    YaccPrec -> <empty>
+Rule 11    YaccTSym -> YaccTS
+Rule 12    YaccTSym -> <empty>
+Rule 13    YaccRules -> YaccRules YaccRule
+Rule 14    YaccRules -> YaccRule
+Rule 15    Code -> Code CodeAll
+Rule 16    Code -> CodeAll
 
 Terminals, with rules where they appear
 
 BSLASH               : 
 COMMA                : 
-CodeAll              : 11 12
+CodeAll              : 15 16
 CodeBegin            : 1
 DOT                  : 
 EQ                   : 
@@ -76,21 +80,23 @@ Str                  :
 TIMES                : 
 UNDERSCORE           : 
 YaccBegin            : 1
-YaccPrecedence       : 8
-YaccRule             : 9 10
-YaccTS               : 8
+YaccPrecedence       : 9
+YaccRule             : 13 14
+YaccTS               : 11
 error                : 
 
 Nonterminals, with rules where they appear
 
-Code                 : 1 11
+Code                 : 1 15
 LexErr               : 2
 LexLits              : 2
 LexRules             : 2 5
 Lexer                : 1
 Prog                 : 0
 Yacc                 : 1
-YaccRules            : 8 9
+YaccPrec             : 8
+YaccRules            : 8 13
+YaccTSym             : 8
 
 Parsing method: LALR
 
@@ -146,75 +152,99 @@ state 5
 state 6
 
     (1) Prog -> LexBegin Lexer YaccBegin . Yacc CodeBegin Code
-    (8) Yacc -> . YaccPrecedence YaccTS YaccRules
+    (8) Yacc -> . YaccPrec YaccTSym YaccRules
+    (9) YaccPrec -> . YaccPrecedence
+    (10) YaccPrec -> .
 
-    YaccPrecedence  shift and go to state 9
+    YaccPrecedence  shift and go to state 10
+    YaccTS          reduce using rule 10 (YaccPrec -> .)
+    YaccRule        reduce using rule 10 (YaccPrec -> .)
 
     Yacc                           shift and go to state 8
+    YaccPrec                       shift and go to state 9
 
 state 7
 
     (2) Lexer -> LexLits LexIgnore . LexTokens LexRules LexErr
 
-    LexTokens       shift and go to state 10
+    LexTokens       shift and go to state 11
 
 
 state 8
 
     (1) Prog -> LexBegin Lexer YaccBegin Yacc . CodeBegin Code
 
-    CodeBegin       shift and go to state 11
+    CodeBegin       shift and go to state 12
 
 
 state 9
 
-    (8) Yacc -> YaccPrecedence . YaccTS YaccRules
+    (8) Yacc -> YaccPrec . YaccTSym YaccRules
+    (11) YaccTSym -> . YaccTS
+    (12) YaccTSym -> .
 
-    YaccTS          shift and go to state 12
+    YaccTS          shift and go to state 14
+    YaccRule        reduce using rule 12 (YaccTSym -> .)
 
+    YaccTSym                       shift and go to state 13
 
 state 10
+
+    (9) YaccPrec -> YaccPrecedence .
+
+    YaccTS          reduce using rule 9 (YaccPrec -> YaccPrecedence .)
+    YaccRule        reduce using rule 9 (YaccPrec -> YaccPrecedence .)
+
+
+state 11
 
     (2) Lexer -> LexLits LexIgnore LexTokens . LexRules LexErr
     (5) LexRules -> . LexRules LexRule
     (6) LexRules -> . LexRule
 
-    LexRule         shift and go to state 14
+    LexRule         shift and go to state 16
 
-    LexRules                       shift and go to state 13
-
-state 11
-
-    (1) Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin . Code
-    (11) Code -> . Code CodeAll
-    (12) Code -> . CodeAll
-
-    CodeAll         shift and go to state 16
-
-    Code                           shift and go to state 15
+    LexRules                       shift and go to state 15
 
 state 12
 
-    (8) Yacc -> YaccPrecedence YaccTS . YaccRules
-    (9) YaccRules -> . YaccRules YaccRule
-    (10) YaccRules -> . YaccRule
+    (1) Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin . Code
+    (15) Code -> . Code CodeAll
+    (16) Code -> . CodeAll
 
-    YaccRule        shift and go to state 18
+    CodeAll         shift and go to state 18
 
-    YaccRules                      shift and go to state 17
+    Code                           shift and go to state 17
 
 state 13
+
+    (8) Yacc -> YaccPrec YaccTSym . YaccRules
+    (13) YaccRules -> . YaccRules YaccRule
+    (14) YaccRules -> . YaccRule
+
+    YaccRule        shift and go to state 20
+
+    YaccRules                      shift and go to state 19
+
+state 14
+
+    (11) YaccTSym -> YaccTS .
+
+    YaccRule        reduce using rule 11 (YaccTSym -> YaccTS .)
+
+
+state 15
 
     (2) Lexer -> LexLits LexIgnore LexTokens LexRules . LexErr
     (5) LexRules -> LexRules . LexRule
     (7) LexErr -> . LexError
 
-    LexRule         shift and go to state 20
-    LexError        shift and go to state 21
+    LexRule         shift and go to state 22
+    LexError        shift and go to state 23
 
-    LexErr                         shift and go to state 19
+    LexErr                         shift and go to state 21
 
-state 14
+state 16
 
     (6) LexRules -> LexRule .
 
@@ -222,48 +252,48 @@ state 14
     LexError        reduce using rule 6 (LexRules -> LexRule .)
 
 
-state 15
-
-    (1) Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code .
-    (11) Code -> Code . CodeAll
-
-    $end            reduce using rule 1 (Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code .)
-    CodeAll         shift and go to state 22
-
-
-state 16
-
-    (12) Code -> CodeAll .
-
-    CodeAll         reduce using rule 12 (Code -> CodeAll .)
-    $end            reduce using rule 12 (Code -> CodeAll .)
-
-
 state 17
 
-    (8) Yacc -> YaccPrecedence YaccTS YaccRules .
-    (9) YaccRules -> YaccRules . YaccRule
+    (1) Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code .
+    (15) Code -> Code . CodeAll
 
-    CodeBegin       reduce using rule 8 (Yacc -> YaccPrecedence YaccTS YaccRules .)
-    YaccRule        shift and go to state 23
+    $end            reduce using rule 1 (Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code .)
+    CodeAll         shift and go to state 24
 
 
 state 18
 
-    (10) YaccRules -> YaccRule .
+    (16) Code -> CodeAll .
 
-    YaccRule        reduce using rule 10 (YaccRules -> YaccRule .)
-    CodeBegin       reduce using rule 10 (YaccRules -> YaccRule .)
+    CodeAll         reduce using rule 16 (Code -> CodeAll .)
+    $end            reduce using rule 16 (Code -> CodeAll .)
 
 
 state 19
+
+    (8) Yacc -> YaccPrec YaccTSym YaccRules .
+    (13) YaccRules -> YaccRules . YaccRule
+
+    CodeBegin       reduce using rule 8 (Yacc -> YaccPrec YaccTSym YaccRules .)
+    YaccRule        shift and go to state 25
+
+
+state 20
+
+    (14) YaccRules -> YaccRule .
+
+    YaccRule        reduce using rule 14 (YaccRules -> YaccRule .)
+    CodeBegin       reduce using rule 14 (YaccRules -> YaccRule .)
+
+
+state 21
 
     (2) Lexer -> LexLits LexIgnore LexTokens LexRules LexErr .
 
     YaccBegin       reduce using rule 2 (Lexer -> LexLits LexIgnore LexTokens LexRules LexErr .)
 
 
-state 20
+state 22
 
     (5) LexRules -> LexRules LexRule .
 
@@ -271,25 +301,25 @@ state 20
     LexError        reduce using rule 5 (LexRules -> LexRules LexRule .)
 
 
-state 21
+state 23
 
     (7) LexErr -> LexError .
 
     YaccBegin       reduce using rule 7 (LexErr -> LexError .)
 
 
-state 22
+state 24
 
-    (11) Code -> Code CodeAll .
+    (15) Code -> Code CodeAll .
 
-    CodeAll         reduce using rule 11 (Code -> Code CodeAll .)
-    $end            reduce using rule 11 (Code -> Code CodeAll .)
+    CodeAll         reduce using rule 15 (Code -> Code CodeAll .)
+    $end            reduce using rule 15 (Code -> Code CodeAll .)
 
 
-state 23
+state 25
 
-    (9) YaccRules -> YaccRules YaccRule .
+    (13) YaccRules -> YaccRules YaccRule .
 
-    YaccRule        reduce using rule 9 (YaccRules -> YaccRules YaccRule .)
-    CodeBegin       reduce using rule 9 (YaccRules -> YaccRules YaccRule .)
+    YaccRule        reduce using rule 13 (YaccRules -> YaccRules YaccRule .)
+    CodeBegin       reduce using rule 13 (YaccRules -> YaccRules YaccRule .)
 

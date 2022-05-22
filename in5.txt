@@ -1,3 +1,5 @@
+%% LEX
+
 %literals = "+*()"
 %ignore = " \t\n"
 %tokens = ["num"]
@@ -5,11 +7,13 @@
 r'\d+'  return("num", int(t.value))
 r'.'    error(f"illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
 
+%% YACC
+
 ts = { }
 
 Z       : Sext                  { print(t[1]) }
 Sext    : '(' '+' Lista ')'     { t[0] = mySum(t[3]) }
-Sext    : '(' '*' Lista ')'     { t[0] = mytrod(t[3]) }
+Sext    : '(' '*' Lista ')'     { t[0] = myProd(t[3]) }
 Sext    : num                   { t[0] = t[1] }
 Lista   : Sext Lista            { t[0] = [t[1]] + t[2] }
 Lista   : Sext Sext             { t[0] = [t[1]] + [t[2]] }
@@ -28,22 +32,26 @@ def myProd(l):
         r *= elem
     return r
 
-
-
-
-
-
 def p_error(p):
     print(f"Syntax error: ", p)
     y.success = False
 
+texto = """
+157
+( + 50 20 4)
+( * 10 74 2)
+"""
+
+# Build the lexer
+l=lex()
+
 # Build the parser
 y=yacc()
 
-
 # Read line from input and parse it
+
 import sys
-for linha in sys.stdin:
+for linha in texto:
     y.success = True
     result = y.parse(linha)
 

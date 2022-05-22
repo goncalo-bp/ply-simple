@@ -1,3 +1,5 @@
+%% LEX
+
 %literals = "[]()"
 %ignore = " \t\n"
 %tokens = ["texto"]
@@ -5,10 +7,12 @@
 r'\"[^"]+\"'    return("texto", t.value)
 r'.'            error(f"illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
 
+%% YACC
+
 ts = { }
 
 Z               : Dir                               { for cmd in t[1]: print(cmd) }
-Dir             : '(' texto Ficheiros SubDirs ')'   { t[0] = [ f"mkdir {t[2]}",  f"cd {t[2]}", t[3] ] + t[4] }
+Dir             : '(' texto Ficheiros SubDirs ')'   { t[0] = [ "mkdir " + t[2],  "cd " + t[2], t[3] ] + t[4] }
 Ficheiros       : '[' texto RestoFicheiros ']'      { t[0] = "touch " + t[2] + " " + t[3] }
 Ficheiros       :                                   { t[0] = "" }
 RestoFicheiros  : texto RestoFicheiros              { t[0] = t[1] + " " + t[2] }
@@ -18,14 +22,14 @@ SubDirs         :                                   { t[0] = ["cd .."] }
 
 
 
-
-
-
 %%
 
 def p_error(p):
     print(f"Syntax error: ", p)
     y.success = False
+
+# Build the lexer
+lexer=lex()
 
 # Build the parser
 y=yacc()

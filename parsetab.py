@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BSLASH COMMA CodeAll CodeBegin DOT EQ Float Int LCHAV LESS LPAR LSPAR LexBegin LexError LexIgnore LexLiterals LexRule LexTokens MINUS MORE PELICA PERC PLUS QUOTE RCHAV RPAR RSPAR SLASH Str TIMES UNDERSCORE YaccBegin YaccPrecedence YaccRule YaccTSProg : LexBegin Lexer YaccBegin Yacc CodeBegin CodeLexer : LexLits LexIgnore LexTokens LexRules LexErrLexLits : LexLiteralsLexLits : LexRules : LexRules LexRuleLexRules : LexRuleLexErr : LexErrorYacc : YaccPrecedence YaccTS YaccRulesYaccRules : YaccRules YaccRuleYaccRules : YaccRuleCode : Code CodeAllCode : CodeAll'
+_lr_signature = 'BSLASH COMMA CodeAll CodeBegin DOT EQ Float Int LCHAV LESS LPAR LSPAR LexBegin LexError LexIgnore LexLiterals LexRule LexTokens MINUS MORE PELICA PERC PLUS QUOTE RCHAV RPAR RSPAR SLASH Str TIMES UNDERSCORE YaccBegin YaccPrecedence YaccRule YaccTSProg : LexBegin Lexer YaccBegin Yacc CodeBegin CodeLexer : LexLits LexIgnore LexTokens LexRules LexErrLexLits : LexLiteralsLexLits : LexRules : LexRules LexRuleLexRules : LexRuleLexErr : LexErrorYacc : YaccPrec YaccTSym YaccRulesYaccPrec : YaccPrecedenceYaccPrec : YaccTSym : YaccTSYaccTSym : YaccRules : YaccRules YaccRuleYaccRules : YaccRuleCode : Code CodeAllCode : CodeAll'
     
-_lr_action_items = {'LexBegin':([0,],[2,]),'$end':([1,15,16,22,],[0,-1,-12,-11,]),'LexLiterals':([2,],[5,]),'LexIgnore':([2,4,5,],[-4,7,-3,]),'YaccBegin':([3,19,21,],[6,-2,-7,]),'YaccPrecedence':([6,],[9,]),'LexTokens':([7,],[10,]),'CodeBegin':([8,17,18,23,],[11,-8,-10,-9,]),'YaccTS':([9,],[12,]),'LexRule':([10,13,14,20,],[14,20,-6,-5,]),'CodeAll':([11,15,16,22,],[16,22,-12,-11,]),'YaccRule':([12,17,18,23,],[18,23,-10,-9,]),'LexError':([13,14,20,],[21,-6,-5,]),}
+_lr_action_items = {'LexBegin':([0,],[2,]),'$end':([1,17,18,24,],[0,-1,-16,-15,]),'LexLiterals':([2,],[5,]),'LexIgnore':([2,4,5,],[-4,7,-3,]),'YaccBegin':([3,21,23,],[6,-2,-7,]),'YaccPrecedence':([6,],[10,]),'YaccTS':([6,9,10,],[-10,14,-9,]),'YaccRule':([6,9,10,13,14,19,20,25,],[-10,-12,-9,20,-11,25,-14,-13,]),'LexTokens':([7,],[11,]),'CodeBegin':([8,19,20,25,],[12,-8,-14,-13,]),'LexRule':([11,15,16,22,],[16,22,-6,-5,]),'CodeAll':([12,17,18,24,],[18,24,-16,-15,]),'LexError':([15,16,22,],[23,-6,-5,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'Prog':([0,],[1,]),'Lexer':([2,],[3,]),'LexLits':([2,],[4,]),'Yacc':([6,],[8,]),'LexRules':([10,],[13,]),'Code':([11,],[15,]),'YaccRules':([12,],[17,]),'LexErr':([13,],[19,]),}
+_lr_goto_items = {'Prog':([0,],[1,]),'Lexer':([2,],[3,]),'LexLits':([2,],[4,]),'Yacc':([6,],[8,]),'YaccPrec':([6,],[9,]),'YaccTSym':([9,],[13,]),'LexRules':([11,],[15,]),'Code':([12,],[17,]),'YaccRules':([13,],[19,]),'LexErr':([15,],[21,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -28,15 +28,19 @@ del _lr_goto_items
 _lr_productions = [
   ("S' -> Prog","S'",1,None,None,None),
   ('Prog -> LexBegin Lexer YaccBegin Yacc CodeBegin Code','Prog',6,'p_Prog','compilador.py',131),
-  ('Lexer -> LexLits LexIgnore LexTokens LexRules LexErr','Lexer',5,'p_Lexer','compilador.py',142),
-  ('LexLits -> LexLiterals','LexLits',1,'p_LexLits_1','compilador.py',147),
-  ('LexLits -> <empty>','LexLits',0,'p_LexLits_2','compilador.py',157),
-  ('LexRules -> LexRules LexRule','LexRules',2,'p_LexRules_1','compilador.py',161),
-  ('LexRules -> LexRule','LexRules',1,'p_LexRules_2','compilador.py',169),
-  ('LexErr -> LexError','LexErr',1,'p_LexErr','compilador.py',177),
-  ('Yacc -> YaccPrecedence YaccTS YaccRules','Yacc',3,'p_Yacc','compilador.py',189),
-  ('YaccRules -> YaccRules YaccRule','YaccRules',2,'p_YaccRules_1','compilador.py',193),
-  ('YaccRules -> YaccRule','YaccRules',1,'p_YaccRules_2','compilador.py',209),
-  ('Code -> Code CodeAll','Code',2,'p_Code_1','compilador.py',226),
-  ('Code -> CodeAll','Code',1,'p_Code_2','compilador.py',227),
+  ('Lexer -> LexLits LexIgnore LexTokens LexRules LexErr','Lexer',5,'p_Lexer','compilador.py',143),
+  ('LexLits -> LexLiterals','LexLits',1,'p_LexLits_1','compilador.py',148),
+  ('LexLits -> <empty>','LexLits',0,'p_LexLits_2','compilador.py',158),
+  ('LexRules -> LexRules LexRule','LexRules',2,'p_LexRules_1','compilador.py',162),
+  ('LexRules -> LexRule','LexRules',1,'p_LexRules_2','compilador.py',170),
+  ('LexErr -> LexError','LexErr',1,'p_LexErr','compilador.py',178),
+  ('Yacc -> YaccPrec YaccTSym YaccRules','Yacc',3,'p_Yacc','compilador.py',190),
+  ('YaccPrec -> YaccPrecedence','YaccPrec',1,'p_YaccPrec_1','compilador.py',194),
+  ('YaccPrec -> <empty>','YaccPrec',0,'p_YaccPrec_2','compilador.py',195),
+  ('YaccTSym -> YaccTS','YaccTSym',1,'p_YaccTSym_1','compilador.py',197),
+  ('YaccTSym -> <empty>','YaccTSym',0,'p_YaccTSym_2','compilador.py',198),
+  ('YaccRules -> YaccRules YaccRule','YaccRules',2,'p_YaccRules_1','compilador.py',200),
+  ('YaccRules -> YaccRule','YaccRules',1,'p_YaccRules_2','compilador.py',216),
+  ('Code -> Code CodeAll','Code',2,'p_Code_1','compilador.py',233),
+  ('Code -> CodeAll','Code',1,'p_Code_2','compilador.py',234),
 ]

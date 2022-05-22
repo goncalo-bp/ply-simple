@@ -1,9 +1,13 @@
+%% LEX
+
 %literals = "()"
 %ignore = " \n\t"
 %tokens = [ 'NUM' ]
 
 r'\d+'      return("NUM", float(t.value))
 r'.'        error(f"Illegal character {t.value[0]} at line {t.lexer.lineno}", t.lexer.skip(1))
+
+%% YACC
 
 ts = { }
 
