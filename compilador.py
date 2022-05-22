@@ -129,8 +129,7 @@ ts = { }
 
 def p_Prog(p):
     "Prog : LexBegin Lexer YaccBegin Yacc CodeBegin Code"
-    p[0]  = imports
-    p[0] += "\n# LEXER\n\n"
+    p[0]  = "\n# LEXER\n\n"
     p[0] += p[2]
     p[0] += "\n# YACC\n\n"
     p[0] += p[4]
@@ -269,11 +268,6 @@ def splitByMarks(s):
         word += c
     lst.append(word)
     return lst
-
-imports = """
-from ply.lex import lex
-from ply.yacc import yacc
-"""
 
 # :::::::::::::::::::::::::::::::::::::::
 
