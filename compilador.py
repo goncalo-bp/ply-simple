@@ -156,7 +156,7 @@ def p_LexLits_1(p):
 
 def p_LexLits_2(p): 
     "LexLits : "
-    p[0] = ""
+    p[0] = "literals = []"
 
 def p_LexRules_1(p):
     "LexRules : LexRules LexRule"
