@@ -4,7 +4,7 @@
 %ignore = " \t\n"
 %tokens = ["texto"]
 
-r'\"[^"]+\"'    return("texto", t)
+r'\"[^"]+\"'    return("texto")
 r'.'            error(f"illegal char {t.value[0]} line {t.lexer.lineno}", t.lexer.skip(1))
 
 %% YACC
@@ -23,6 +23,10 @@ SubDirs         :                                   { t[0] = ["cd .."] }
 
 
 %%
+
+from ply.lex import lex
+from ply.yacc import yacc
+
 
 def p_error(p):
     print(f"Syntax error: ", p)

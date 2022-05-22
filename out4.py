@@ -1,6 +1,3 @@
-from ply.lex import lex
-from ply.yacc import yacc
-
 # LEXER
 
 literals = ['[', ']', '(', ')']
@@ -10,7 +7,8 @@ t_ignore = " \t\n"
 
 def t_texto(t):
     r'\"[^"]+\"'
-    return  t.value
+
+    return t
 
 def t_error(t):
     f"illegal char {t.value[0]} line {t.lexer.lineno}"
@@ -24,32 +22,34 @@ ts = { }
 
 def p_Z_1(t):
     "Z : Dir                               "
-    for cmd in t[1]: print(cmd) 
+    for cmd in t[1]: print(cmd)
 def p_Dir_1(t):
     "Dir : '(' texto Ficheiros SubDirs ')'   "
-    t[0] = [ "mkdir " + t[2],  "cd " + t[2], t[3] ] + t[4] 
+    t[0] = [ "mkdir " + t[2],  "cd " + t[2], t[3] ] + t[4]
 def p_Ficheiros_1(t):
     "Ficheiros : '[' texto RestoFicheiros ']'      "
-    t[0] = "touch " + t[2] + " " + t[3] 
+    t[0] = "touch " + t[2] + " " + t[3]
 def p_Ficheiros_2(t):
     "Ficheiros : "
-    t[0] = "" 
+    t[0] = ""
 def p_RestoFicheiros_1(t):
     "RestoFicheiros : texto RestoFicheiros              "
-    t[0] = t[1] + " " + t[2] 
+    t[0] = t[1] + " " + t[2]
 def p_RestoFicheiros_2(t):
     "RestoFicheiros : "
-    t[0] = "" 
+    t[0] = ""
 def p_SubDirs_1(t):
     "SubDirs : Dir SubDirs                       "
-    t[0] = t[1] + t[2] 
+    t[0] = t[1] + t[2]
 def p_SubDirs_2(t):
     "SubDirs : "
-    t[0] = ["cd .."] 
+    t[0] = ["cd .."]
 
 
 # RAW PYTHON
 
+from ply.lex import lex
+from ply.yacc import yacc
 def p_error(p):
     print(f"Syntax error: ", p)
     y.success = False
@@ -67,3 +67,5 @@ for linha in sys.stdin:
         print(result)
     else:
         print("Frase invalida... Corrija e tente novamente!")
+# Exemplo input
+# ("4a1s" ["notas.txt" "testes.txt"] ("cg") ("adi") ("io") ("pl") ("eptn" ["formulario.txt"]) ("so"))

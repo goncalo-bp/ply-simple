@@ -1,6 +1,3 @@
-from ply.lex import lex
-from ply.yacc import yacc
-
 # LEXER
 
 literals = ['+', '*', '(', ')']
@@ -10,7 +7,8 @@ t_ignore = " \t\n"
 
 def t_num(t):
     r'\d+'
-    return  int(t.value)
+    t.value = int(t.value)
+    return t
 
 def t_error(t):
     f"illegal char {t.value[0]} line {t.lexer.lineno}"
@@ -24,26 +22,28 @@ ts = { }
 
 def p_Z_1(t):
     "Z : Sext                  "
-    print(t[1]) 
+    print(t[1])
 def p_Sext_1(t):
     "Sext : '(' '+' Lista ')'     "
-    t[0] = mySum(t[3]) 
+    t[0] = mySum(t[3])
 def p_Sext_2(t):
     "Sext : '(' '*' Lista ')'     "
-    t[0] = myProd(t[3]) 
+    t[0] = myProd(t[3])
 def p_Sext_3(t):
     "Sext : num                   "
-    t[0] = t[1] 
+    t[0] = t[1]
 def p_Lista_1(t):
     "Lista : Sext Lista            "
-    t[0] = [t[1]] + t[2] 
+    t[0] = [t[1]] + t[2]
 def p_Lista_2(t):
     "Lista : Sext Sext             "
-    t[0] = [t[1]] + [t[2]] 
+    t[0] = [t[1]] + [t[2]]
 
 
 # RAW PYTHON
 
+from ply.lex import lex
+from ply.yacc import yacc
 def mySum(l):
     r = 0
     for elem in l:
@@ -57,18 +57,13 @@ def myProd(l):
 def p_error(p):
     print(f"Syntax error: ", p)
     y.success = False
-texto = """
-157
-( + 50 20 4)
-( * 10 74 2)
-"""
 # Build the lexer
 l=lex()
 # Build the parser
 y=yacc()
 # Read line from input and parse it
 import sys
-for linha in texto:
+for linha in sys.stdin:
     y.success = True
     result = y.parse(linha)
     if y.success:

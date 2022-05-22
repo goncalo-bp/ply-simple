@@ -4,7 +4,7 @@
 %ignore = " \n\t"
 %tokens = [ 'NUM' ]
 
-r'\d+'      return("NUM", float(t.value))
+r'\d+'      return("NUM", t.value = float(t.value))
 r'.'        error(f"Illegal character {t.value[0]} at line {t.lexer.lineno}", t.lexer.skip(1))
 
 %% YACC
@@ -16,12 +16,19 @@ ABin : '(' ')' { t[0] = 0 }
 
 %%
 
-def p_error(p):
-    print(f"Syntax error: ", p)
-    y.success = False
+from ply.lex import lex
+from ply.yacc import yacc
+
+
+# Build the lexer
+lexer = lex()
 
 # Build the parser
 y=yacc()
+
+def p_error(p):
+    print(f"Syntax error: ", p)
+    y.success = False
 
 
 # Read line from input and parse it

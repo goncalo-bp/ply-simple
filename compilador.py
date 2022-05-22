@@ -160,17 +160,19 @@ def p_LexLits_2(p):
 def p_LexRules_1(p):
     "LexRules : LexRules LexRule"
     p[0] = p[1]
-    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",(.*)\)', p[2])
+    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",?\ *(.*)\)', p[2])
     p[0] += f"""def t_{params[2]}(t):
     {params[1]}
-    return {params[3]}
+    {params[3] if params[3] else ""}
+    return t
 """
 def p_LexRules_2(p):
     "LexRules : LexRule"
-    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",(.*)\)', p[1])
+    params = re.match(r'(r\'.*\')\ *\t*return\(\"(\w+)\",?\ *(.*)\)', p[1])
     p[0] = f"""def t_{params[2]}(t):
     {params[1]}
-    return {params[3]}
+    {params[3] if params[3] else ""}
+    return t
 """
 
 def p_LexErr(p):
